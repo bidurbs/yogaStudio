@@ -1,12 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
@@ -14,6 +16,20 @@ import javax.persistence.Entity;
  * @version 0.0.1
  */
 @Entity
-public class Customer extends User implements Serializable {
+@Table(name = "CUSTOMER")
+public class Customer extends Users implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PurchaseOrder> orders;
+
+   
+
+    public List<PurchaseOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<PurchaseOrder> orders) {
+        this.orders = orders;
+    }
 
 }
