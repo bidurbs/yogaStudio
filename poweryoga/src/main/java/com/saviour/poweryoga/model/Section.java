@@ -32,7 +32,7 @@ public class Section implements Serializable {
     private Course course;
     
     @ManyToMany(mappedBy = "sections")
-    private List<Users> users = new ArrayList<Users>();
+    private List<User> users = new ArrayList<User>();
 
     public Section() {
     }
@@ -85,11 +85,11 @@ public class Section implements Serializable {
         this.course = course;
     }
 
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Users> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

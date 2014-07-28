@@ -36,7 +36,7 @@ public class ShoppingCart implements Serializable {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Users user;
+    private User user;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar shopDate;
@@ -49,7 +49,7 @@ public class ShoppingCart implements Serializable {
     public ShoppingCart() {
     }
 
-    public ShoppingCart(Users user, Calendar shopDate, double totalPrice) {
+    public ShoppingCart(User user, Calendar shopDate, double totalPrice) {
         this.user = user;
         this.shopDate = shopDate;
         this.totalPrice = totalPrice;
@@ -91,11 +91,11 @@ public class ShoppingCart implements Serializable {
         this.shoppingCartItems = shoppingCartItems;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

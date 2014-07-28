@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CUSTOMER")
-public class Customer extends Users implements Serializable {
+public class Customer extends User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PurchaseOrder> orders;

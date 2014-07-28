@@ -5,7 +5,7 @@
  */
 package com.saviour.poweryoga.dao;
 
-import com.saviour.poweryoga.model.Users;
+import com.saviour.poweryoga.model.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,7 +21,7 @@ public class UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void save(Users user) {
+    public void save(User user) {
         sessionFactory.getCurrentSession().save(user);
     }
 }

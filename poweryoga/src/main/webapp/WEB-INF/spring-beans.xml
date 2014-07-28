@@ -55,6 +55,19 @@
             <list>
                 <value>com.saviour.poweryoga.model.User</value>
                 <value>com.saviour.poweryoga.model.Customer</value>
+                <value>com.saviour.poweryoga.model.Role</value>
+                <value>com.saviour.poweryoga.model.Admin</value>
+                <value>com.saviour.poweryoga.model.Course</value>
+                <value>com.saviour.poweryoga.model.CreditCard</value>
+                <value>com.saviour.poweryoga.model.Faculty</value>
+                <value>com.saviour.poweryoga.model.Product</value>
+                <value>com.saviour.poweryoga.model.PurchaseOrder</value>
+                <value>com.saviour.poweryoga.model.Section</value>
+                <value>com.saviour.poweryoga.model.Semester</value>
+                <value>com.saviour.poweryoga.model.ShoppingCart</value>
+                <value>com.saviour.poweryoga.model.ShoppingCartItem</value>
+                <value>com.saviour.poweryoga.model.Student</value>
+                <value>com.saviour.poweryoga.model.Transcript</value>
             </list>
         </property>
 
