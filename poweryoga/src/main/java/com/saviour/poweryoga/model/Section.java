@@ -29,10 +29,10 @@ public class Section implements Serializable {
     private Semester semester;
     
     @OneToMany
-    private Course course;
+    private List<Course> course;
     
     @ManyToMany(mappedBy = "sections")
-    private List<User> users = new ArrayList<User>();
+    private List<User> users = new ArrayList<>();
 
     public Section() {
     }
@@ -77,13 +77,14 @@ public class Section implements Serializable {
         this.semester = semester;
     }
 
-    public Course getCourse() {
+    public List<Course> getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(List<Course> course) {
         this.course = course;
     }
+
 
     public List<User> getUsers() {
         return users;
