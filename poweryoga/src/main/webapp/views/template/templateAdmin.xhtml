@@ -40,15 +40,16 @@
         </ui:insert>
         <!-- ======================================================================================================================== -->	
         <div id="mainBody" class="container">
-            
+
             <div class="row">
                 <ui:insert name="sidebar">
                     <ui:include src="sections/sidebar2.xhtml"/>
                 </ui:insert>
 
                 <div class="span9">
+                    <ui:insert name="successFailure"/>
                     <ui:insert name="content"/>
-                    
+
                 </div>
             </div>
             <ui:insert name="footer">
