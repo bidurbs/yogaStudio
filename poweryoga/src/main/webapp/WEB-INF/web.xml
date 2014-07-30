@@ -34,6 +34,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>views/template/template.jsf</welcome-file>
+        <welcome-file>views/index.jsf</welcome-file>
     </welcome-file-list>
 </web-app>
