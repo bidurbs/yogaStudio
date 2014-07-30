@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Guest
  */
 @Entity
+@Table(name="SECTION")
 public class Section implements Serializable {
 
     @Id
@@ -32,7 +34,7 @@ public class Section implements Serializable {
     private List<Course> course;
     
     @ManyToMany(mappedBy = "sections")
-    private List<User> users = new ArrayList<>();
+    private List<Users> users = new ArrayList<>();
 
     public Section() {
     }
@@ -86,11 +88,11 @@ public class Section implements Serializable {
     }
 
 
-    public List<User> getUsers() {
+    public List<Users> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<Users> users) {
         this.users = users;
     }
 

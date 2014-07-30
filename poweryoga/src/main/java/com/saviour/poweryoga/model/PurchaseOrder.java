@@ -39,7 +39,7 @@ public class PurchaseOrder implements Serializable {
 
     //@OneToMany(mappedBy = "orders")
     @ManyToOne
-    private User user;
+    private Users user;
 
     public PurchaseOrder() {
     }
@@ -68,11 +68,11 @@ public class PurchaseOrder implements Serializable {
         this.shoppingCart = shoppingCart;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 }

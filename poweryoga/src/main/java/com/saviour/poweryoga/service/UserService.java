@@ -6,7 +6,7 @@
 package com.saviour.poweryoga.service;
 
 import com.saviour.poweryoga.dao.UserDAO;
-import com.saviour.poweryoga.model.User;
+import com.saviour.poweryoga.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class UserService {
     private UserDAO userDao;
 
     @Transactional
-    public void save(User user) {
+    public void save(Users user) {
         userDao.save(user);
     }
     

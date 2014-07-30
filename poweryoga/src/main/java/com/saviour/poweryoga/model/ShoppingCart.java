@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
@@ -27,6 +28,7 @@ import javax.persistence.Temporal;
  * version 1.0.0
  */
 @Entity
+@Table(name="SHOPPINGCART")
 public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +38,7 @@ public class ShoppingCart implements Serializable {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Users user;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar shopDate;
@@ -49,7 +51,7 @@ public class ShoppingCart implements Serializable {
     public ShoppingCart() {
     }
 
-    public ShoppingCart(User user, Calendar shopDate, double totalPrice) {
+    public ShoppingCart(Users user, Calendar shopDate, double totalPrice) {
         this.user = user;
         this.shopDate = shopDate;
         this.totalPrice = totalPrice;
@@ -91,11 +93,11 @@ public class ShoppingCart implements Serializable {
         this.shoppingCartItems = shoppingCartItems;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

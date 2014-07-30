@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * This class is for Shopping Cart item and contains Shopping Cart item features.
@@ -23,6 +24,7 @@ import javax.persistence.OneToOne;
  * version 0.0.1
  */
 @Entity
+@Table(name="SHOPPINGCARTITEM")
 public class ShoppingCartItem implements Serializable {
     private static final long serialVersionUID = 1L;
 

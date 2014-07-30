@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "FACULTY")
-public class Faculty extends User implements Serializable{
+public class Faculty extends Users implements Serializable{
     
     
 }

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * This class is for Credit Card and contains Credit Card features.
@@ -13,6 +14,7 @@ import javax.persistence.Id;
  * version 0.0.1
  */
 @Entity
+@Table(name="CREDITCARD")
 public class CreditCard implements Serializable {
     private static final long serialVersionUID = 1L;
     

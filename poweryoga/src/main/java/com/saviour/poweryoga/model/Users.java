@@ -20,8 +20,8 @@ import javax.persistence.Table;
  * @version 1.0.0
  */
 @Entity
-@Table(name = "USER")
-public class User implements Serializable {
+@Table(name = "USERS")
+public class Users implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +58,7 @@ public class User implements Serializable {
      @ManyToMany
     private List<Section> sections = new ArrayList<>();
 
-    public User() {
+    public Users() {
     }
 
     public long getUserId() {
