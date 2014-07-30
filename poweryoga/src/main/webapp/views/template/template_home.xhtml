@@ -43,10 +43,19 @@
             <ui:insert name="header">
                 <ui:include src="sections/header.xhtml"/>
             </ui:insert>
-            
+            <ui:insert name="carousel">
+                <ui:include src="sections/carousel.xhtml"/>
+            </ui:insert>
+
+
             <div class="row">
-                <div class="span12">
+                <ui:insert name="sidebar">
+                    <ui:include src="sections/sidebar.xhtml"/>
+                </ui:insert>
+
+                <div class="span9">
                     <ui:insert name="content"/>
+                    
                 </div>
             </div>
 

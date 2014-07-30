@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head></h:head>
-    <h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-        Welcome
+    <h:head>
 
-    </h:body>
+    </h:head>
+    <body>
+        <ui:composition template="template/template_home.xhtml">
 
+            <ui:define name="content">
+                <h3>New Products </h3>
+
+                <h3>New Courses </h3>
+            </ui:define>
+        </ui:composition>
+    </body>
 </html>
+
