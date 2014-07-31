@@ -1,5 +1,5 @@
 
-package com.saviour.poweryoga.service;
+package com.saviour.poweryoga.serviceImpl;
 
 /**
  *

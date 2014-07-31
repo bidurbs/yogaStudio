@@ -3,6 +3,7 @@ package com.saviour.poweryoga.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 /**
  *
  * @author Guest
+ * @author TalakB
+ * @version 0.0.1
  */
 @Entity
 @Table(name = "COURSE")
@@ -22,14 +25,19 @@ public class Course implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String courseName;
+
     private double courseFee;
+
     private String description;
+
     @OneToMany
-    @JoinColumn
-    private List<Course> prerequisites = new ArrayList<>();
+    @JoinColumn(name = "PrerequisiteCid")
+    private List<Course> prerequisites;
+
     @OneToMany(mappedBy = "course")
-    private List<Section> sections = new ArrayList<Section>();
+    private List<Section> sections;
 
     public Course(String courseName, double courseFee, String description) {
         this.courseName = courseName;

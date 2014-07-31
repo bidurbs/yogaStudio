@@ -1,11 +1,11 @@
-package com.saviour.poweryoga.service;
+package com.saviour.poweryoga.serviceImpl;
 
-import com.saviour.poweryoga.dao.UserDAO;
+import com.saviour.poweryoga.daoImpl.UserDAO;
 import com.saviour.poweryoga.model.Users;
+import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 0.0.1
  */
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     @Autowired
     private UserDAO userDao;

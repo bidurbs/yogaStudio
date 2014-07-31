@@ -2,7 +2,7 @@ package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Users;
-import com.saviour.poweryoga.service.UserService;
+import com.saviour.poweryoga.serviceImpl.UserService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;

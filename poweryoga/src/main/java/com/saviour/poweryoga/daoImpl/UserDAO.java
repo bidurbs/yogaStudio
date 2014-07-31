@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.saviour.poweryoga.dao;
+package com.saviour.poweryoga.daoImpl;
 
+import com.saviour.poweryoga.daoI.IUserDAO;
 import com.saviour.poweryoga.model.Users;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class UserDAO {
+public class UserDAO implements IUserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
