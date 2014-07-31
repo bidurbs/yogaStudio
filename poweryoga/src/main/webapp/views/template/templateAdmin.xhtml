@@ -40,19 +40,18 @@
         </ui:insert>
         <!-- ======================================================================================================================== -->	
         <div id="mainBody" class="container">
-            
+
             <div class="row">
                 <ui:insert name="sidebar">
                     <ui:include src="sections/sidebar2.xhtml"/>
                 </ui:insert>
 
                 <div class="span9">
+                    <ui:insert name="successFailure"/>
                     <ui:insert name="content"/>
-                    
+
                 </div>
             </div>
-
-            <hr class="soft"/>
             <ui:insert name="footer">
                 <ui:include src="sections/footer2.xhtml"/>
             </ui:insert>
