@@ -27,9 +27,22 @@ public class ProductService {
     public void saveProduct(Product product) {
         productDao.save(product);
     }
-
+    
+    @Transactional
     public List<Product> getAllProducts() {
-        return productDao.getAllProducts();
+        return productDao.getAll();
+    }
+
+    public void updateProduct(Product product) {
+        productDao.update(product);
+    }
+
+    public Product getProductById(int Id) {
+        return productDao.get(Id);
+    }
+
+    public void deleteProduct(int Id) {
+        productDao.delete(Id);
     }
 
 }

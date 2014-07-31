@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -19,11 +20,20 @@ import org.springframework.stereotype.Repository;
  * @version 0.0.1
  */
 @Repository
+@Transactional
 public class ProductDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
     private Session session;
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void save(Product product) {
         sessionFactory.getCurrentSession().save(product);
@@ -37,8 +47,26 @@ public class ProductDAO {
         this.session = session;
     }
 
-    public List<Product> getAllProducts() {
-        Query q = sessionFactory.getCurrentSession().createQuery("from PRODUCT");
+    public List<Product> getAll() {
+        Query q = sessionFactory.getCurrentSession().createQuery("from Product");
         return q.list();
     }
+
+    public void add(Product product) {
+        sessionFactory.getCurrentSession().persist(product);
+    }
+
+    public Product get(int id) {
+        return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
+    }
+
+    public void update(Product p) {
+        sessionFactory.getCurrentSession().merge(p);
+    }
+
+    public void delete(int id) {
+        Product p = get(id);
+        sessionFactory.getCurrentSession().delete(p);
+    }
+
 }

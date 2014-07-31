@@ -30,12 +30,26 @@ public class ProductController implements Serializable {
 
     public ProductController() {
         product = new Product();
-        //listProducts();
     }
 
     public String saveProduct() {
         ProductService.saveProduct(product);
-        return "product";
+        return ("/views/admin/product.xhtml?faces-redirect=true");
+    }
+
+    public String updateProduct() {
+        ProductService.updateProduct(product);
+        return ("/views/admin/product.xhtml?faces-redirect=true");
+    }
+
+    public String editProduct(int Id) {
+        product = ProductService.getProductById(Id);
+        return "editProduct";
+    }
+
+    public String deleteProduct(int Id) {
+        ProductService.deleteProduct(Id);
+        return ("/views/admin/product.xhtml?faces-redirect=true");
     }
 
     public Product getProduct() {
@@ -45,11 +59,9 @@ public class ProductController implements Serializable {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
-    public void listProducts(){
-        listOfProducts = ProductService.getAllProducts();}
 
     public List<Product> getListOfProducts() {
+        listOfProducts = ProductService.getAllProducts();
         return listOfProducts;
     }
 
