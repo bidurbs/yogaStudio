@@ -7,7 +7,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring-beans.xml</param-value>
-    </context-param>
+    </context-param> 
   
     <listener>
         <listener-class>
@@ -31,8 +31,7 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
-    </servlet-mapping>
-    
+    </servlet-mapping>    
     <session-config>
         <session-timeout>
             30

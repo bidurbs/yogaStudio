@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author TalakB 
+ * @author TalakB
  * @version 1.0.0
  */
 @Entity
@@ -25,7 +25,6 @@ public class Users implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private long userId;
 
     @Column(name = "FirstName")
@@ -54,8 +53,8 @@ public class Users implements Serializable {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Role role;
-    
-     @ManyToMany
+
+    @ManyToMany
     private List<Section> sections = new ArrayList<>();
 
     public Users() {
@@ -148,7 +147,5 @@ public class Users implements Serializable {
     public void setSections(List<Section> sections) {
         this.sections = sections;
     }
-    
-    
 
 }

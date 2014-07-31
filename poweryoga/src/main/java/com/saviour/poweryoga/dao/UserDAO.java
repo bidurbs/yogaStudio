@@ -11,33 +11,54 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Md Mojahidul Islam
- * @version 0.0.1
+ * @author  TalakB
+ * @version 0.0.2
  */
 @Repository
+@Transactional
 public class UserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
     private Session session;
 
-    public void save(Users user) {
-        sessionFactory.getCurrentSession().save(user);
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public void save(Users user) {
+        sessionFactory.getCurrentSession().save(user);
+
+    }
+
+    /**
+     * Authenticate the user with username and password.
+     *
+     * @param user
+     * @return
+     */
     public Users authenticatedUser(Users user) {
 
-        Query query = session.getNamedQuery("authenticateUser");
-        query.setParameter("uname", user.getEmail());
+        Query query = sessionFactory.getCurrentSession()
+                .createQuery("from Users u where u.email = :uemail and u.password= :upass");
+        query.setParameter("uemail", user.getEmail());
         query.setParameter("upass", user.getPassword());
 
-        if (!query.list().isEmpty()) {
-            Users userAuthenticated = (Users) query.list();
+        if (query.uniqueResult() != null) {
+            Users userAuthenticated = (Users) query.uniqueResult();
             return userAuthenticated;
         }
+        
+        //user not found or email and password error 
         return null;
     }
 

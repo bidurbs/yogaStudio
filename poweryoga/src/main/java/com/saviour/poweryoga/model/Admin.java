@@ -3,7 +3,6 @@ package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**

@@ -52,21 +52,28 @@ public class UserController implements Serializable {
                 // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
-                return "adminHome";
+//                FacesContext.getCurrentInstance()
+//                        .getExternalContext()..redirect("views/admin/adminHome");
+//                return;
+//            //    FacesContext context = FacesContext.getCurrentInstance();
+                return ("/views/admin/adminHome.xhtml?faces-redirect=true");
             } //faculty user 
             else if (userRoleCode == ROLE_FACULTY_CODE) {
                 // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
-                return "facultyHome";
+                return ("/views/faculty/facultyHome.xhtml?faces-redirect=true");
+
             } //vedor user
             else if (userRoleCode == ROLE_CUSTOMER_CODE) {
                 // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
-                return "customerHome";
+                return ("/views/customer/customerHome.xhtml?faces-redirect=true");
+
             }
         }
+        //username/password error 
         return null;
     }
 

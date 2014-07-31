@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.service;
 
 import com.saviour.poweryoga.dao.UserDAO;
@@ -26,7 +21,9 @@ public class UserService {
     //for password encription 
     private PasswordService encpass = new PasswordService();
 
-    @Transactional
+    
+    
+    
     public void save(Users user) {
         userDao.save(user);
     }
@@ -38,9 +35,6 @@ public class UserService {
      * @return userAuthenticated or null
      */
     public Users authenticateUser(Users user) {
-        
-        
-
         Users userAuthenticated = userDao.authenticatedUser(user);
         return userAuthenticated;
     }
