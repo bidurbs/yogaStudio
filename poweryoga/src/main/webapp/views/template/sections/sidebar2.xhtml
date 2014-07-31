@@ -1,4 +1,7 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <div id="sidebar" class="span3">
         <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
             <li><a> </a></li>
@@ -6,7 +9,8 @@
             <li><a href="#"> CUSTOMER MGMT </a></li>
             <li><a href="/products">FACULTY MGMT</a></li>
             <li><a href="/products">COURSE MGNT</a></li>
-            <li><a href="../../admin/product.xhtml">PRODUCT MANAGEMENT</a></li>
+            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/product.xhtml">PRODUCT MANAGEMENT</a></li>
+            <!--<h:commandLink action="${facesContext.externalContext.requestContextPath}/views/admin/product.xhtml" value="PRODUCT MANAGEMENT" />-->
             <li><a href="/products">ORDER HISTORY</a></li>
         </ul>
     </div>
