@@ -27,8 +27,7 @@
                 <div class="well">
                     <h:dataTable value="#{CourseController.listOfCourses}" var="item" class="table table-bordered">
                         <h:column>
-                            <f:facet name="header">Description</f:facet>
-                            #{item.courseName}<br/>
+                            <f:facet name="header">Course Name</f:facet>
                             #{item.courseName}
                         </h:column>
                         <h:column>
@@ -36,7 +35,7 @@
                                 #{item.courseFee}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Quantity</f:facet>
+                            <f:facet name="header">Description</f:facet>
                                 #{item.description}
                         </h:column>
                         <h:column>

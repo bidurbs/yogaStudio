@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
 
@@ -22,10 +21,9 @@
                 </div>
             </ui:define>
             <ui:define name="content">
-                <h3><c:if test="#{not empty SectionController.course or SectionController.course.id eq null}" /> All <c:otherwise> #{SectionController.course.courseName} </c:otherwise> >> Section List</h3>	
+                <h3>#{SectionController.course.courseName} : Section List</h3>	
                 <hr class="soft"/>
-                
-                <h:commandLink action="#{SectionController.addSection(item.id)}" value="Create Section" /> 
+                <a href="addCourse.xhtml">Add Section</a>
                 <div class="well">
                     <h:dataTable value="#{SectionController.listOfSection}" var="item" class="table table-bordered">
                         <h:column>
