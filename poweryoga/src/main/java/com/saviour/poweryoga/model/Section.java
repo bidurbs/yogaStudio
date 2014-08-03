@@ -15,10 +15,10 @@ import javax.persistence.Table;
 /**
  *
  * @author Guest
- * 
+ *
  */
 @Entity
-@Table(name="SECTION")
+@Table(name = "SECTION")
 public class Section implements Serializable {
 
     @Id
@@ -27,14 +27,14 @@ public class Section implements Serializable {
     private String sectionName;
     private int maxNoStudent;
     private int roomNumber;
-    
+
     @OneToOne
     private Semester semester;
-    
+
     @OneToMany
     // @JoinColumn(name = "Course")
     private List<Course> course;
-    
+
     @ManyToMany(mappedBy = "sections")
     private List<Users> users = new ArrayList<>();
 
@@ -88,7 +88,6 @@ public class Section implements Serializable {
     public void setCourse(List<Course> course) {
         this.course = course;
     }
-
 
     public List<Users> getUsers() {
         return users;

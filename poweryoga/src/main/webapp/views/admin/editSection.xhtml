@@ -14,39 +14,41 @@
 
             </ui:define>
             <ui:define name="content">
-                <h3>Create Course</h3>	
+                <h3>Edit Section</h3>	
                 <hr class="soft"/>
                 <div class="well">
                     <h:form class="form-horizontal">
 
                         <div class="control-group">
-                            <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
+                            <label class="control-label" for="sectionName">Section Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName" value="#{CourseController.course.courseName}" />
+                                <h:inputText id="sectionName" value="#{SectionController.section.sectionName}" />
                             </div>
-                            <h:message for="courseName"/>
+                            <h:message for="sectionName"/>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="description">Description <sup>*</sup></label>
+                            <label class="control-label" for="maxNoStudent">Max Student Limit <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputTextarea id="description" value="#{CourseController.course.description}" />
+                                <h:inputText id="maxNoStudent" value="#{SectionController.section.maxNoStudent}" />
                             </div>
-                            <h:message for="description"/>
+                            <h:message for="maxNoStudent"/>
                         </div>
-                        
+
                         <div class="control-group">
-                            <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
+                            <label class="control-label" for="roomNumber">Room Number <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseFee" value="#{CourseController.course.courseFee}" />
+                                <h:inputText id="roomNumber" value="#{SectionController.section.roomNumber}" />
                             </div>
-                            <h:message for="courseFee"/>
+                            <h:message for="roomNumber"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{CourseController.saveCourse()}"/>
-                                <!--<input class="btn btn-large" type="submit" value="Register" />-->
+                                <h:inputHidden id="course" value="#{SectionController.section.course}" />
+                                <h:inputHidden id="sectionId" value="#{SectionController.section.id}" />
+
+                                <h:commandButton class="btn btn-large" value="Save" action="#{SectionController.updateSection()}"/>
                             </div>
                         </div>
                     </h:form>

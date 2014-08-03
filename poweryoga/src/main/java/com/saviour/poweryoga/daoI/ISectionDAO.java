@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.saviour.poweryoga.daoI;
 
-import com.saviour.poweryoga.model.Course;
+import com.saviour.poweryoga.model.Section;
 import java.util.List;
 import org.hibernate.SessionFactory;
 
@@ -14,23 +13,23 @@ import org.hibernate.SessionFactory;
  *
  * @author bidur
  */
-public interface ICourseDAO {
+public interface ISectionDAO {
+
     public SessionFactory getSessionFactory();
 
     public void setSessionFactory(SessionFactory sessionFactory);
 
-    public void save(Course course);
+    public void save(Section course);
 
-    public List<Course> getAll();
+    public List<Section> getAll();
 
-    public void add(Course course);
+    public void add(Section course);
 
-    public Course get(int id);
+    public Section get(int id);
 
-    public void update(Course p);
+    public void update(Section p);
 
     public void delete(int id);
 
-    public Course getSectionByCourseId(int Id);
-    
+    public List<Section> listSectionByCourseId(int Id);
 }
