@@ -40,7 +40,7 @@ public class ProductController implements Serializable {
      */
     public String saveProduct() {
         ProductService.saveProduct(product);
-        return ("/views/admin/product.xhtml?faces-redirect=true");
+        return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
     
     /**
@@ -50,7 +50,7 @@ public class ProductController implements Serializable {
      */
     public String updateProduct() {
         ProductService.updateProduct(product);
-        return ("/views/admin/product.xhtml?faces-redirect=true");
+        return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
     
     /**
@@ -71,7 +71,7 @@ public class ProductController implements Serializable {
      */
     public String deleteProduct(int Id) {
         ProductService.deleteProduct(Id);
-        return ("/views/admin/product.xhtml?faces-redirect=true");
+        return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 
     public Product getProduct() {

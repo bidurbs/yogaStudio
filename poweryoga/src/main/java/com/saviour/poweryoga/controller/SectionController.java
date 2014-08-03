@@ -97,7 +97,7 @@ public class SectionController implements Serializable {
      */
     public String viewSection(int courseId) {
         listOfSection = SectionService.listSectionByCourseId(courseId);
-        return "manageSection";
+        return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
 
     public Course getCourse() {
