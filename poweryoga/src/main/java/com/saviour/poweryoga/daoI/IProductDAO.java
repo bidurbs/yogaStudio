@@ -2,8 +2,6 @@ package com.saviour.poweryoga.daoI;
 
 import com.saviour.poweryoga.model.Product;
 import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 /**

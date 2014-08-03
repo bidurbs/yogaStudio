@@ -6,6 +6,7 @@
 package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Product;
+import com.saviour.poweryoga.serviceI.IProductService;
 import com.saviour.poweryoga.serviceImpl.ProductService;
 import java.io.Serializable;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ProductController implements Serializable {
 
     @Autowired
-    private ProductService ProductService;
+    private IProductService ProductService;
 
     private Product product;
     private List<Product> listOfProducts;

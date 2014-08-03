@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
@@ -20,7 +21,8 @@ import javax.persistence.Table;
  * @version 1.0.0
  */
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", uniqueConstraints=
+           @UniqueConstraint(columnNames = {"email"}))
 public class Users implements Serializable {
 
     @Id
@@ -33,7 +35,7 @@ public class Users implements Serializable {
     @Column(name = "LastName")
     private String lastName;
 
-    @Column(name = "Email", unique = true)
+    @Column(name = "Email")
     private String email;
 
     @Column(name = "Password")

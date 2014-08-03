@@ -5,13 +5,12 @@
  */
 package com.saviour.poweryoga.serviceImpl;
 
-import com.saviour.poweryoga.daoImpl.ProductDAO;
+import com.saviour.poweryoga.daoI.IProductDAO;
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.serviceI.IProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -22,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService implements IProductService {
 
     @Autowired
-    private ProductDAO productDao;
+    private IProductDAO productDao;
 
     
     public void saveProduct(Product product) {

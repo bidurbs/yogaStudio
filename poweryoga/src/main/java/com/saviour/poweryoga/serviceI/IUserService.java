@@ -8,7 +8,7 @@ import com.saviour.poweryoga.model.Users;
  */
 public interface IUserService {
 
-    public void save(Users user);
+    public Users save(Users user);
 
     public Users authenticateUser(Users user);
 

@@ -6,12 +6,11 @@
         <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
             <li><a> </a></li>
             <li><a> </a></li>
-            <li><a href="#"> CUSTOMER MGMT </a></li>
-            <li><a href="/products">FACULTY MGMT</a></li>
-            <li><a href="/products">COURSE MGNT</a></li>
-            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/product.xhtml">PRODUCT MANAGEMENT</a></li>
-            <!--<h:commandLink action="${facesContext.externalContext.requestContextPath}/views/admin/product.xhtml" value="PRODUCT MANAGEMENT" />-->
-            <li><a href="/products">ORDER HISTORY</a></li>
+            <li><a href="#"> CUSTOMER MGMT (Optional) </a></li>
+            <li><a href="/products">Faculty Management</a></li>
+            <li><a href="/products">Course Management</a></li>            
+            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/adminManageSection.xhtml?faces-redirect=true">Section Management</a></li>
+            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/product.xhtml?faces-redirect=true">Product Management</a></li>
         </ul>
     </div>
 </html>
