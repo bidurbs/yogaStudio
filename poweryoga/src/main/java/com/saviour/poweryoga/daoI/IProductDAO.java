@@ -25,4 +25,6 @@ public interface IProductDAO {
     public void update(Product p);
 
     public void delete(int id);
+
+    public List<Product> searchProduct(String name);
 }

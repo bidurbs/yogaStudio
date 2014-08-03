@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class ProductDAO implements IProductDAO  {
+public class ProductDAO implements IProductDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -76,6 +76,15 @@ public class ProductDAO implements IProductDAO  {
     public void delete(int id) {
         Product p = get(id);
         sessionFactory.getCurrentSession().delete(p);
+    }
+
+    public List<Product> searchProduct(String name) {
+        Query query = sessionFactory.getCurrentSession().getNamedQuery("Product.searchProduct");
+        String param = "%" + name + "%";
+        query.setParameter("pname", param);
+
+        List<Product> products = query.list();
+        return products;
     }
 
 }

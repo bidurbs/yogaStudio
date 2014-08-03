@@ -1,11 +1,14 @@
 package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.daoI.IUserDAO;
+import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @author TalakB
  * @version 0.0.1
  */
+@Transactional
 @Service
 public class UserService implements IUserService {
 
@@ -26,14 +30,14 @@ public class UserService implements IUserService {
      * Save the user and return Users object if it is saved successfully.
      *
      * @param user
-     * @return 
+     * @return
      */
     @Override
-    public Users save(Users user) {
+    public Users saveUser(Users user) {
 
         boolean userSaved = false;
         try {
-            userDao.save(user);
+            userDao.saveUser(user);
             userSaved = true;
         } catch (Exception ex) {
         }
@@ -42,6 +46,23 @@ public class UserService implements IUserService {
         } else {
             return null;
         }
+    }
+
+    public List<Customer> findAllCustomer() {
+        return userDao.findAllCustomer();
+    }
+
+    public Customer findCustomerById(long customerId) {
+        return userDao.findCustomerById(customerId);
+    }
+
+    @Override
+    public Customer findCustomerByEmail(String email) {
+        return userDao.findCustomerByEmail(email);
+    }
+
+    public void updateUser(Users user) {
+        userDao.updateUser(user);
     }
 
     /**

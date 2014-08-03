@@ -11,6 +11,7 @@ import com.saviour.poweryoga.serviceI.IProductService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -23,12 +24,12 @@ public class ProductService implements IProductService {
     @Autowired
     private IProductDAO productDao;
 
-    
+    @Transactional
     public void saveProduct(Product product) {
         productDao.save(product);
     }
-    
-    
+
+    @Transactional
     public List<Product> getAllProducts() {
         return productDao.getAll();
     }
@@ -43,6 +44,16 @@ public class ProductService implements IProductService {
 
     public void deleteProduct(int Id) {
         productDao.delete(Id);
+    }
+
+    /**
+     * This method will return list of product matched with the parameter name
+     *
+     * @param name Name of the product
+     * @return Product List
+     */
+    public List<Product> searchProduct(String name) {
+        return productDao.searchProduct(name);
     }
 
 }
