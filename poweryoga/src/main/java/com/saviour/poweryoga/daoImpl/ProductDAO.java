@@ -28,14 +28,17 @@ public class ProductDAO implements IProductDAO  {
     private SessionFactory sessionFactory;
     private Session session;
 
+    @Override
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
+    @Override
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public void save(Product product) {
         sessionFactory.getCurrentSession().save(product);
     }
@@ -48,23 +51,28 @@ public class ProductDAO implements IProductDAO  {
         this.session = session;
     }
 
+    @Override
     public List<Product> getAll() {
         Query q = sessionFactory.getCurrentSession().createQuery("from Product");
         return q.list();
     }
 
+    @Override
     public void add(Product product) {
         sessionFactory.getCurrentSession().persist(product);
     }
 
+    @Override
     public Product get(int id) {
         return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
     }
 
+    @Override
     public void update(Product p) {
         sessionFactory.getCurrentSession().merge(p);
     }
 
+    @Override
     public void delete(int id) {
         Product p = get(id);
         sessionFactory.getCurrentSession().delete(p);
