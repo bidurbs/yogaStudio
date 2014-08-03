@@ -22,7 +22,7 @@
                         <div class="control-group">
                             <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName" value="#{courseController.course.courseName}" />
+                                <h:inputText id="courseName" value="#{CourseController.course.courseName}" />
                             </div>
                             <h:message for="courseName"/>
                         </div>
@@ -30,7 +30,7 @@
                         <div class="control-group">
                             <label class="control-label" for="description">Description <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputTextarea id="description" value="#{courseController.product.description}" />
+                                <h:inputTextarea id="description" value="#{CourseController.product.description}" />
                             </div>
                             <h:message for="description"/>
                         </div>
@@ -38,14 +38,14 @@
                         <div class="control-group">
                             <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseFee" value="#{courseController.course.courseFee}" />
+                                <h:inputText id="courseFee" value="#{CourseController.course.courseFee}" />
                             </div>
                             <h:message for="courseFee"/>
                         </div>
                         
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{courseController.saveCourse()}"/>
+                                <h:commandButton class="btn btn-large" value="Save" action="#{CourseController.saveCourse()}"/>
                                 <!--<input class="btn btn-large" type="submit" value="Register" />-->
                             </div>
                         </div>
