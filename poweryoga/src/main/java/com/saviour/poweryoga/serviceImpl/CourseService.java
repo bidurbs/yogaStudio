@@ -44,5 +44,4 @@ public class CourseService implements ICourseService {
     public void deleteCourse(int Id) {
         courseDao.delete(Id);
     }
-
 }

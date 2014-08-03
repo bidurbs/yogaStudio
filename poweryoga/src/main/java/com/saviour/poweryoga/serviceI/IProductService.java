@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author TalakB
+ * @author bidur
  */
 public interface IProductService {
 

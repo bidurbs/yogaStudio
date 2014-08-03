@@ -39,7 +39,7 @@ public class CourseController implements Serializable {
      */
     public String saveCourse() {
         CourseService.saveCourse(course);
-        return ("/views/admin/course.xhtml?faces-redirect=true");
+        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
     
     /**
@@ -49,7 +49,7 @@ public class CourseController implements Serializable {
      */
     public String updateCourse() {
         CourseService.updateCourse(course);
-        return ("/views/admin/course.xhtml?faces-redirect=true");
+        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
     
     /**
@@ -70,7 +70,7 @@ public class CourseController implements Serializable {
      */
     public String deleteCourse(int Id) {
         CourseService.deleteCourse(Id);
-        return ("/views/admin/course.xhtml?faces-redirect=true");
+        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
 
     public Course getCourse() {

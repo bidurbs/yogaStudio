@@ -5,8 +5,8 @@
  */
 package com.saviour.poweryoga.daoImpl;
 
-import com.saviour.poweryoga.daoI.ICourseDAO;
-import com.saviour.poweryoga.model.Course;
+import com.saviour.poweryoga.daoI.ISectionDAO;
+import com.saviour.poweryoga.model.Section;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class CourseDAO implements ICourseDAO {
+public class SectionDAO implements ISectionDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -36,8 +36,8 @@ public class CourseDAO implements ICourseDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    public void save(Course course) {
-        sessionFactory.getCurrentSession().save(course);
+    public void save(Section section) {
+        sessionFactory.getCurrentSession().save(section);
     }
 
     public Session getSession() {
@@ -48,31 +48,32 @@ public class CourseDAO implements ICourseDAO {
         this.session = session;
     }
 
-    public List<Course> getAll() {
-        Query q = sessionFactory.getCurrentSession().createQuery("from Course");
+    public List<Section> getAll() {
+        Query q = sessionFactory.getCurrentSession().createQuery("from Section");
         return q.list();
     }
 
-    public void add(Course course) {
-        sessionFactory.getCurrentSession().persist(course);
+    public void add(Section section) {
+        sessionFactory.getCurrentSession().persist(section);
     }
 
-    public Course get(int id) {
-        return (Course) sessionFactory.getCurrentSession().get(Course.class, id);
+    public Section get(int id) {
+        return (Section) sessionFactory.getCurrentSession().get(Section.class, id);
     }
 
-    public void update(Course p) {
+    public void update(Section p) {
         sessionFactory.getCurrentSession().merge(p);
     }
 
     public void delete(int id) {
-        Course p = get(id);
+        Section p = get(id);
         sessionFactory.getCurrentSession().delete(p);
     }
-
-    @Override
-    public Course getSectionByCourseId(int Id) {
-        return null;
+    
+    
+    public List<Section> listSectionByCourseId(int Id) {
+        Query q = sessionFactory.getCurrentSession().createQuery("from Section");
+        return q.list();
     }
 
 }
