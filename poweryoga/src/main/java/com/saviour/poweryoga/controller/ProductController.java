@@ -32,22 +32,43 @@ public class ProductController implements Serializable {
     public ProductController() {
         product = new Product();
     }
-
+    
+    /**
+     * Save Product data
+     *
+     * @return 
+     */
     public String saveProduct() {
         ProductService.saveProduct(product);
         return ("/views/admin/product.xhtml?faces-redirect=true");
     }
-
+    
+    /**
+     * Display update Product data page
+     *
+     * @return 
+     */
     public String updateProduct() {
         ProductService.updateProduct(product);
         return ("/views/admin/product.xhtml?faces-redirect=true");
     }
-
+    
+    /**
+     * Update Product data
+     * @param Id
+     * @return 
+     */
     public String editProduct(int Id) {
         product = ProductService.getProductById(Id);
         return "editProduct";
     }
-
+    
+    /**
+     * Delete Product entry
+     *
+     * @param Id
+     * @return 
+     */
     public String deleteProduct(int Id) {
         ProductService.deleteProduct(Id);
         return ("/views/admin/product.xhtml?faces-redirect=true");
