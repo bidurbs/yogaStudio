@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="../template/templateAdmin.xhtml">
+            <ui:define name="successFailure">
+
+            </ui:define>
+            <ui:define name="content">
+                <h3>Create Course</h3>	
+                <hr class="soft"/>
+                <div class="well">
+                    <h:form class="form-horizontal">
+
+                        <div class="control-group">
+                            <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="courseName" value="#{courseController.course.courseName}" />
+                            </div>
+                            <h:message for="courseName"/>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="description">Description <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputTextarea id="description" value="#{courseController.product.description}" />
+                            </div>
+                            <h:message for="description"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="courseFee" value="#{courseController.course.courseFee}" />
+                            </div>
+                            <h:message for="courseFee"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="controls">
+                                <h:commandButton class="btn btn-large" value="Save" action="#{courseController.saveCourse()}"/>
+                                <!--<input class="btn btn-large" type="submit" value="Register" />-->
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
