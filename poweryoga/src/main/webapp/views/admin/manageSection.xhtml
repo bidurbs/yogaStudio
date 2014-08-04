@@ -23,7 +23,7 @@
             <ui:define name="content">
                 <h3>#{SectionController.course.courseName} : Section List</h3>	
                 <hr class="soft"/>
-                <a href="addCourse.xhtml">Add Section</a>
+                <a href="addSection.xhtml">Add Section</a>
                 <div class="well">
                     <h:dataTable value="#{SectionController.listOfSection}" var="item" class="table table-bordered">
                         <h:column>
@@ -41,7 +41,7 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="#{SectionController.editSection(item.id)}" value="Edit" />  <h:commandLink action="#{SectionController.deleteSection(item.id)}" value="Delete"/>
+                                <h:commandLink action="#{SectionController.editSection(item.id)}" value="Edit" /> | <h:commandLink action="#{SectionController.deleteSection(item.id)}" value="Delete"/>
                             </h:form>
                         </h:column>
                     </h:dataTable>

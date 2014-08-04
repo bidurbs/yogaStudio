@@ -26,14 +26,17 @@ public class SectionController implements Serializable {
 
     @Autowired
     private ISectionService SectionService;
-    private ICourseService CourseService;
 
     private Course course;
     private Section section;
     private List<Section> listOfSection;
+    
+    private List<Course> listOfCourse;
+    
 
     public SectionController() {
         section = new Section();
+        course = new Course();
     }
 
     /**
@@ -65,17 +68,6 @@ public class SectionController implements Serializable {
     public String editSection(int Id) {
         section = SectionService.getSectionById(Id);
         return "editSection";
-    }
-
-    /**
-     * Update Section data
-     *
-     * @param courseId
-     * @return
-     */
-    public String addSection(int courseId) {
-        course = CourseService.getCourseById(courseId);
-        return "addSection";
     }
 
     /**
@@ -123,5 +115,16 @@ public class SectionController implements Serializable {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    public List<Course> getListOfCourse() {
+        listOfCourse = SectionService.getAllCourses();
+        return listOfCourse;
+    }
+
+    public void setListOfCourse(List<Course> listOfCourse) {
+        this.listOfCourse = listOfCourse;
+    }
+    
+    
 
 }

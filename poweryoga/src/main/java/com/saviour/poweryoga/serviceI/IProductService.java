@@ -19,4 +19,6 @@ public interface IProductService {
 
     public void deleteProduct(int Id);
 
+    public List<Product> searchProduct(String name);
+
 }

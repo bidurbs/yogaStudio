@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -20,6 +22,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="PRODUCT")
+@NamedQueries(
+@NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname")
+)
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

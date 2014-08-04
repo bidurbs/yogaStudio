@@ -5,7 +5,9 @@
  */
 package com.saviour.poweryoga.serviceImpl;
 
+import com.saviour.poweryoga.daoI.ICourseDAO;
 import com.saviour.poweryoga.daoI.ISectionDAO;
+import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.ISectionService;
 import java.util.List;
@@ -22,6 +24,10 @@ public class SectionService implements ISectionService {
 
     @Autowired
     private ISectionDAO sectionDao;
+    
+    @Autowired
+    private ICourseDAO courseDao;
+    
 
     public void saveSection(Section section) {
         sectionDao.save(section);
@@ -45,6 +51,10 @@ public class SectionService implements ISectionService {
 
     public List<Section> listSectionByCourseId(int Id) {
         return sectionDao.listSectionByCourseId(Id);
+    }
+    
+    public List<Course> getAllCourses() {
+        return courseDao.getAll();
     }
 
 }

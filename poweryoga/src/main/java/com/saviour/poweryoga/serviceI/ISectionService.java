@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.serviceI;
 
+import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
 import java.util.List;
 
@@ -25,5 +26,7 @@ public interface ISectionService {
     public void deleteSection(int Id);
 
     public List<Section> listSectionByCourseId(int Id);
+
+    public List<Course> getAllCourses();
 
 }
