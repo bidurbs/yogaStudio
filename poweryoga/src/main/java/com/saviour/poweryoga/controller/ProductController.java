@@ -7,7 +7,6 @@ package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.serviceI.IProductService;
-import com.saviour.poweryoga.serviceImpl.ProductService;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;

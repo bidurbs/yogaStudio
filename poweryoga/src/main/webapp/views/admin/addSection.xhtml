@@ -44,6 +44,18 @@
                         </div>
 
                         <div class="control-group">
+                            <label class="control-label" for="course">Course <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu value="#{SectionController.section.course}">
+                                    <ui:repeat value="#{SectionController.listOfCourse}" var="item">
+                                        <f:selectItem itemValue="#{item}" itemLabel="#{item.courseName}" />
+                                    </ui:repeat>
+                                </h:selectOneMenu>
+                            </div>
+                            <h:message for="course"/>
+                        </div>
+
+                        <div class="control-group">
                             <div class="controls">
                                 <h:inputHidden id="course" value="#{SectionController.section.course}" />
                                 <h:commandButton class="btn btn-large" value="Save" action="#{SectionController.saveSection()}"/>
