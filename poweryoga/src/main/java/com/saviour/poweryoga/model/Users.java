@@ -27,7 +27,8 @@ import javax.persistence.UniqueConstraint;
            @UniqueConstraint(columnNames = {"email"}))
 @NamedQueries({
     @NamedQuery(name = "Users.findAllCustomer", query = "from Customer c"),
-    @NamedQuery(name = "Users.findCustomerByEmail", query = "from Customer c where c.email=:email")
+    @NamedQuery(name = "Users.findCustomerByEmail", query = "from Customer c where c.email=:email"),
+	 @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass")
 })
 public class Users implements Serializable {
 

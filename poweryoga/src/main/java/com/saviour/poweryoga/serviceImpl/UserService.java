@@ -1,11 +1,14 @@
 package com.saviour.poweryoga.serviceImpl;
 
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.daoI.IUserDAO;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserDAO userDao;
+	
+	 @Autowired
+    private CRUDFacadeImpl crudfacade; 
 
     //for password encription 
     private PasswordService encpass = new PasswordService();
@@ -37,7 +43,7 @@ public class UserService implements IUserService {
 
         boolean userSaved = false;
         try {
-            userDao.saveUser(user);
+            crudfacade.create(user);
             userSaved = true;
         } catch (Exception ex) {
         }
@@ -73,8 +79,13 @@ public class UserService implements IUserService {
      */
     @Override
     public Users authenticateUser(Users user) {
-        Users userAuthenticated = userDao.authenticatedUser(user);
-        return userAuthenticated;
+        Map<String, String> paramaters = new HashMap<>(2);
+        paramaters.put("uemail", user.getEmail());
+        paramaters.put("upass", user.getPassword());
+
+        List authUser = crudfacade.findWithNamedQuery("User.authenticateUser", paramaters);
+
+        return (Users) authUser.get(0);
     }
 
 }

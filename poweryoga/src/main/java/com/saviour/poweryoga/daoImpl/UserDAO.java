@@ -5,10 +5,13 @@
  */
 package com.saviour.poweryoga.daoImpl;
 
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.daoI.IUserDAO;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Users;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,20 +33,27 @@ public class UserDAO implements IUserDAO {
     private SessionFactory sessionFactory;
     private Session session;
 
+    private CRUDFacadeImpl crudfacade;
+
+    public UserDAO() {
+        crudfacade = new CRUDFacadeImpl();
+    }
+
+    @Override
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
+    @Override
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public void saveUser(Users user) {
-        sessionFactory.getCurrentSession().save(user);
-    }
+        crudfacade.create(user);
 
-    public void updateUser(Users user) {
-        sessionFactory.getCurrentSession().update(user);
+        // sessionFactory.getCurrentSession().save(user);
     }
 
     public List<Customer> findAllCustomer() {
@@ -69,26 +79,43 @@ public class UserDAO implements IUserDAO {
 
     public Users authenticatedUser(Users user) {
 
-        Query query = sessionFactory.getCurrentSession()
-                .createQuery("from Users u where u.email = :uemail and u.password= :upass");
-        query.setParameter("uemail", user.getEmail());
-        query.setParameter("upass", user.getPassword());
+        Map<String, String> paramaters = new HashMap<>(2);
+        paramaters.put("uemail", user.getEmail());
+        paramaters.put("upass", user.getPassword());
 
-        if (query.uniqueResult() != null) {
-            Users userAuthenticated = (Users) query.uniqueResult();
-            return userAuthenticated;
-        }
+        List authUser = crudfacade.findWithNamedQuery("User.authenticateUser", paramaters, 1);
 
-        //user not found or email and password error 
-        return null;
+        return (Users) authUser.get(0);
+
+//        Query query = sessionFactory.getCurrentSession()
+//                .createQuery("from Users u where u.email = :uemail and u.password= :upass");
+//        query.setParameter("uemail", user.getEmail());
+//        query.setParameter("upass", user.getPassword());
+//
+//        if (query.uniqueResult() != null) {
+//            Users userAuthenticated = (Users) query.uniqueResult();
+//            return userAuthenticated;
+//        }
+//
+//        //user not found or email and password error 
+//        return null;
     }
 
+    @Override
     public Session getSession() {
         return sessionFactory.openSession();
     }
 
+    @Override
     public void setSession(Session session) {
         this.session = session;
+    }
+
+ 
+
+    @Override
+    public void updateUser(Users user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
