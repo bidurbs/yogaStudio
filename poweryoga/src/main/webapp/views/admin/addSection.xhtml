@@ -47,9 +47,8 @@
                             <label class="control-label" for="course">Course <sup>*</sup></label>
                             <div class="controls">
                                 <h:selectOneMenu value="#{SectionController.section.course}">
-                                    <ui:repeat value="#{SectionController.listOfCourse}" var="item">
-                                        <f:selectItem itemValue="#{item}" itemLabel="#{item.courseName}" />
-                                    </ui:repeat>
+                                    <f:selectItems value="#{SectionController.listOfCourse}" var="item"
+                                                   itemLabel="#{item.courseName}" itemValue="#{item}" />
                                 </h:selectOneMenu>
                             </div>
                             <h:message for="course"/>
