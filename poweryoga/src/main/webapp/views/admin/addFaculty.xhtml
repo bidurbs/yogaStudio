@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="../template/templateAdmin.xhtml">
+            <ui:define name="successFailure">
+
+            </ui:define>
+            <ui:define name="content">
+                <h3>Create Faculty</h3>	
+                <hr class="soft"/>
+                <div class="well">
+                    <h:form class="form-horizontal">
+
+                        <div class="control-group">
+                            <label class="control-label" for="firstname">First Name<sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="firstName" value="#{FacultyController.faculty.firstName}"/>
+                            </div>
+                            <h:message for="firstName"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="firstname">Last Name<sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="lastName" value="#{FacultyController.faculty.lastName}"/>
+                            </div>
+                            <h:message for="lastName"/>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="password">Password <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputSecret id="password" value="#{FacultyController.faculty.password}" />
+                            </div>
+                            <h:message for="password"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="phone">Phone <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="phone" value="#{FacultyController.faculty.phone}" />
+                            </div>
+                            <h:message for="phone"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="street">Street <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="street" value="#{FacultyController.faculty.street}" />
+                            </div>
+                            <h:message for="street"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="city">City <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="city" value="#{FacultyController.faculty.city}" />   
+                            </div>
+                            <h:message for="city"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="state">State <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="state" value="#{FacultyController.faculty.state}" />   
+                            </div>
+                            <h:message for="state"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="zipcode"> Zip Code <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="zip" value="#{FacultyController.faculty.zip}" />   
+                            </div>
+                            <h:message for="zip"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="controls">
+                                <h:commandButton class="btn btn-large" value="Save" action="#{FacultyController.saveFaculty()}"/>
+                                <!--<input class="btn btn-large" type="submit" value="Register" />-->
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

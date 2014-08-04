@@ -46,6 +46,9 @@ public class Users implements Serializable {
 
     @Column(name = "Street")
     private String Street;
+    
+    @Column(name ="City")
+    private String City;
 
     @Column(name = "State")
     private String state;
@@ -118,6 +121,14 @@ public class Users implements Serializable {
         this.Street = Street;
     }
 
+    public String getCity(){
+        return City;
+    }
+    
+    public void setCity(String City){
+        this.City = City;
+    }
+    
     public String getState() {
         return state;
     }
