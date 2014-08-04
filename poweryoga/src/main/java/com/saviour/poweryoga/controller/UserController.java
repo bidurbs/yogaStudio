@@ -32,6 +32,10 @@ public class UserController implements Serializable {
     private static final int ROLE_ADMIN_CODE = 1;
     private static final int ROLE_FACULTY_CODE = 2;
     private static final int ROLE_CUSTOMER_CODE = 3;
+    
+    private boolean isAdmin;
+    private boolean isFaculty;
+    private boolean isCustomer;
 
     public UserController() {
         user = new Users();
@@ -45,6 +49,40 @@ public class UserController implements Serializable {
     public void setUser(Users user) {
         this.user = user;
     }
+
+    public HttpSession getActiveSession() {
+        return activeSession;
+    }
+
+    public void setActiveSession(HttpSession activeSession) {
+        this.activeSession = activeSession;
+    }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isIsFaculty() {
+        return isFaculty;
+    }
+
+    public void setIsFaculty(boolean isFaculty) {
+        this.isFaculty = isFaculty;
+    }
+
+    public boolean isIsCustomer() {
+        return isCustomer;
+    }
+
+    public void setIsCustomer(boolean isCustomer) {
+        this.isCustomer = isCustomer;
+    }
+    
+    
 
     /**
      * Authenticate user and redirect to the respective home page based on role.
@@ -86,15 +124,14 @@ public class UserController implements Serializable {
     }
 
     /**
-     * Save userID and firstname on session
+     * Save userID and first name on session
      *
      * @param user
      */
     public void setUserSessionData(Users user) {
         
         activeSession = (HttpSession) FacesContext
-            .getCurrentInstance().getExternalContext().getSession(true);
-        
+            .getCurrentInstance().getExternalContext().getSession(true);        
         activeSession.setAttribute("loggedUserId", user.getUserId());
         activeSession.setAttribute("loggedUserFname", user.getFirstName());
     }
