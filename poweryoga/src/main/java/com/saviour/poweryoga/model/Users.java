@@ -52,12 +52,9 @@ public class Users implements Serializable {
     private String phone;
 
     @Column(name = "Street")
-    private String Street;
+    private String street;
     
     @Column(name ="City")
-    private String City;
-
-    @Column(name = "City")
     private String city;
 
     @Column(name = "State")
@@ -84,7 +81,7 @@ public class Users implements Serializable {
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.Street = Street;
+        this.street = Street;
         this.state = state;
         this.city = city;
         this.country = country;
@@ -141,19 +138,19 @@ public class Users implements Serializable {
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
-    public void setStreet(String Street) {
-        this.Street = Street;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCity(){
-        return City;
+        return city;
     }
     
     public void setCity(String City){
-        this.City = City;
+        this.city = City;
     }
     
     public String getState() {
@@ -195,13 +192,4 @@ public class Users implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
 }
