@@ -1,16 +1,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <div id="sidebar" class="span3">
-        <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
-            <li><a> </a></li>
-            <li><a> </a></li>
-            <li><a href="#"> CUSTOMER MGMT (Optional) </a></li>
-            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageFaculty.xhtml?faces-redirect=true">Faculty Management</a></li>
-            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageCourse.xhtml?faces-redirect=true">Course Management</a></li>            
-            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageSection.xhtml?faces-redirect=true">Section Management</a></li>
-            <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageProduct.xhtml?faces-redirect=true">Product Management</a></li>
-        </ul>
-    </div>
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:body>
+        <h:form>
+            <div id="sidebar" class="span3">
+                <br class="clr"/>
+                <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
+                    <li><a href="#"> CUSTOMER MGMT (Optional) </a></li>
+                    <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageFaculty.xhtml?faces-redirect=true">Faculty Management</a></li>
+                    <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageCourse.xhtml?faces-redirect=true">Course Management</a></li>            
+                    <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageSection.xhtml?faces-redirect=true">Section Management</a></li>
+                    <li><a href="${facesContext.externalContext.requestContextPath}/views/admin/manageProduct.xhtml?faces-redirect=true">Product Management</a></li>
+                </ul>
+            </div>
+        </h:form>
+    </h:body>
 </html>
