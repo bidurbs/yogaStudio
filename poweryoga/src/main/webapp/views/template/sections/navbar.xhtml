@@ -15,7 +15,8 @@
                         <ul class="nav">
                             <li class="active"><a href="${facesContext.externalContext.requestContextPath}">Home</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/course.xhtml">Course</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/product.xhtml">Products</a></li>
+                            <!--<li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/product.xhtml">Products</a></li>-->
+                            <li class=""><h:form> <h:commandLink action="#{productSearchController.displayProducts()}" value="Products"/></h:form></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/contact.xhtml">Contact</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
 
