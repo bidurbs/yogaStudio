@@ -3,6 +3,7 @@ package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Faculty;
+import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import java.util.List;
@@ -46,6 +47,9 @@ public class FacultyService implements IFacultyService {
     
     @Override
     public void saveFaculty(Faculty faculty) {
+        //set faculty role 
+       
+       
         crudfacade.create(faculty);
 
     }
