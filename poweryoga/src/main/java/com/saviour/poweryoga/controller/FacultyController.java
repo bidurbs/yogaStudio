@@ -12,6 +12,7 @@ import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.ISectionService;
 import com.saviour.poweryoga.serviceImpl.RoleService;
+import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,10 @@ public class FacultyController implements Serializable {
 
     private Long selectedSectionId;
 
+    private String errorMsg = null;
+
+    private String successMsg = null;
+
     public FacultyController() {
         faculty = new Faculty();
     }
@@ -74,16 +79,24 @@ public class FacultyController implements Serializable {
      */
     public String saveFaculty() {
 
-        Section sectionsAssigned = SectionService.getSectionById(selectedSectionId);
-        sectionList.add(sectionsAssigned);
-        faculty.setSections(sectionList);
+        try {
+            Section sectionsAssigned = SectionService.getSectionById(selectedSectionId);
+            sectionList.add(sectionsAssigned);
+            faculty.setSections(sectionList);
 
-        //set faculty role from userControll
-        Role facRRole = roleService.getRoleByUserCode(UserController.ROLE_FACULTY_CODE);
-      //  facRRole.setUserCode(UserController.ROLE_FACULTY_CODE);
-        faculty.setRole(facRRole);
-        FacultyService.saveFaculty(faculty);
-        return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
+            //set faculty role from userControll
+            Role facRRole = roleService.getRoleByUserCode(UserController.ROLE_FACULTY_CODE);
+            //  facRRole.setUserCode(UserController.ROLE_FACULTY_CODE);
+            faculty.setPassword(PasswordService.encrypt(faculty.getPassword()));
+
+            faculty.setRole(facRRole);
+            FacultyService.saveFaculty(faculty);
+            return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            errorMsg = "Customer saving failed";
+        }
+        return null;
     }
 
     /**
@@ -104,7 +117,6 @@ public class FacultyController implements Serializable {
     public List<Section> getMySections() {
         Faculty fac = (Faculty) usercontroller.getUser();
         return fac.getSections();
-
     }
 
     /**
