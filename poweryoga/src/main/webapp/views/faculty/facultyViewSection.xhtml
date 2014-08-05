@@ -10,20 +10,20 @@
     </h:head>
     <body>
         <ui:composition template="../template/templateFaculty.xhtml">
-            
+
             <ui:define name="content">
                 <h3>My Sections</h3>	
                 <hr class="soft"/>
                 <div class="well">
                     <h:dataTable value="#{FacultyController.mySections}" var="sec" class="table table-bordered">
-                        
+
                         <h:column>
                             <f:facet name="header">Section Name</f:facet>
-                            #{sec.sectionName}
+                                #{sec.sectionName}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header">Room No.</f:facet>
-                            #{sec.roomNumber}
+                                #{sec.roomNumber}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Max. No Of Students</f:facet>
@@ -33,7 +33,7 @@
                             <f:facet name="header">Semester</f:facet>
                                 #{sec.semester.semesterName}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header">Semester Start</f:facet>
                                 #{sec.semester.startDate}
                         </h:column>
@@ -44,7 +44,7 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="#{productController.editProduct(item.id)}" value="Send email for students" />
+                                <h:commandLink action="" value="Send email to students" />
                             </h:form>
                         </h:column>
                     </h:dataTable>

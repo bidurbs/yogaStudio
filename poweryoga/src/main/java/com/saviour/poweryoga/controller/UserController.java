@@ -4,6 +4,7 @@ import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
 import java.io.Serializable;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 0.0.1
  */
 @Named("userController")
-@SessionScoped
+@Dependent
 public class UserController implements Serializable {
 
     @Autowired
@@ -29,9 +30,9 @@ public class UserController implements Serializable {
 //    = (HttpSession) FacesContext
 //            .getCurrentInstance().getExternalContext().getSession(true);
 
-    private static final int ROLE_ADMIN_CODE = 1;
-    private static final int ROLE_FACULTY_CODE = 2;
-    private static final int ROLE_CUSTOMER_CODE = 3;
+    public static final int ROLE_ADMIN_CODE = 1;
+    public static final int ROLE_FACULTY_CODE = 2;
+    public static final int ROLE_CUSTOMER_CODE = 3;
     
     private boolean isAdmin;
     private boolean isFaculty;

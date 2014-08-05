@@ -7,9 +7,11 @@ package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.model.Faculty;
+import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.ISectionService;
-import com.saviour.poweryoga.serviceI.IUserService;
+import com.saviour.poweryoga.serviceImpl.RoleService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +30,12 @@ public class FacultyController implements Serializable {
 
     @Autowired
     private IFacultyService FacultyService;
-    
+
     @Autowired
-    private UserController usercontroller; 
+    private IRoleService roleService;
+
+    @Autowired
+    private UserController usercontroller;
 
     @Autowired
     private ISectionService SectionService;
@@ -72,6 +77,11 @@ public class FacultyController implements Serializable {
         Section sectionsAssigned = SectionService.getSectionById(selectedSectionId);
         sectionList.add(sectionsAssigned);
         faculty.setSections(sectionList);
+
+        //set faculty role from userControll
+        Role facRRole = roleService.getRoleByUserCode(UserController.ROLE_FACULTY_CODE);
+      //  facRRole.setUserCode(UserController.ROLE_FACULTY_CODE);
+        faculty.setRole(facRRole);
         FacultyService.saveFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
@@ -85,15 +95,16 @@ public class FacultyController implements Serializable {
         FacultyService.updateFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
-    
+
     /**
-     * List all the sections assigned to a faculty 
-     * @return 
+     * List all the sections assigned to a faculty
+     *
+     * @return
      */
-    public List<Section> getMySections(){
-        Faculty fac = (Faculty)usercontroller.getUser();
+    public List<Section> getMySections() {
+        Faculty fac = (Faculty) usercontroller.getUser();
         return fac.getSections();
-    
+
     }
 
     /**
