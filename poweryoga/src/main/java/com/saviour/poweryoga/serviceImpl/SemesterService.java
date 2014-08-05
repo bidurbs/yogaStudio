@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.serviceImpl;
 
+
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.daoI.ISemesterDAO;
 import com.saviour.poweryoga.model.Semester;
@@ -32,6 +33,7 @@ public class SemesterService implements ISemesterService {
     public void saveSemester(Semester semester) {
         crudfacade.create(semester);
     }
+
 
     public List<Semester> getAllSemester() {
         return semesterDao.getAll();
