@@ -8,6 +8,22 @@
     </h:head>
     <h:body>
         <ui:composition template="/views/template/template.xhtml">
+            <ui:define name="successFailure">
+
+
+                <h:panelGrid rendered="#{purchaseOrderController.successMsg != null}">
+                    <div class="alert fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{purchaseOrderController.successMsg}</strong>
+                    </div>
+                </h:panelGrid>
+                <h:panelGrid rendered="#{purchaseOrderController.errorMsg != null}">
+                    <div class="alert alert-block alert-error fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{purchaseOrderController.errorMsg}</strong>
+                    </div>
+                 </h:panelGrid>
+            </ui:define>
             <ui:define name="content">
                 <div class="row">
                     <div class="span12">
@@ -19,7 +35,7 @@
 
                                     <h:column>
                                         <f:facet name="header">Item</f:facet>
-                                        <h:graphicImage value="#{item.product.imageURL}" alt="Product_Image"/>
+                                        <h:graphicImage style="width: 140px; height: 120px;" value="#{item.product.imageURL}" alt="Product_Image"/>
 
                                     </h:column>
 
