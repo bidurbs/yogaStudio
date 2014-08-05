@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author bidur
+ * @author AnurR
  */
 public interface ISemesterService {
 
