@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.saviour.poweryoga.daoI;
 
 import com.saviour.poweryoga.model.PurchaseOrder;
@@ -14,6 +13,6 @@ import com.saviour.poweryoga.model.PurchaseOrder;
  */
 public interface IPurchaseOrderDAO {
 
-    void savePurchaseOrder(PurchaseOrder order);
-    
+    public PurchaseOrder savePurchaseOrder(PurchaseOrder order);
+
 }

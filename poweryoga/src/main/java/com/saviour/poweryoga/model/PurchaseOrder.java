@@ -17,11 +17,12 @@ import javax.persistence.Temporal;
 /**
  * This class is for Product Order and contains Product Order features.
  *
- * @author TalakB 
+ * @author TalakB
+ * @author Md Mojahidul Islam
  * @version 0.0.1
  */
 @Entity
-@Table(name="PURCHASEORDER")
+@Table(name = "PURCHASE_ORDER")
 public class PurchaseOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,9 +40,23 @@ public class PurchaseOrder implements Serializable {
 
     //@OneToMany(mappedBy = "orders")
     @ManyToOne
-    private Users user;
+    private Customer customer;
 
     public PurchaseOrder() {
+    }
+
+    public PurchaseOrder(Calendar buyingDate, ShoppingCart shoppingCart, Customer customer) {
+        this.buyingDate = buyingDate;
+        this.shoppingCart = shoppingCart;
+        this.customer = customer;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public int getId() {
@@ -68,11 +83,4 @@ public class PurchaseOrder implements Serializable {
         this.shoppingCart = shoppingCart;
     }
 
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
 }

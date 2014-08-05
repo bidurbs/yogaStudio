@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.saviour.poweryoga.serviceI;
 
+import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.PurchaseOrder;
+import com.saviour.poweryoga.model.ShoppingCart;
+import java.util.Calendar;
 
 /**
  *
@@ -14,6 +16,6 @@ import com.saviour.poweryoga.model.PurchaseOrder;
  */
 public interface IPurchaseOrderService {
 
-    void savePurchaseOrder(PurchaseOrder order);
-    
+    public PurchaseOrder savePurchaseOrder(ShoppingCart shoppingCart, Customer customer, Calendar buyDate);
+
 }

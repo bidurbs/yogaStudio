@@ -25,9 +25,7 @@ public abstract class CRUDEntityFacade<T> implements PoweryogaEntityFacade<T> {
 
     private boolean operationSuccessful;
 
-  
-
-    
+      
     /**
      *
      * @param entity
