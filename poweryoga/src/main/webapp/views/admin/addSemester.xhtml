@@ -7,20 +7,17 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-
     </h:head>
     <body>
         <ui:composition template="../template/templateAdmin.xhtml">
             <ui:define name="successFailure">
-
             </ui:define>
             <ui:define name="content">
                 <h3>Create Semester</h3>	
                 <hr class="soft"/>
                 <div class="well">
-                    <p:panel >
-                    <h:form class="form-horizontal">
 
+                    <h:form class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label" for="semesterName">Semester Name <sup>*</sup></label>
                             <div class="controls">
@@ -28,38 +25,21 @@
                             </div>
                             <h:message for="semesterName"/>
                         </div>
-
                         <div class="control-group">
-                            
                             <label class="control-label" for="startDate">Start Date <sup>*</sup></label>
                             <div class="controls">
-                                <p:calendar value="#{SemesterController.semester.startDate}" id="popupCal"/>
-                                      
+                                <p:calendar value="#{SemesterController.semester.startDate}" id="popupCals"/>
                             </div>
                             <h:message for="startDate"/>
                         </div>
-                        
                         <div class="control-group">
                             <label class="control-label" for="endDate">End Date <sup>*</sup></label>
                             <div class="controls">
-                                <h:selectOneMenu id="endYear" value="#{SemesterController.semester.endDate.year}">
-                                    <f:selectItem itemValue="jan" itemLabel="January"/>
-                                    <f:selectItem itemValue="feb" itemLabel="February"/>
-                                    <f:selectItem itemValue="mar" itemLabel="March"/>
-                                    <f:selectItem itemValue="apr" itemLabel="April"/>
-                                    <f:selectItem itemValue="may" itemLabel="May"/>
-                                    <f:selectItem itemValue="jun" itemLabel="June"/>
-                                    <f:selectItem itemValue="jul" itemLabel="July"/>
-                                    <f:selectItem itemValue="aug" itemLabel="August"/>
-                                    <f:selectItem itemValue="sep" itemLabel="September"/>
-                                    <f:selectItem itemValue="oct" itemLabel="October"/>
-                                    <f:selectItem itemValue="nov" itemLabel="November"/>
-                                    <f:selectItem itemValue="dec" itemLabel="December"/>
-                                </h:selectOneMenu>
+                                <p:calendar value="#{SemesterController.semester.endDate}" id="popupCale"/>
                             </div>
                             <h:message for="endDate"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <div class="controls">
                                 <h:commandButton class="btn btn-large" value="Save" action="#{SemesterController.saveSemester()}"/>
@@ -67,8 +47,9 @@
                             </div>
                         </div>
                     </h:form>
-                    </p:panel>
-                </div>
+
+               </div>
+  
             </ui:define>
         </ui:composition>
     </body>

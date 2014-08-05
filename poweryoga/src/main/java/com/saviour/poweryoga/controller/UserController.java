@@ -95,7 +95,7 @@ public class UserController implements Serializable {
         user = userService.authenticateUser(user);
         //check if the user is registered and authenticated 
         if (user != null) {
-            //get the authenticated user 
+            //set the authenticated user info. on the session  
             setUserSessionData(user);
 
             //check user code 

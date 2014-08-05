@@ -21,12 +21,13 @@ public interface ISectionService {
 
     public void updateSection(Section section);
 
-    public Section getSectionById(int Id);
+    public Section getSectionById(Long Id);
 
-    public void deleteSection(int Id);
+    public void deleteSection(Long Id);
 
-    public List<Section> listSectionByCourseId(int Id);
+    public List<Section> listSectionByCourseId(Long Id);
 
     public List<Course> getAllCourses();
+    
 
 }

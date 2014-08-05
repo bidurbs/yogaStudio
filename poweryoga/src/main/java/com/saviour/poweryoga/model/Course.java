@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,12 +22,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "COURSE")
+@NamedQueries({
+        @NamedQuery(name = "Course.findByName", query = "FROM Course c WHERE c.courseName=:cname"),
+        @NamedQuery(name = "Course.findAll", query = "FROM Course c")
+})
 public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String courseCode; 
+    
     private String courseName;
 
     private double courseFee;

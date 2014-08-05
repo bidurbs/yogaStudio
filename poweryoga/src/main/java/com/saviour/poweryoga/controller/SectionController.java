@@ -27,16 +27,26 @@ public class SectionController implements Serializable {
     @Autowired
     private ISectionService SectionService;
 
-    private Course course;
+    @Autowired
+    private ICourseService courseService;
+
+    //  private Course course;
     private Section section;
     private List<Section> listOfSection;
-    
     private List<Course> listOfCourse;
-    
+    private String selectedCourse;
 
     public SectionController() {
         section = new Section();
-        course = new Course();
+        //    course = new Course();
+    }
+
+    public String getSelectedCourse() {
+        return selectedCourse;
+    }
+
+    public void setSelectedCourse(String selectedCourse) {
+        this.selectedCourse = selectedCourse;
     }
 
     /**
@@ -45,6 +55,9 @@ public class SectionController implements Serializable {
      * @return
      */
     public String saveSection() {
+        // find the section based on selected course name and set course of this section 
+        Course course = courseService.findByName(selectedCourse);
+        section.setCourse(course);
         SectionService.saveSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
@@ -65,7 +78,7 @@ public class SectionController implements Serializable {
      * @param Id
      * @return
      */
-    public String editSection(int Id) {
+    public String editSection(Long Id) {
         section = SectionService.getSectionById(Id);
         return "editSection";
     }
@@ -76,7 +89,7 @@ public class SectionController implements Serializable {
      * @param Id
      * @return
      */
-    public String deleteSection(int Id) {
+    public String deleteSection(Long Id) {
         SectionService.deleteSection(Id);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
@@ -87,13 +100,9 @@ public class SectionController implements Serializable {
      * @param courseId
      * @return
      */
-    public String viewSection(int courseId) {
+    public String viewSection(Long courseId) {
         listOfSection = SectionService.listSectionByCourseId(courseId);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
-    }
-
-    public Course getCourse() {
-        return course;
     }
 
     public Section getSection() {
@@ -105,15 +114,11 @@ public class SectionController implements Serializable {
     }
 
     public List<Section> getListOfSection() {
-        return listOfSection;
+        return listOfSection = SectionService.getAllSections();
     }
 
     public void setListOfSection(List<Section> listOfSection) {
         this.listOfSection = listOfSection;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public List<Course> getListOfCourse() {
@@ -124,18 +129,16 @@ public class SectionController implements Serializable {
     public void setListOfCourse(List<Course> listOfCourse) {
         this.listOfCourse = listOfCourse;
     }
-    
+
     /**
      * Display all the Section for requested course data for customer
      *
      * @param courseId
      * @return
      */
-    public String displaySection(int courseId) {
+    public String displaySection(long courseId) {
         listOfSection = SectionService.listSectionByCourseId(courseId);
         return ("/views/customer/section.xhtml?faces-redirect=true");
     }
-    
-    
 
 }

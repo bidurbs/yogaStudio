@@ -5,12 +5,15 @@
  */
 package com.saviour.poweryoga.serviceImpl;
 
-import com.saviour.poweryoga.daoI.ICourseDAO;
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.serviceI.ICourseService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -18,30 +21,71 @@ import org.springframework.stereotype.Service;
  * @version 0.0.1
  */
 @Service
+@Transactional
 public class CourseService implements ICourseService {
 
+//    @Autowired
+//    private ICourseDAO courseDao;
     @Autowired
-    private ICourseDAO courseDao;
+    private CRUDFacadeImpl crudfacade;
 
-    
+//    public void saveCourse(Course course) {
+//        courseDao.save(course);
+//    }
+//
+//    public List<Course> getAllCourses() {
+//        return courseDao.getAll();
+//    }
+//
+//    public void updateCourse(Course course) {
+//        courseDao.update(course);
+//    }
+//
+//    public Course getCourseById(int Id) {
+//        return courseDao.get(Id);
+//    }
+//
+//    public void deleteCourse(int Id) {
+//        courseDao.delete(Id);
+//    }
+    /**
+     * Find course by course name
+     *
+     * @param cname
+     * @return
+     */
+    @Override
+    public Course findByName(String cname) {
+        Map<String, String> paramaters = new HashMap<>(1);
+        paramaters.put("cname", cname);
+        List course = crudfacade.findWithNamedQuery("Course.findByName", paramaters);
+
+        return (Course) course.get(0);
+
+    }
+
+    @Override
     public void saveCourse(Course course) {
-        courseDao.save(course);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    @Override
     public List<Course> getAllCourses() {
-        return courseDao.getAll();
+        return crudfacade.findWithNamedQuery("Course.findAll");
     }
 
+    @Override
     public void updateCourse(Course course) {
-        courseDao.update(course);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public Course getCourseById(int Id) {
-        return courseDao.get(Id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void deleteCourse(int Id) {
-        courseDao.delete(Id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

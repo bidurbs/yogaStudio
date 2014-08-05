@@ -7,6 +7,7 @@
 package com.saviour.poweryoga.serviceI;
 
 import com.saviour.poweryoga.model.Faculty;
+import com.saviour.poweryoga.model.Section;
 import java.util.List;
 /**
  *
@@ -23,4 +24,6 @@ public interface IFacultyService {
     public Faculty getFacultyById(long Id);
     
     public void deleteFaculty(long Id);
+    
+    public List<Section> getMySections(Faculty faculty);
 }

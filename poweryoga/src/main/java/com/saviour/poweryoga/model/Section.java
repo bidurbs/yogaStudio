@@ -3,22 +3,31 @@ package com.saviour.poweryoga.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  *
  * @author Guest
+ * @author TalakB
+ * @version 0.0.1 
  *
  */
 @Entity
 @Table(name = "SECTION")
+@NamedQueries({
+    @NamedQuery(name = "Section.findAll", query = "from Section s")
+})
 public class Section implements Serializable {
 
     @Id
@@ -28,12 +37,11 @@ public class Section implements Serializable {
     private int maxNoStudent;
     private int roomNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Semester semester;
 
-    @OneToMany
-    // @JoinColumn(name = "Course")
-    private List<Course> course;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Course course;
 
     @ManyToMany(mappedBy = "sections")
     private List<Users> users = new ArrayList<>();
@@ -81,11 +89,11 @@ public class Section implements Serializable {
         this.semester = semester;
     }
 
-    public List<Course> getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(List<Course> course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 

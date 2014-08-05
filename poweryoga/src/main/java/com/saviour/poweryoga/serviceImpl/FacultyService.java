@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.saviour.poweryoga.serviceImpl;
 
-import com.saviour.poweryoga.daoI.IFacultyDAO;
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Faculty;
+import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -18,30 +16,74 @@ import org.springframework.stereotype.Service;
  * @version 0.0.1
  */
 @Service
+@Transactional
 public class FacultyService implements IFacultyService {
 
     @Autowired
-    private IFacultyDAO facultyDao;
+    private CRUDFacadeImpl crudfacade;
 
+//    public void saveFaculty(Faculty faculty) {
+//        facultyDao.save(faculty);
+//    }
+//    
+//    
+//    public List<Faculty> getListOfFaculty() {
+//        return facultyDao.getAll();
+//    }
+//
+//    public void updateFaculty(Faculty faculty) {
+//        facultyDao.update(faculty);
+//    }
+//
+//    public Faculty getFacultyById(long Id) {
+//        return facultyDao.get(Id);
+//    }
+//
+//    public void deleteFaculty(long Id) {
+//        facultyDao.delete(Id);
+//    }
     
+    
+    @Override
     public void saveFaculty(Faculty faculty) {
-        facultyDao.save(faculty);
+        crudfacade.create(faculty);
+
     }
-    
-    
+
+    @Override
     public List<Faculty> getListOfFaculty() {
-        return facultyDao.getAll();
+        return crudfacade.findWithNamedQuery("Faculty.findAll");
     }
 
+    @Override
     public void updateFaculty(Faculty faculty) {
-        facultyDao.update(faculty);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public Faculty getFacultyById(long Id) {
-        return facultyDao.get(Id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public void deleteFaculty(long Id) {
-        facultyDao.delete(Id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * Find the sections where the faculty is assigned. 
+     * @return 
+     */
+    @Override
+    public List<Section> getMySections(Faculty faculty) {
+        
+//        Map<String, String> paramaters = new HashMap<>(1);
+//        paramaters.put("uemail", facult);
+//        paramaters.put("upass", user.getPassword());
+//
+//        List authUser = crudfacade.findWithNamedQuery("User.authenticateUser", paramaters);
+//
+//        return (Users) authUser.get(0);
+        return null;
     }
 }
