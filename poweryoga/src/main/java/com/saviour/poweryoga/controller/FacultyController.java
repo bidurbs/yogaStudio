@@ -7,8 +7,10 @@ package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.model.Faculty;
-import com.saviour.poweryoga.serviceImpl.FacultyService;
+import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.serviceI.ISectionService;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -26,48 +28,82 @@ public class FacultyController implements Serializable {
     @Autowired
     private IFacultyService FacultyService;
 
+    @Autowired
+    private ISectionService SectionService;
+
     private Faculty faculty;
     private List<Faculty> listOfFaculty;
+    
+    private List<Section> sectionList = new ArrayList<>(); 
+
+    private Long selectedSectionId;
 
     public FacultyController() {
         faculty = new Faculty();
     }
+
+    public Long getSelectedSectionId() {
+        return selectedSectionId;
+    }
+
+    public void setSelectedSectionId(Long selectedSectionId) {
+        this.selectedSectionId = selectedSectionId;
+    }
+
+    public List<Section> getSectionList() {
+        return sectionList;
+    }
+
+    public void setSectionList(List<Section> sectionList) {
+        this.sectionList = sectionList;
+    }
     
+    
+
     /**
      * Save Course data
      *
-     * @return 
+     * @return
      */
     public String saveFaculty() {
+        //Find section based on selected course and set it 
+        //Course course = SectionService.findByName(selectedSection);
+        //  Course course = courseService.findByName(selectedCourse);
+        
+        Section sectionsAssigned = SectionService.getSectionById(selectedSectionId);
+
+        sectionList.add(sectionsAssigned);
+        faculty.setSections(sectionList);
         FacultyService.saveFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Display update Course data page
      *
-     * @return 
+     * @return
      */
     public String updateFaculty() {
         FacultyService.updateFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Update Course data
+     *
      * @param Id
-     * @return 
+     * @return
      */
     public String editFaculty(long Id) {
         faculty = FacultyService.getFacultyById(Id);
         return "editFaculty";
     }
-    
+
     /**
      * Delete Course entry
      *
      * @param Id
-     * @return 
+     * @return
      */
     public String deleteFaculty(long Id) {
         FacultyService.deleteFaculty(Id);

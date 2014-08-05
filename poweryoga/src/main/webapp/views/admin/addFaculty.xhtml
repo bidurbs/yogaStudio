@@ -26,7 +26,7 @@
                             </div>
                             <h:message for="firstName"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="firstname">Last Name<sup>*</sup></label>
                             <div class="controls">
@@ -42,7 +42,7 @@
                             </div>
                             <h:message for="password"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="phone">Phone <sup>*</sup></label>
                             <div class="controls">
@@ -50,7 +50,7 @@
                             </div>
                             <h:message for="phone"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="street">Street <sup>*</sup></label>
                             <div class="controls">
@@ -58,7 +58,7 @@
                             </div>
                             <h:message for="street"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="city">City <sup>*</sup></label>
                             <div class="controls">
@@ -66,7 +66,7 @@
                             </div>
                             <h:message for="city"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="state">State <sup>*</sup></label>
                             <div class="controls">
@@ -74,7 +74,7 @@
                             </div>
                             <h:message for="state"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="zipcode"> Zip Code <sup>*</sup></label>
                             <div class="controls">
@@ -82,7 +82,17 @@
                             </div>
                             <h:message for="zip"/>
                         </div>
-                        
+                        <div class="control-group">
+                            <label class="control-label" for="course">Course <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu value="#{FacultyController.selectedSectionId}">
+                                    <f:selectItems value="#{SectionController.listOfSection}" var="item"
+                                                   itemLabel="#{item.sectionName}" itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <h:message for="course"/>
+                        </div>
+
                         <div class="control-group">
                             <div class="controls">
                                 <h:commandButton class="btn btn-large" value="Save" action="#{FacultyController.saveFaculty()}"/>

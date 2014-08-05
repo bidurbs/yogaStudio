@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  * @version 0.0.1
  */
 @Entity
-@Table(name="ORDER")
+@Table(name="PURCHASEORDER")
 public class PurchaseOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;

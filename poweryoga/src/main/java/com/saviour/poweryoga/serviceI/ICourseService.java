@@ -23,4 +23,6 @@ public interface ICourseService {
     public Course getCourseById(int Id);
 
     public void deleteCourse(int Id);
+
+    public Course findByName(String cname);
 }

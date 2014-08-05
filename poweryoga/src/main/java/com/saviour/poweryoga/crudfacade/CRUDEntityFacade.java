@@ -54,9 +54,9 @@ public abstract class CRUDEntityFacade<T> implements PoweryogaEntityFacade<T> {
      * @throws IllegalArgumentException
      */
     @Override
-    public T read(final Serializable primaryKey) throws IllegalStateException,
+    public T read(final Serializable primaryKey, Class c) throws IllegalStateException,
             IllegalArgumentException {
-        return (T) sessionFactory.getCurrentSession().get(entityClass, primaryKey);
+        return (T) sessionFactory.getCurrentSession().get(c, primaryKey);
     }
 
     /**

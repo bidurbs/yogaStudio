@@ -23,12 +23,12 @@ import javax.persistence.UniqueConstraint;
  * @version 1.0.0
  */
 @Entity
-@Table(name = "USERS", uniqueConstraints=
-           @UniqueConstraint(columnNames = {"email"}))
+@Table(name = "USERS", uniqueConstraints
+        = @UniqueConstraint(columnNames = {"email"}))
 @NamedQueries({
     @NamedQuery(name = "Users.findAllCustomer", query = "from Customer c"),
     @NamedQuery(name = "Users.findCustomerByEmail", query = "from Customer c where c.email=:email"),
-	 @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass")
+    @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass")
 })
 public class Users implements Serializable {
 
@@ -53,23 +53,23 @@ public class Users implements Serializable {
 
     @Column(name = "Street")
     private String street;
-    
-    @Column(name ="City")
+
+    @Column(name = "City")
     private String city;
 
     @Column(name = "State")
     private String state;
 
-    @Column(name = "Country")
-    private String country;
-
     @Column(name = "Zip")
     private String zip;
+
+    @Column(name = "Country")
+    private String country;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Role role;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Section> sections = new ArrayList<>();
 
     public Users() {
@@ -145,14 +145,14 @@ public class Users implements Serializable {
         this.street = street;
     }
 
-    public String getCity(){
+    public String getCity() {
         return city;
     }
-    
-    public void setCity(String City){
+
+    public void setCity(String City) {
         this.city = City;
     }
-    
+
     public String getState() {
         return state;
     }

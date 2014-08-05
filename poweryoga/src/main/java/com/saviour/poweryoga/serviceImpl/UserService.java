@@ -25,9 +25,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserDAO userDao;
-	
-	 @Autowired
-    private CRUDFacadeImpl crudfacade; 
+
+    @Autowired
+    private CRUDFacadeImpl crudfacade;
 
     //for password encription 
     private PasswordService encpass = new PasswordService();
@@ -54,10 +54,12 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
     public List<Customer> findAllCustomer() {
         return userDao.findAllCustomer();
     }
 
+    @Override
     public Customer findCustomerById(long customerId) {
         return userDao.findCustomerById(customerId);
     }
@@ -67,6 +69,7 @@ public class UserService implements IUserService {
         return userDao.findCustomerByEmail(email);
     }
 
+    @Override
     public void updateUser(Users user) {
         userDao.updateUser(user);
     }
