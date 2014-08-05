@@ -129,5 +129,14 @@ public class SectionController implements Serializable {
     public void setListOfCourse(List<Course> listOfCourse) {
         this.listOfCourse = listOfCourse;
     }
-
+    /**
+     * Display all the Section for requested course data for customer
+     *
+     * @param courseId
+     * @return
+     */
+    public String displaySection(long courseId) {
+        listOfSection = SectionService.listSectionByCourseId(courseId);
+        return ("/views/customer/section.xhtml?faces-redirect=true");
+    }
 }

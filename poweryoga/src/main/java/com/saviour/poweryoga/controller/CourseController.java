@@ -22,6 +22,15 @@ public class CourseController implements Serializable {
 
     private Course course;
     private List<Course> listOfCourses;
+    private int noOfCourses;
+
+    public int getNoOfCourses() {
+        return noOfCourses;
+    }
+
+    public void setNoOfCourses(int noOfCourses) {
+        this.noOfCourses = noOfCourses;
+    }
 
     public CourseController() {
         course = new Course();
@@ -83,5 +92,15 @@ public class CourseController implements Serializable {
 
     public void setListOfCourses(List<Course> listOfCourses) {
         this.listOfCourses = listOfCourses;
+    }
+    
+    /**
+     * Display list of Courses for customer
+     *
+     * @return 
+     */
+    public String displayCourses() {
+        noOfCourses = getListOfCourses().size();
+        return ("/views/customer/course.xhtml?faces-redirect=true");
     }
 }
