@@ -74,7 +74,7 @@ public class SectionService implements ISectionService {
 
     @Override
     public void updateSection(Section section) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        crudfacade.update(section);
     }
 
     @Override
@@ -84,12 +84,12 @@ public class SectionService implements ISectionService {
 
     @Override
     public void deleteSection(Long Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        crudfacade.delete(getSectionById(Id));
     }
 
     @Override
     public List<Section> listSectionByCourseId(Long Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return crudfacade.findWithNamedQuery("Section.findAll");
     }
 
     /**

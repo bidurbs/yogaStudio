@@ -17,14 +17,14 @@
                             <li><a href="${facesContext.externalContext.requestContextPath}/${CourseController.displayCourses()}">Courses</a> <span class="divider">/</span></li>
                             <li class="active">Section</li>
                         </ul>
-                        <h3> Course : #{SectionController.course.courseName} <small class="pull-right"> #{CourseController.noOfCourses} Section are available </small></h3>	
+                        <h3> Course : #{SectionController.section.course.courseName} <small class="pull-right"> #{CourseController.noOfCourses} Section are available </small></h3>	
 
                         <hr class="soft"/>
                         <br class="clr"/>
                         <div class="span8">
-                            <h3>$#{SectionController.course.courseFee}</h3>
+                            <h3>$#{SectionController.section.course.courseName}</h3>
                             <p>
-                                #{SectionController.course.description}
+                                #{SectionController.section.course.courseName}
                             </p>
                         </div>
                         <br class="clr" />
