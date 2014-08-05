@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.saviour.poweryoga.dao;
+package com.saviour.poweryoga.daoImpl;
 
 import com.saviour.poweryoga.daoI.IShoppingCartDAO;
 import com.saviour.poweryoga.model.ShoppingCart;
 import com.saviour.poweryoga.model.ShoppingCartItem;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,21 +20,30 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ShoppingCartDAO implements IShoppingCartDAO {
-    
+
     @Autowired
     private SessionFactory sessionFactory;
-    
+    private Session session;
+
+    public Session getSession() {
+        return sessionFactory.openSession();
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
     @Override
     public ShoppingCart addToCart(ShoppingCart cart) {
         try {
-            ShoppingCart sc = (ShoppingCart) sessionFactory.getCurrentSession().merge(cart);
-            return sc;
+            sessionFactory.getCurrentSession().save(cart);
+            return cart;
         } catch (Exception ex) {
-            
+            ex.printStackTrace();
         }
         return null;
     }
-    
+
     @Override
     public ShoppingCart removeFromCart(ShoppingCart cart, ShoppingCartItem item) {
         try {
@@ -42,7 +52,7 @@ public class ShoppingCartDAO implements IShoppingCartDAO {
             sessionFactory.getCurrentSession().delete(it);
             return cart;
         } catch (Exception ex) {
-            
+
         }
         return null;
     }

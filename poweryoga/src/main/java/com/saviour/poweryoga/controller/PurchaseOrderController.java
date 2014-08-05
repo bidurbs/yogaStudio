@@ -1,19 +1,24 @@
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.model.PurchaseOrder;
 import com.saviour.poweryoga.model.ShoppingCart;
 import com.saviour.poweryoga.model.ShoppingCartItem;
-import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IProductService;
 import com.saviour.poweryoga.serviceI.IPurchaseOrderService;
 import com.saviour.poweryoga.serviceI.IShoppingCartService;
+import com.saviour.poweryoga.serviceI.IUserService;
+import com.saviour.poweryoga.util.EmailManager;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 /**
  *
@@ -31,7 +36,14 @@ public class PurchaseOrderController implements Serializable {
     private IPurchaseOrderService purchaseOrderService;
 
     @Autowired
+    private IUserService customerService;
+
+    @Autowired
     private IProductService productService;
+    
+    
+    @Autowired
+    private JavaMailSender mailSender;
 
     private Product product;
 
@@ -45,7 +57,11 @@ public class PurchaseOrderController implements Serializable {
 
     private int noOfItemsInTheCart;
 
-    private Users usr = null;
+    private Customer customer = null;
+
+    private String errorMsg = null;
+
+    private String successMsg = null;
 
     public PurchaseOrderController() {
         shoppingCart = new ShoppingCart();
@@ -57,8 +73,15 @@ public class PurchaseOrderController implements Serializable {
 
         product = productService.getProductById(productId);
 
+        HttpSession activeSession = (HttpSession) FacesContext
+                .getCurrentInstance().getExternalContext().getSession(true);
+
+        Long customerId = (Long) activeSession.getAttribute("loggedUserId");
+
+        customer = customerService.findCustomerById(customerId);
+
         if (shoppingCart.getId() == null) {
-            shoppingCart.setUser(usr);
+            shoppingCart.setUser(customer);
             shoppingCart.setShopDate(Calendar.getInstance());
         }
 
@@ -110,6 +133,90 @@ public class PurchaseOrderController implements Serializable {
     }
 
     public void checkout() {
-
+        PurchaseOrder savedOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
+        if (savedOrder != null) {
+            
+            //EMAIL SENDING
+            EmailManager.sendEmail(mailSender,"Your shopping receipt", "Thank you for shopping", "shahin.kuet@gmail.com");
+            
+            successMsg = "Thank you for shopping with us. Please check your email for order detail";
+            errorMsg = null;
+            return;
+        }
+        successMsg = null;
+        errorMsg = "Ooops !!! something went wrong confirming your order";
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getNoOfItemsInTheCart() {
+        return noOfItemsInTheCart;
+    }
+
+    public void setNoOfItemsInTheCart(int noOfItemsInTheCart) {
+        this.noOfItemsInTheCart = noOfItemsInTheCart;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public int getProductQty() {
+        return productQty;
+    }
+
+    public void setProductQty(int productQty) {
+        this.productQty = productQty;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
 }

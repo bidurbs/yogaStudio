@@ -23,7 +23,8 @@ public class PurchaseOrderDAO implements IPurchaseOrderDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public void savePurchaseOrder(PurchaseOrder order){
-        
+    public PurchaseOrder savePurchaseOrder(PurchaseOrder order) {
+        sessionFactory.getCurrentSession().save(order);
+        return order;
     }
 }
