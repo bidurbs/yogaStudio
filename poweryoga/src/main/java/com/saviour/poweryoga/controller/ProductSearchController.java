@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Product;
@@ -30,17 +29,26 @@ public class ProductSearchController implements Serializable {
     private List<Product> products;
 
     private String productName;
-    
-    public ProductSearchController() {
-    }
+    private int noOfAvailableProducts;
 
+    public ProductSearchController() {
+
+    }
 
     public String searchProduct() {
         products = productService.searchProduct(productName);
-        return "/views/customer/productSearch";
+        noOfAvailableProducts = products.size();
+        return ("/views/customer/product.xhtml?faces-redirect=true");
+    }
+
+    public String displayProducts() {
+        products = productService.searchProduct(productName);
+        noOfAvailableProducts = products.size();
+        return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
     public List<Product> getProducts() {
+        products = productService.getAllProducts();
         return products;
     }
 
@@ -64,9 +72,18 @@ public class ProductSearchController implements Serializable {
         this.product = product;
     }
 
-    public String viewProductDetail(Product product) {
-        this.product=product;
-        return "/views/customer/productDetail";
+    public int getNoOfAvailableProducts() {
+        return noOfAvailableProducts;
     }
-    
+
+    public void setNoOfAvailableProducts(int noOfAvailableProducts) {
+        this.noOfAvailableProducts = noOfAvailableProducts;
+    }
+
+    public String viewProductDetail(Product product) {
+        this.product = product;
+        //return "/views/customer/productDetail";
+        return ("/views/customer/productDetail.xhtml?faces-redirect=true");
+    }
+
 }

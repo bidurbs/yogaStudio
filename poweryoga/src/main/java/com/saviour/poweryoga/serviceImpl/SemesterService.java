@@ -25,16 +25,14 @@ public class SemesterService implements ISemesterService {
 
     @Autowired
     private ISemesterDAO semesterDao;
-    
+
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
-    
     public void saveSemester(Semester semester) {
         crudfacade.create(semester);
     }
-    
-    
+
     public List<Semester> getAllSemester() {
         return semesterDao.getAll();
     }
