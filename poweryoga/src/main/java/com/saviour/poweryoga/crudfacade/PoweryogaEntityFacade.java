@@ -16,7 +16,7 @@ public interface PoweryogaEntityFacade<T> {
     public T create(T entity) throws EntityExistsException, IllegalStateException,
             IllegalArgumentException, TransactionRequiredException;
 
-    public T read(Serializable primaryKey) throws IllegalStateException,
+    public T read(Serializable primaryKey, Class c) throws IllegalStateException,
             IllegalArgumentException;
 
     public boolean update(T entity) throws IllegalStateException,

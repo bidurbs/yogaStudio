@@ -11,30 +11,28 @@ import javax.persistence.Table;
 
 /**
  * This class is for Role of Users and contains Credit Card features.
- * 
- * 
+ *
+ *
  * @author Talak
  * @version 0.0.1
  */
-
 @Entity
-@Table(name="ROLE")
+@Table(name = "ROLE")
 @NamedQueries({
-     @NamedQuery(name = "findRoleByUserCode", query = "select r from Role r where r.userCode = :rcode")
+    @NamedQuery(name = "Role.findRoleByUserCode", query = "select r from Role r where r.userCode = :rcode")
 })
 public class Role implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-    public static final int ROLE_ADMIN = 1;
-    public static final int ROLE_INTERNAL_USER = 2;
-    public static final int ROLE_VENDOR_USER = 3;
-    public static final int ROLE_BUYER = 4;
-    public static final int ROLE_GUEST = 5;
+
+    public static final int ROLE_ADMIN_CODE = 1;
+    public static final int ROLE_FACULTY_CODE = 2;
+    public static final int ROLE_CUSTOMER_CODE = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
+    private Long id;
+
     private int userCode;
 
     private String name;
@@ -46,11 +44,11 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,6 +67,5 @@ public class Role implements Serializable {
     public void setUserCode(int userCode) {
         this.userCode = userCode;
     }
-    
-    
+
 }

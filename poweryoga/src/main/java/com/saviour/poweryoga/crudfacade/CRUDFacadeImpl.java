@@ -25,8 +25,6 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
 
     private boolean operationSuccessful;
 
-   
-
     /**
      *
      * @param entity
@@ -53,9 +51,9 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      * @throws IllegalArgumentException
      */
     @Override
-    public T read(final Serializable primaryKey) throws IllegalStateException,
+    public T read(final Serializable primaryKey, Class entClass) throws IllegalStateException,
             IllegalArgumentException {
-        return (T) sessionFactory.getCurrentSession().get(entityClass, primaryKey);
+        return (T) sessionFactory.getCurrentSession().get(entClass, primaryKey);
     }
 
     /**
@@ -109,7 +107,8 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      */
     @Override
     public List findWithNamedQuery(String queryName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = sessionFactory.openSession().getNamedQuery(queryName);
+        return query.list();
     }
 
     /**
@@ -121,7 +120,8 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      */
     @Override
     public List findWithNamedQuery(String queryName, int resultLimit) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = sessionFactory.openSession().getNamedQuery(queryName);
+        return query.list();
     }
 
     /**

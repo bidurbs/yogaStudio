@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="../template/templateAdmin.xhtml">
+            <ui:define name="successFailure">
+                
+            </ui:define>
+            <ui:define name="content">
+                    <h3>Edit Semester</h3>	
+                    <hr class="soft"/>
+                    <div class="well">
+                        <h:form class="form-horizontal">
+                           
+                            <div class="control-group">
+                                <label class="control-label" for="name">Semester Name <sup>*</sup></label>
+                                <div class="controls">
+                                    <h:inputText id="name" value="#{SemesterController.semester.semesterName}" />
+                                </div>
+                                <h:message for="semesterName"/>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="startDate">Start Date <sup>*</sup></label>
+                                <div class="controls">
+                                    <p:calendar value="#{SemesterController.semester.startDate}" id="popupCals"/>
+                                </div>
+                                <h:message for="startDate"/>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="endDate">End Date <sup>*</sup></label>
+                                <div class="controls">
+                                     <p:calendar value="#{SemesterController.semester.endDate}" id="popupCale"/>
+                                </div>
+                                <h:message for="endDate"/>
+                            </div>
+<!--                            <div class="control-group">
+                                <label class="control-label" for="price">Price <sup>*</sup></label>
+                                <div class="controls">
+                                    <h:inputText id="price" value="#{productController.product.price}" />
+                                </div>
+                                <h:message for="price"/>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="quantity">Quantity <sup>*</sup></label>
+                                <div class="controls">
+                                    <h:inputText id="quantity" value="#{productController.product.quantity}" />
+                                </div>
+                                <h:message for="quantity"/>
+                            </div>-->
+                            <div class="control-group">
+                                <div class="controls">
+                                    <h:inputHidden id="id" value="#{SemesterController.semester.id}" />
+                                    <h:commandButton class="btn btn-large" value="Save" action="#{SemesterController.updateSemester()}"/>
+                                    <!--<input class="btn btn-large" type="submit" value="Register" />-->
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

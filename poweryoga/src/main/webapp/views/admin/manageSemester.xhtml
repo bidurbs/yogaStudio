@@ -21,27 +21,27 @@
                 </div>
             </ui:define>
             <ui:define name="content">
-                <h3>Section List</h3>	
+                <h3>Semester List</h3>	
                 <hr class="soft"/>
-                <a href="addSection.xhtml">Add Section</a>
+                <a href="addSemester.xhtml">Add Semester</a>
                 <div class="well">
-                    <h:dataTable value="#{SectionController.listOfSection}" var="item" class="table table-bordered">
+                    <h:dataTable value="#{SemesterController.listOfSemester}" var="item" class="table table-bordered">
                         <h:column>
-                            <f:facet name="header">Section</f:facet>
-                            #{item.sectionName}<br/>
+                            <f:facet name="header">Semester Name</f:facet>
+                            #{item.semesterName}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Maximum No Students</f:facet>
-                                #{item.maxNoStudent}
+                            <f:facet name="header">Start Date</f:facet>
+                                #{item.startDate}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Room No</f:facet>
-                                #{item.roomNumber}
+                            <f:facet name="header">End Date</f:facet>
+                                #{item.endDate}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="#{SectionController.editSection(item.id)}" value="Edit" /> | <h:commandLink action="#{SectionController.deleteSection(item.id)}" value="Delete"/>
+                                <h:commandLink action="#{SemesterController.editSemester(item.id)}" value="Edit" /> | <h:commandLink action="#{SemesterController.deleteSemester(item.id)}" value="Delete"/>
                             </h:form>
                         </h:column>
                     </h:dataTable>

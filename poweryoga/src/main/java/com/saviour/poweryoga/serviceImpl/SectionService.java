@@ -5,14 +5,14 @@
  */
 package com.saviour.poweryoga.serviceImpl;
 
-import com.saviour.poweryoga.daoI.ICourseDAO;
-import com.saviour.poweryoga.daoI.ISectionDAO;
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.ISectionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -20,41 +20,84 @@ import org.springframework.stereotype.Service;
  * @version 0.0.1
  */
 @Service
+@Transactional
 public class SectionService implements ISectionService {
+//
+//    @Autowired
+//    private ISectionDAO sectionDao;
+//
+//    @Autowired
+//    private ICourseDAO courseDao;
 
     @Autowired
-    private ISectionDAO sectionDao;
-    
-    @Autowired
-    private ICourseDAO courseDao;
-    
+    private CRUDFacadeImpl crudfacade;
 
+    /**
+     * Save new section to the DB.
+     *
+     * @param section
+     */
     public void saveSection(Section section) {
-        sectionDao.save(section);
+        crudfacade.create(section);
+        //sectionDao.save(section);
     }
 
+//    public List<Section> getAllSections() {
+//        return sectionDao.getAll();
+//    }
+//
+//    public void updateSection(Section section) {
+//        sectionDao.update(section);
+//    }
+//
+//    public Section getSectionById(int Id) {
+//        return sectionDao.get(Id);
+//    }
+//
+//    public void deleteSection(int Id) {
+//        sectionDao.delete(Id);
+//    }
+//
+//    public List<Section> listSectionByCourseId(int Id) {
+//        return sectionDao.listSectionByCourseId(Id);
+//    }
+//
+//    public List<Course> getAllCourses() {
+//        return courseDao.getAll();
+//    }
+    @Override
     public List<Section> getAllSections() {
-        return sectionDao.getAll();
+        return crudfacade.findWithNamedQuery("Section.findAll");
     }
 
+    @Override
     public void updateSection(Section section) {
-        sectionDao.update(section);
+        crudfacade.update(section);
     }
 
-    public Section getSectionById(int Id) {
-        return sectionDao.get(Id);
+    @Override
+    public Section getSectionById(Long Id) {
+        return (Section) crudfacade.read(Id, Section.class);
     }
 
-    public void deleteSection(int Id) {
-        sectionDao.delete(Id);
+    @Override
+    public void deleteSection(Long Id) {
+        crudfacade.delete(getSectionById(Id));
     }
 
-    public List<Section> listSectionByCourseId(int Id) {
-        return sectionDao.listSectionByCourseId(Id);
+    @Override
+    public List<Section> listSectionByCourseId(Long Id) {
+        return crudfacade.findWithNamedQuery("Section.findAll");
     }
-    
+
+    /**
+     * Find all courses. It is used to assign course for a specific section.
+     *
+     * @return
+     */
+    @Override
     public List<Course> getAllCourses() {
-        return courseDao.getAll();
+        return crudfacade.findWithNamedQuery("Course.findAll");
     }
 
 }

@@ -11,19 +11,42 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="span12">
+                        <ul class="breadcrumb">
+                            <li><a href="${facesContext.externalContext.requestContextPath}">Home</a> <span class="divider">/</span></li>
+                            <li><a href="${facesContext.externalContext.requestContextPath}/#{productSearchController.displayProducts()}">Products</a> <span class="divider">/</span></li>
+                            <li class="active">#{productSearchController.product.name}</li>
+                        </ul>
                         <h3>Product Detail</h3>	
                         <hr class="soft"/>
-                        <div class="well">
-                            <h:form class="form-horizontal">
+                        <div class="row">	  
+                            <div id="gallery" class="span3">
 
-                                <h:panelGrid columns="1">
-                                    <h:graphicImage style="width: 150px; height: 130px;" value="#{productSearchController.product.imageURL}" alt="Product_Image"/>
-                                    <h:outputText value="#{productSearchController.product.name}"/>
-                                    <h:outputText value="#{productSearchController.product.price}"/>
-                                    <h:outputText value="#{productSearchController.product.description}"/>
-                                </h:panelGrid>
-                                <h:commandLink value="Add to cart" action="#{purchaseOrderController.addToCart(productSearchController.product.id)}"/>
-                            </h:form>
+                                <a href="#{productSearchController.product.imageURL}" title="#{productSearchController.product.name}">
+                                    <img src="#{productSearchController.product.imageURL}" width="100%" alt="#{productSearchController.product.name}"/>
+                                </a>
+
+                            </div>
+                            <div class="span6">
+                                <h3>#{productSearchController.product.name}</h3>
+
+                                <hr class="soft"/>
+                                <h:form class="form-horizontal qtyFrm">
+                                    <div class="control-group">
+                                        <label class="control-label"><span>$#{productSearchController.product.price}</span></label>
+                                        <div class="controls">
+                                            <i class=" icon-shopping-cart"></i><h:commandLink class="btn btn-large pull-right" value="Add to cart" action="#{purchaseOrderController.addToCart(productSearchController.product.id)}"/>
+                                        </div>
+                                    </div>
+                                </h:form>
+
+                                <hr class="soft clr"/>
+                                <p>
+                                    #{productSearchController.product.description}
+                                </p>
+
+                                <hr class="soft"/>
+                            </div>
+
                         </div>
                     </div>
                 </div>

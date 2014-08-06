@@ -1,44 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
+ * @author Guest
  * @author TalakB
  */
 @Entity
 @Table(name = "WAIVER")
+@NamedQueries({
+    @NamedQuery(name = "Waiver.findAllWaivers", query = "from Waiver w")
+})
 public class Waiver implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long wavierId;
-
-    private String reason;
-
-    @ManyToOne
-    private Customer customer;
-
-    @ManyToOne
-    private Faculty submittedTo;
+    private Long id;
     
-    private boolean approved; 
+    private String reason;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date requestDate = new Date();
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Users user;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Section section;
+    public enum statusType {
+        APPROVED, PENDING, NOTAPPROVED;
+    }
+    private statusType status;
 
-    public Waiver() {
+    public Long getId() {
+        return id;
     }
 
-    public Long getWavierId() {
-        return wavierId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setWavierId(Long wavierId) {
-        this.wavierId = wavierId;
+    public statusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(statusType status) {
+        this.status = status;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
     }
 
     public String getReason() {
@@ -49,32 +89,17 @@ public class Waiver implements Serializable {
         this.reason = reason;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Date getRequestDate() {
+        return requestDate;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setRequestDate(Date requestDate) {
+        this.requestDate = requestDate;
     }
 
-    public Faculty getSubmittedTo() {
-        return submittedTo;
+    public void addCustSec(Users customer, Section section) {
+        this.user = customer;
+        this.section = section;
     }
-
-    public void setSubmittedTo(Faculty submittedTo) {
-        this.submittedTo = submittedTo;
-    }
-
-    public boolean isApproved() {
-        return approved;
-    }
-
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
-    
-    
-    
-    
 
 }

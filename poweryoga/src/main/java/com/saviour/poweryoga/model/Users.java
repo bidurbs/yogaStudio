@@ -55,10 +55,25 @@ public class Users implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Address address;
 
+    @Column(name = "Street")
+    private String street;
+
+    @Column(name = "City")
+    private String city;
+
+    @Column(name = "State")
+    private String state;
+
+    @Column(name = "Zip")
+    private String zip;
+
+    @Column(name = "Country")
+    private String country;
+    
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Role role;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Section> sections = new ArrayList<>();
 
     public Users() {
@@ -129,7 +144,7 @@ public class Users implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+    
     public Role getRole() {
         return role;
     }

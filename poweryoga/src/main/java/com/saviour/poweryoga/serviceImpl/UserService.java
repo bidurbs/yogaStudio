@@ -25,12 +25,16 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserDAO userDao;
-	
-	 @Autowired
-    private CRUDFacadeImpl crudfacade; 
+
+    @Autowired
+    private CRUDFacadeImpl crudfacade;
 
     //for password encription 
-    private PasswordService encpass = new PasswordService();
+   // private PasswordService encpass = new PasswordService();
+
+    private String errorMsg = null;
+
+    private String successMsg = null;
 
     /**
      * Save the user and return Users object if it is saved successfully.
@@ -54,10 +58,12 @@ public class UserService implements IUserService {
         }
     }
 
+    @Override
     public List<Customer> findAllCustomer() {
         return userDao.findAllCustomer();
     }
 
+    @Override
     public Customer findCustomerById(long customerId) {
         return userDao.findCustomerById(customerId);
     }
@@ -80,13 +86,18 @@ public class UserService implements IUserService {
      */
     @Override
     public Users authenticateUser(Users user) {
-        Map<String, String> paramaters = new HashMap<>(2);
-        paramaters.put("uemail", user.getEmail());
-        paramaters.put("upass", user.getPassword());
+        try {
+            Map<String, String> paramaters = new HashMap<>(2);
+            paramaters.put("uemail", user.getEmail());
+            paramaters.put("upass", user.getPassword());
 
-        List authUser = crudfacade.findWithNamedQuery("User.authenticateUser", paramaters);
+            List authUser = crudfacade.findWithNamedQuery("User.authenticateUser", paramaters);
 
-        return (Users) authUser.get(0);
+            return (Users) authUser.get(0);
+        } catch (Exception ex) {
+            return null;
+
+        }
     }
 
 }
