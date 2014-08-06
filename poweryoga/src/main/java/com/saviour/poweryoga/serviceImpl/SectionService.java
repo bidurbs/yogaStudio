@@ -8,6 +8,7 @@ package com.saviour.poweryoga.serviceImpl;
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.ISectionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SectionService implements ISectionService {
-//
-//    @Autowired
-//    private ISectionDAO sectionDao;
-//
-//    @Autowired
-//    private ICourseDAO courseDao;
 
     @Autowired
     private CRUDFacadeImpl crudfacade;
@@ -37,34 +32,11 @@ public class SectionService implements ISectionService {
      *
      * @param section
      */
+    @Override
     public void saveSection(Section section) {
         crudfacade.create(section);
-        //sectionDao.save(section);
     }
 
-//    public List<Section> getAllSections() {
-//        return sectionDao.getAll();
-//    }
-//
-//    public void updateSection(Section section) {
-//        sectionDao.update(section);
-//    }
-//
-//    public Section getSectionById(int Id) {
-//        return sectionDao.get(Id);
-//    }
-//
-//    public void deleteSection(int Id) {
-//        sectionDao.delete(Id);
-//    }
-//
-//    public List<Section> listSectionByCourseId(int Id) {
-//        return sectionDao.listSectionByCourseId(Id);
-//    }
-//
-//    public List<Course> getAllCourses() {
-//        return courseDao.getAll();
-//    }
     @Override
     public List<Section> getAllSections() {
         return crudfacade.findWithNamedQuery("Section.findAll");
@@ -98,6 +70,11 @@ public class SectionService implements ISectionService {
     @Override
     public List<Course> getAllCourses() {
         return crudfacade.findWithNamedQuery("Course.findAll");
+    }
+
+    @Override
+    public Boolean checkCustomerEnrolled(Section section, Users customer) {
+        return true;
     }
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -45,6 +46,9 @@ public class Section implements Serializable {
 
     @ManyToMany(mappedBy = "sections")
     private List<Users> users = new ArrayList<>();
+    
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private List<Users> withdrawalList;
 
     public Section() {
     }
@@ -104,5 +108,14 @@ public class Section implements Serializable {
     public void setUsers(List<Users> users) {
         this.users = users;
     }
+    
+    public List<Users> getWithdrawalList() {
+        return withdrawalList;
+    }
+
+    public void setWithdrawalList(List<Users> withdrawalList) {
+        this.withdrawalList = withdrawalList;
+    }
+
 
 }

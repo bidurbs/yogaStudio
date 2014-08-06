@@ -7,6 +7,7 @@ package com.saviour.poweryoga.serviceI;
 
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.model.Users;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public interface ISectionService {
     public List<Section> listSectionByCourseId(Long Id);
 
     public List<Course> getAllCourses();
+
+    public Boolean checkCustomerEnrolled(Section section, Users customer);
     
 
 }
