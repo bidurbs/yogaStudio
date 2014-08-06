@@ -1,7 +1,6 @@
 package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
-import com.saviour.poweryoga.daoI.IProductDAO;
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.serviceI.IProductService;
 import java.util.HashMap;
@@ -22,12 +21,6 @@ public class ProductService implements IProductService {
 
     @Autowired
     private CRUDFacadeImpl crudfacade;
-
-    public void deleteProduct(Long Id) {
-        //  productDao.delete(Id);
-        Product prod = (Product) crudfacade.read(Id, Product.class);
-        crudfacade.delete(prod);
-    }
 
     /**
      * This method will return list of product matched with the parameter name
