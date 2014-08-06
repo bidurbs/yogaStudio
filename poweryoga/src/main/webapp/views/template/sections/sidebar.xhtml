@@ -8,18 +8,16 @@
                 <li><a href="${facesContext.externalContext.requestContextPath}#{SectionController.displaySection(course.id)}">${course.courseName}</a></li>
             </ui:repeat>
             
-            <li><a href="#">SHIRTS [14]</a></li>
-            
             <ui:repeat value="#{indexController.listOfFeaturedProducts}" var="featured">
             <li>
                 <div class="thumbnail">
-                    <img src="resources/products/1.jpg" alt="" />
+                    <img src="${featured.imageURL}" alt="${featured.name}" />
                     <div class="caption">
                         <h5>${featured.name}</h5>
                         <p> 
                             Lorem Ipsum is simply dummy text. 
                         </p>
-                        <!--<h4><a class="btn" href="product_details.jsp">VIEW</a> <span class="pull-right">$222.00</span></h4>-->
+                        <h4><a class="btn" href="${facesContext.externalContext.requestContextPath}#{productSearchController.viewProductDetail(product)}">VIEW</a> <span class="pull-right">$${featured.price}</span></h4>
                     </div>
                 </div>
             </li>
