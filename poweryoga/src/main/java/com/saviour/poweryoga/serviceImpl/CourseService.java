@@ -59,14 +59,13 @@ public class CourseService implements ICourseService {
         Map<String, String> paramaters = new HashMap<>(1);
         paramaters.put("cname", cname);
         List course = crudfacade.findWithNamedQuery("Course.findByName", paramaters);
-
         return (Course) course.get(0);
 
     }
 
     @Override
     public void saveCourse(Course course) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        crudfacade.create(course);
     }
 
     @Override

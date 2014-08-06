@@ -3,6 +3,7 @@ package com.saviour.poweryoga.controller;
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
+import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
@@ -109,6 +110,11 @@ public class UserController implements Serializable {
      * @throws Exception
      */
     public String loginUser() throws Exception {
+        
+        //encrypt password to check it against the DB. 
+        String encPass = PasswordService.encrypt(user.getPassword());
+        user.setPassword(encPass);
+
         try {
             user = userService.authenticateUser(user);
             //check if the user is registered and authenticated 
@@ -120,12 +126,14 @@ public class UserController implements Serializable {
                 int userRoleCode = user.getRole().getUserCode();
                 //admin
                 if (userRoleCode == ROLE_ADMIN_CODE) {
+                    isAdmin = true;
                     return ("/views/admin/adminHome.xhtml?faces-redirect=true");
                 } //faculty user 
                 else if (userRoleCode == ROLE_FACULTY_CODE) {
                     // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
+                    isFaculty = true;
                     return ("/views/faculty/facultyHome.xhtml?faces-redirect=true");
 
                 } //vedor user
@@ -133,6 +141,7 @@ public class UserController implements Serializable {
                     // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
+                    isCustomer = true;
                     return ("/views/customer/customerHome.xhtml?faces-redirect=true");
                 }
             }

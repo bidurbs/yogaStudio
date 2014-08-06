@@ -20,9 +20,16 @@
                     <h:form class="form-horizontal">
 
                         <div class="control-group">
+                            <label class="control-label" for="coursecode">Course Code <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="courseName" value="#{courseController.course.id}" />
+                            </div>
+                            <h:message for="courseCourse"/>
+                        </div>
+                        <div class="control-group">
                             <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName" value="#{CourseController.course.courseName}" />
+                                <h:inputText id="courseName" value="#{courseController.course.courseName}" />
                             </div>
                             <h:message for="courseName"/>
                         </div>
@@ -30,22 +37,22 @@
                         <div class="control-group">
                             <label class="control-label" for="description">Description <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputTextarea id="description" value="#{CourseController.course.description}" />
+                                <h:inputTextarea id="description" value="#{courseController.course.description}" />
                             </div>
                             <h:message for="description"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseFee" value="#{CourseController.course.courseFee}" />
+                                <h:inputText id="courseFee" value="#{courseController.course.courseFee}" />
                             </div>
                             <h:message for="courseFee"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{CourseController.saveCourse()}"/>
+                                <h:commandButton class="btn btn-large" value="Save" action="#{courseController.saveCourse()}"/>
                                 <!--<input class="btn btn-large" type="submit" value="Register" />-->
                             </div>
                         </div>
