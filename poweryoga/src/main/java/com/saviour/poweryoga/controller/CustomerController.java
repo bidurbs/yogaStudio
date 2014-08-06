@@ -1,5 +1,6 @@
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.model.Address;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
@@ -29,6 +30,8 @@ public class CustomerController implements Serializable {
     
     private Customer customer;
     
+    private Address address;
+    
     private String errorMsg = null;
     
     private String successMsg = null;
@@ -37,6 +40,7 @@ public class CustomerController implements Serializable {
     
     public CustomerController() {
         customer = new Customer();
+        address=new Address();
         customers = new ArrayList<>();
         
     }
@@ -49,6 +53,7 @@ public class CustomerController implements Serializable {
     public void saveCustomer() {
         try {
             if (findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
+                customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
                 userService.saveUser(customer);
                 successMsg = "Customer " + customer.getFirstName() + " saved successfully";
@@ -143,6 +148,14 @@ public class CustomerController implements Serializable {
     
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
     
 }

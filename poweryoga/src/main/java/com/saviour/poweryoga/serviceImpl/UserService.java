@@ -67,8 +67,9 @@ public class UserService implements IUserService {
         return userDao.findCustomerByEmail(email);
     }
 
+    @Override
     public void updateUser(Users user) {
-        userDao.updateUser(user);
+        crudfacade.update(user);
     }
 
     /**

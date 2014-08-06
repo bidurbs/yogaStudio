@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -23,12 +24,12 @@ import javax.persistence.UniqueConstraint;
  * @version 1.0.0
  */
 @Entity
-@Table(name = "USERS", uniqueConstraints=
-           @UniqueConstraint(columnNames = {"email"}))
+@Table(name = "USERS", uniqueConstraints
+        = @UniqueConstraint(columnNames = {"email"}))
 @NamedQueries({
     @NamedQuery(name = "Users.findAllCustomer", query = "from Customer c"),
     @NamedQuery(name = "Users.findCustomerByEmail", query = "from Customer c where c.email=:email"),
-	 @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass")
+    @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass")
 })
 public class Users implements Serializable {
 
@@ -51,20 +52,8 @@ public class Users implements Serializable {
     @Column(name = "Phone")
     private String phone;
 
-    @Column(name = "Street")
-    private String street;
-    
-    @Column(name ="City")
-    private String city;
-
-    @Column(name = "State")
-    private String state;
-
-    @Column(name = "Country")
-    private String country;
-
-    @Column(name = "Zip")
-    private String zip;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Address address;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Role role;
@@ -75,18 +64,22 @@ public class Users implements Serializable {
     public Users() {
     }
 
-    public Users(String firstName, String lastName, String email, String password, String phone, String Street, String state, String city, String country, String zip, Role role) {
+    public Users(String firstName, String lastName, String email, String password, String phone, Address address, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
-        this.street = Street;
-        this.state = state;
-        this.city = city;
-        this.country = country;
-        this.zip = zip;
+        this.address = address;
         this.role = role;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public long getUserId() {
@@ -137,38 +130,6 @@ public class Users implements Serializable {
         this.phone = phone;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getCity(){
-        return city;
-    }
-    
-    public void setCity(String City){
-        this.city = City;
-    }
-    
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -184,12 +145,5 @@ public class Users implements Serializable {
     public void setSections(List<Section> sections) {
         this.sections = sections;
     }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
+    
 }

@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author bidur
  * @version 0.0.1
  */
-@Named("CourseController")
+@Named(value="CourseController")
 @SessionScoped
 public class CourseController implements Serializable {
 
