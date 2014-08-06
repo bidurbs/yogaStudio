@@ -13,15 +13,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 /**
  *
  * @author Guest
+ * @author TalakB
  */
 @Entity
 @Table(name = "WAIVER")
+@NamedQueries({
+    @NamedQuery(name = "Waiver.findAllWaivers", query = "from Waiver w")
+})
 public class Waiver implements Serializable {
 
     @Id
@@ -38,10 +44,8 @@ public class Waiver implements Serializable {
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Section section;
-
     public enum statusType {
-
-        approved, pending, notapproved;
+        APPROVED, PENDING, NOTAPPROVED;
     }
     private statusType status;
 

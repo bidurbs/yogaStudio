@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.daoI.IProductDAO;
 import com.saviour.poweryoga.model.Product;
+import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IProductService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +22,7 @@ public class ProductService implements IProductService {
 
     @Autowired
     private IProductDAO productDao;
-    
-    @Autowired
+
     private CRUDFacadeImpl crudfacade;
 
     @Transactional
@@ -46,8 +43,9 @@ public class ProductService implements IProductService {
         return productDao.get(Id);
     }
 
-    public void deleteProduct(int Id) {
-        productDao.delete(Id);
+    public void deleteProduct(Product product) {
+        //  productDao.delete(Id);
+        crudfacade.delete(product);
     }
 
     /**
@@ -57,7 +55,15 @@ public class ProductService implements IProductService {
      * @return Product List
      */
     public List<Product> searchProduct(String name) {
-        return productDao.searchProduct(name);
+
+        try {
+            Map<String, String> paramaters = new HashMap<>(1);
+            paramaters.put("pname", name);
+            return crudfacade.findWithNamedQuery("Product.searchProduct", paramaters);
+        } catch (Exception ex) {
+            return null;
+
+        }
     }
 
     /**
