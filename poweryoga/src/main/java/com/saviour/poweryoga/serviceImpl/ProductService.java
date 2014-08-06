@@ -3,7 +3,6 @@ package com.saviour.poweryoga.serviceImpl;
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.daoI.IProductDAO;
 import com.saviour.poweryoga.model.Product;
-import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IProductService;
 import java.util.HashMap;
 import java.util.List;
@@ -18,34 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @version 0.0.1
  */
 @Service
+@Transactional
 public class ProductService implements IProductService {
 
     @Autowired
-    private IProductDAO productDao;
-
     private CRUDFacadeImpl crudfacade;
 
-    @Transactional
-    public void saveProduct(Product product) {
-        productDao.save(product);
-    }
-
-    @Transactional
-    public List<Product> getAllProducts() {
-        return productDao.getAll();
-    }
-
-    public void updateProduct(Product product) {
-        productDao.update(product);
-    }
-
-    public Product getProductById(int Id) {
-        return productDao.get(Id);
-    }
-
-    public void deleteProduct(Product product) {
+    public void deleteProduct(Long Id) {
         //  productDao.delete(Id);
-        crudfacade.delete(product);
+        Product prod = (Product) crudfacade.read(Id, Product.class);
+        crudfacade.delete(prod);
     }
 
     /**
@@ -54,6 +35,7 @@ public class ProductService implements IProductService {
      * @param name Name of the product
      * @return Product List
      */
+    @Override
     public List<Product> searchProduct(String name) {
 
         try {
@@ -75,6 +57,31 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getFeaturedProducts() {
         return crudfacade.findWithNamedQuery("Product.findAllFeatured");
+    }
+
+    @Override
+    public void saveProduct(Product product) {
+        crudfacade.create(product);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return crudfacade.findWithNamedQuery("Product.findAllProducts");
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        crudfacade.update(product);
+    }
+
+    @Override
+    public Product getProductById(Long Id) {
+        return (Product) crudfacade.read(Id, Product.class);
+    }
+
+    @Override
+    public void deleteProduct(Product product) {
+        crudfacade.delete(product);
     }
 
 }

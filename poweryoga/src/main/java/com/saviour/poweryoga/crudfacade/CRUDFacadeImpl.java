@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  * CRUD facade
  *
  * @author TalakB
+ * @version 0.0.1
  */
 @Component
 public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {

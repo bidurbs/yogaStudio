@@ -79,7 +79,7 @@ public class PurchaseOrderController implements Serializable {
         productQty = 1;
     }
 
-    public String addToCart(int productId) {
+    public String addToCart(Long productId) {
 
         product = productService.getProductById(productId);
 
