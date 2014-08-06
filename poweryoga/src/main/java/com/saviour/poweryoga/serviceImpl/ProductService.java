@@ -36,7 +36,7 @@ public class ProductService implements IProductService {
     }
 
     public void updateProduct(Product product) {
-        productDao.update(product);
+        crudfacade.update(product);
     }
 
     public Product getProductById(int Id) {
