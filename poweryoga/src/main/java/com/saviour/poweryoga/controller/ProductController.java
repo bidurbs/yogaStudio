@@ -69,7 +69,7 @@ public class ProductController implements Serializable {
      * @return 
      */
     public String deleteProduct(int Id) {
-        ProductService.deleteProduct(Id);
+        ProductService.deleteProduct(product);
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 

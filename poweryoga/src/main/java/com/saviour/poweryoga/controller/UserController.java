@@ -25,21 +25,41 @@ public class UserController implements Serializable {
     private Role userRole;
 
     //to keep user relaed data on the session 
-    private HttpSession activeSession; 
+    private HttpSession activeSession;
 //    = (HttpSession) FacesContext
 //            .getCurrentInstance().getExternalContext().getSession(true);
 
     public static final int ROLE_ADMIN_CODE = 1;
     public static final int ROLE_FACULTY_CODE = 2;
     public static final int ROLE_CUSTOMER_CODE = 3;
-    
+
     private boolean isAdmin;
     private boolean isFaculty;
     private boolean isCustomer;
 
+    private String errorMsg = null;
+
+    private String successMsg = null;
+
     public UserController() {
         user = new Users();
         userRole = new Role();
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
     }
 
     public Users getUser() {
@@ -81,8 +101,6 @@ public class UserController implements Serializable {
     public void setIsCustomer(boolean isCustomer) {
         this.isCustomer = isCustomer;
     }
-    
-    
 
     /**
      * Authenticate user and redirect to the respective home page based on role.
@@ -91,36 +109,41 @@ public class UserController implements Serializable {
      * @throws Exception
      */
     public String loginUser() throws Exception {
+        try {
+            user = userService.authenticateUser(user);
+            //check if the user is registered and authenticated 
+            if (user != null) {
+                //set the authenticated user info. on the session  
+                setUserSessionData(user);
 
-        user = userService.authenticateUser(user);
-        //check if the user is registered and authenticated 
-        if (user != null) {
-            //set the authenticated user info. on the session  
-            setUserSessionData(user);
-
-            //check user code 
-            int userRoleCode = user.getRole().getUserCode();
-            //admin
-            if (userRoleCode == ROLE_ADMIN_CODE) {
-                return ("/views/admin/adminHome.xhtml?faces-redirect=true");
-            } //faculty user 
-            else if (userRoleCode == ROLE_FACULTY_CODE) {
-                // activeSession.setAttribute("loggedUser", user);
+                //check user code 
+                int userRoleCode = user.getRole().getUserCode();
+                //admin
+                if (userRoleCode == ROLE_ADMIN_CODE) {
+                    return ("/views/admin/adminHome.xhtml?faces-redirect=true");
+                } //faculty user 
+                else if (userRoleCode == ROLE_FACULTY_CODE) {
+                    // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
-                return ("/views/faculty/facultyHome.xhtml?faces-redirect=true");
+                    return ("/views/faculty/facultyHome.xhtml?faces-redirect=true");
 
-            } //vedor user
-            else if (userRoleCode == ROLE_CUSTOMER_CODE) {
-                // activeSession.setAttribute("loggedUser", user);
+                } //vedor user
+                else if (userRoleCode == ROLE_CUSTOMER_CODE) {
+                    // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
-                return ("/views/customer/customerHome.xhtml?faces-redirect=true");
-
+                    return ("/views/customer/customerHome.xhtml?faces-redirect=true");
+                }
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            errorMsg = "Login failed.";
+            successMsg = null;
         }
-        //username/password error 
         return null;
+        //username/password error 
+
     }
 
     /**
@@ -129,9 +152,9 @@ public class UserController implements Serializable {
      * @param user
      */
     public void setUserSessionData(Users user) {
-        
+
         activeSession = (HttpSession) FacesContext
-            .getCurrentInstance().getExternalContext().getSession(true);        
+                .getCurrentInstance().getExternalContext().getSession(true);
         activeSession.setAttribute("loggedUserId", user.getUserId());
         activeSession.setAttribute("loggedUserFname", user.getFirstName());
     }

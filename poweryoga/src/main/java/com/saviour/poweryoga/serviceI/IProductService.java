@@ -17,7 +17,7 @@ public interface IProductService {
 
     public Product getProductById(int Id);
 
-    public void deleteProduct(int Id);
+    public void deleteProduct(Product product);
 
     public List<Product> searchProduct(String name);
 

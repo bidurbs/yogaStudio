@@ -25,109 +25,31 @@
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>#{customerController.errorMsg}</strong>
                     </div>
-                 </h:panelGrid>
+                </h:panelGrid>
             </ui:define>
             <ui:define name="content">
-                <div class="row">
-                    <div class="span12">
-                        <h3>Registration</h3>	
-                        <hr class="soft"/>
-                        <div class="well">
-                            <h:form class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="firstName">First Name <sup>*</sup></label>
-                                    <div class="controls">
-                                        <h:inputText id="firstName" value="#{customerController.customer.firstName}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="firstName"/>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="lastName">Last Name <sup>*</sup></label>
-                                    <div class="controls">
-                                        <h:inputText id="lastName" value="#{customerController.customer.lastName}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="lastName"/>
-                                </div>
+                <h:form>
+                    <h:panelGrid columns="3">
+                        Date:
+                        <h:inputText id="requestDate" value="#{waiverController.waiver.requestDate}">
+                            <f:convertDateTime type="date"/>
+                        </h:inputText>
+                        <h:message for="requestDate"/>
+                        Course ID:
+                        <h:selectOneMenu id="sections" value="#{waiverController.sectionId}" >
+                            <f:selectItems value="#{waiverController.sections}" var="waive" 
+                                           itemValue="#{waive.id}" itemLabel="#{waive.course.courseName}"/>
+                        </h:selectOneMenu>
+                        <h:message for="sections"/>
+                        Reason:
+                        <h:inputTextarea cols="30" value="#{waiverController.waiver.reason}"/>
+                        <h:message for="sections"/>              
 
-                                <div class="control-group">
-                                    <label class="control-label" for="email">Email <sup>*</sup></label>
-                                    <div class="controls">
-                                        <h:inputText id="email" value="#{customerController.customer.email}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="email"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="password">Password <sup>*</sup></label>
-                                    <div class="controls">
-                                        <h:inputSecret id="password" value="#{customerController.customer.password}" maxlength="50" required="true"/>
-                                    </div>
-                                    <h:message for="password"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="repassword">Re-Password <sup>*</sup></label>
-                                    <div class="controls">
-                                        <h:inputSecret id="repassword" maxlength="50" value="#{customerController.rePassword}" required="true"/>
-                                    </div>
-                                    <h:message for="repassword"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="phone">Phone </label>
-                                    <div class="controls">
-                                        <h:inputText id="phone" value="#{customerController.customer.phone}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="phone"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="street">Street </label>
-                                    <div class="controls">
-                                        <h:inputText id="street" value="#{customerController.customer.street}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="street"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="city">City </label>
-                                    <div class="controls">
-                                        <h:inputText id="city" value="#{customerController.customer.city}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="city"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="state">State </label>
-                                    <div class="controls">
-                                        <h:inputText id="state" value="#{customerController.customer.state}" maxlength="50"/>
-                                    </div>
-                                    <h:message for="state"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label" for="country">Country </label>
-                                    <div class="controls">
-                                        <h:selectOneMenu id="country" value="#{customerController.customer.country}">
-                                            <f:selectItem itemLabel="United States" itemValue="United States"/>
-                                            <f:selectItem itemLabel="Canada" itemValue="Canada"/>
-                                            <f:selectItem itemLabel="Greenland" itemValue="Greenland"/>
-                                            <f:selectItem itemLabel="Mexico" itemValue="Mexico"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                    <h:message for="country"/>
-                                </div>
-
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <h:commandButton class="btn btn-small" value="Register" action="#{customerController.saveCustomer()}"/>
-                                        <h:commandButton class="btn btn-small" value="SendMailTest" immediate="true" action="#{customerController.sendEmail()}"/>
-                                    </div>
-                                </div>
-                            </h:form>
-                        </div>
-                    </div>
-                </div>
+                        &nbsp;
+                        <h:commandButton value="Waive" action="#{waiverController.waiveSection()}"/>
+                    </h:panelGrid>
+                    <h:outputText value="#{waiverController.sectionId}"/>
+                </h:form>
             </ui:define>
         </ui:composition>
     </body>
