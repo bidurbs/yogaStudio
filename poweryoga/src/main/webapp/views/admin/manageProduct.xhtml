@@ -46,7 +46,8 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="#{productController.editProduct(item.id)}" value="Edit" /> | <h:commandLink action="#{productController.deleteProduct(item.id)}" value="Delete"/>
+                                <h:commandLink action="#{productController.editProduct(item.id)}" value="Edit" /> | 
+                                <h:commandLink action="#{productController.deleteProduct(item.id)}" value="Delete"/>
                             </h:form>
                         </h:column>
                     </h:dataTable>

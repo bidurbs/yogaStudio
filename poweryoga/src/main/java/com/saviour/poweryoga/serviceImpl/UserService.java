@@ -5,7 +5,6 @@ import com.saviour.poweryoga.daoI.IUserDAO;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
-import com.saviour.poweryoga.util.PasswordService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

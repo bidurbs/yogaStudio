@@ -24,7 +24,9 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT")
 @NamedQueries({
         @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname"),
-        @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by id desc limit 2")
+        @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by id desc limit 2"),
+        @NamedQuery(name = "Product.findAllProducts", query = "FROM Product p")        
+        
 })
 public class Product implements Serializable {
 
@@ -32,7 +34,7 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
 
@@ -54,11 +56,11 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
