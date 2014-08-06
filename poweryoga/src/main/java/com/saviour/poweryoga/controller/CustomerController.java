@@ -1,5 +1,6 @@
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.model.Address;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.serviceI.IRoleService;
@@ -27,14 +28,14 @@ public class CustomerController implements Serializable {
 
     @Autowired
     private IUserService userService;
-    
-    @Autowired 
+
+    @Autowired
     private IRoleService roleService;
 
     private List<Customer> customers;
 
     private Customer customer;
-
+    private Address address;
     private String errorMsg = null;
 
     private String successMsg = null;
@@ -43,22 +44,18 @@ public class CustomerController implements Serializable {
 
     public CustomerController() {
         customer = new Customer();
+        address = new Address();
         customers = new ArrayList<>();
 
     }
 
-//    @PostConstruct
-//    public void init() {
-//        customers = userService.findAllCustomer();
-//    }
-
     public void saveCustomer() {
         try {
             if (findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
+                customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
-                
                 Role custRRole = roleService.getRoleByUserCode(UserController.ROLE_CUSTOMER_CODE);
-               
+
                 customer.setRole(custRRole);
                 userService.saveUser(customer);
                 successMsg = "Customer " + customer.getFirstName() + " saved successfully";
@@ -153,6 +150,14 @@ public class CustomerController implements Serializable {
 
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
 }

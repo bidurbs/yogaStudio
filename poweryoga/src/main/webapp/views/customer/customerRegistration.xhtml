@@ -84,7 +84,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="street">Street </label>
                                     <div class="controls">
-                                        <h:inputText id="street" value="#{customerController.customer.street}" maxlength="50"/>
+                                        <h:inputText id="street" value="#{customerController.address.street}" maxlength="50"/>
                                     </div>
                                     <h:message for="street"/>
                                 </div>
@@ -92,7 +92,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="city">City </label>
                                     <div class="controls">
-                                        <h:inputText id="city" value="#{customerController.customer.city}" maxlength="50"/>
+                                        <h:inputText id="city" value="#{customerController.address.city}" maxlength="50"/>
                                     </div>
                                     <h:message for="city"/>
                                 </div>
@@ -100,15 +100,23 @@
                                 <div class="control-group">
                                     <label class="control-label" for="state">State </label>
                                     <div class="controls">
-                                        <h:inputText id="state" value="#{customerController.customer.state}" maxlength="50"/>
+                                        <h:inputText id="state" value="#{customerController.address.state}" maxlength="50"/>
                                     </div>
                                     <h:message for="state"/>
+                                </div>
+                                
+                                <div class="control-group">
+                                    <label class="control-label" for="state">Zip </label>
+                                    <div class="controls">
+                                        <h:inputText id="zip" value="#{customerController.address.zip}" maxlength="5"/>
+                                    </div>
+                                    <h:message for="zip"/>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label" for="country">Country </label>
                                     <div class="controls">
-                                        <h:selectOneMenu id="country" value="#{customerController.customer.country}">
+                                        <h:selectOneMenu id="country" value="#{customerController.address.country}">
                                             <f:selectItem itemLabel="United States" itemValue="United States"/>
                                             <f:selectItem itemLabel="Canada" itemValue="Canada"/>
                                             <f:selectItem itemLabel="Greenland" itemValue="Greenland"/>
@@ -121,7 +129,6 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <h:commandButton class="btn btn-small" value="Register" action="#{customerController.saveCustomer()}"/>
-                                        <h:commandButton class="btn btn-small" value="SendMailTest" immediate="true" action="#{customerController.sendEmail()}"/>
                                     </div>
                                 </div>
                             </h:form>

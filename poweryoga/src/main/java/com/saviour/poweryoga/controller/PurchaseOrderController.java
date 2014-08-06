@@ -1,5 +1,7 @@
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.model.Address;
+import com.saviour.poweryoga.model.CreditCard;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.model.PurchaseOrder;
@@ -40,8 +42,7 @@ public class PurchaseOrderController implements Serializable {
 
     @Autowired
     private IProductService productService;
-    
-    
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -63,9 +64,18 @@ public class PurchaseOrderController implements Serializable {
 
     private String successMsg = null;
 
+    private Address billingAddress;
+
+    private Address shippingAddress;
+
+    private CreditCard creditCard;
+
     public PurchaseOrderController() {
         shoppingCart = new ShoppingCart();
         purchaseOrder = new PurchaseOrder();
+        billingAddress = new Address();
+        shippingAddress = new Address();
+        creditCard = new CreditCard();
         productQty = 1;
     }
 
@@ -132,19 +142,36 @@ public class PurchaseOrderController implements Serializable {
         updateShoppingCartTotalCost();
     }
 
-    public void checkout() {
-        PurchaseOrder savedOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
-        if (savedOrder != null) {
-            
+    public String checkout() {
+        purchaseOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
+        if (purchaseOrder != null) {
+
             //EMAIL SENDING
-            EmailManager.sendEmail(mailSender,"Your shopping receipt", "Thank you for shopping", "shahin.kuet@gmail.com");
-            
+            EmailManager.sendEmail(mailSender, "Your shopping receipt", "Thank you for shopping", "shahin.kuet@gmail.com");
+
             successMsg = "Thank you for shopping with us. Please check your email for order detail";
             errorMsg = null;
-            return;
+            return "/views/customer/customerAddress.jsf?faces-redirect=true";
         }
         successMsg = null;
         errorMsg = "Ooops !!! something went wrong confirming your order";
+        return null;
+    }
+
+    public Address getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public Product getProduct() {
@@ -217,6 +244,41 @@ public class PurchaseOrderController implements Serializable {
 
     public void setSuccessMsg(String successMsg) {
         this.successMsg = successMsg;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
+    public String saveAddress() {
+
+        customer = getCurrentCustomer();
+        customer.setAddress(billingAddress);
+        customerService.updateUser(customer);
+
+        return "/views/customer/cardInformation.jsf?faces-redirect=true";
+    }
+
+    public String saveCreditCard() {
+        customer = getCurrentCustomer();
+        creditCard.setCustomer(customer);
+        customer.addCreditCard(creditCard);
+        customerService.updateUser(customer);
+
+        return "/views/customer/orderDetail.jsf?faces-redirect=t                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          rue";
+    }
+
+    public Customer getCurrentCustomer() {
+        HttpSession activeSession = (HttpSession) FacesContext
+                .getCurrentInstance().getExternalContext().getSession(true);
+
+        Long customerId = (Long) activeSession.getAttribute("loggedUserId");
+
+        return customerService.findCustomerById(customerId);
     }
 
 }
