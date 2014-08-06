@@ -10,6 +10,7 @@ import javax.persistence.TransactionRequiredException;
 /**
  *
  * @author TalakB
+ * @version 0.0.1 
  */
 public interface PoweryogaEntityFacade<T> {
 
