@@ -1,36 +1,28 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
     <div id="sidebar" class="span3">
         <br class="clr"/>
         <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
-            <li class="subMenu"><a> WATCHES [840] </a></li>
-            <li><a href="/products">SHOES [18]</a></li>
-            <li><a href="/products">PANTS [58]</a></li>
-            <li><a href="/products">SHIRTS [14]</a></li>
+            <ui:repeat value="#{indexController.listOfCourses}" var="course">
+                <li><a href="${facesContext.externalContext.requestContextPath}#{SectionController.displaySection(course.id)}">${course.courseName}</a></li>
+            </ui:repeat>
+            
+            <ui:repeat value="#{indexController.listOfFeaturedProducts}" var="featured">
             <li>
                 <div class="thumbnail">
-                    <img src="resources/products/1.jpg" alt="" />
+                    <img src="${featured.imageURL}" alt="${featured.name}" />
                     <div class="caption">
-                        <h5>Product name</h5>
+                        <h5>${featured.name}</h5>
                         <p> 
                             Lorem Ipsum is simply dummy text. 
                         </p>
-                        <!--<h4><a class="btn" href="product_details.jsp">VIEW</a> <span class="pull-right">$222.00</span></h4>-->
+                        <h4><a class="btn" href="${facesContext.externalContext.requestContextPath}#{productSearchController.viewProductDetail(product)}">VIEW</a> <span class="pull-right">$${featured.price}</span></h4>
                     </div>
                 </div>
             </li>
-            <li style="border:0"></li>		
-            <li class="last">
-                <div class="thumbnail">
-                    <img src="resources/products/2.jpg" alt="" />
-                    <div class="caption">
-                        <h5>Product name</h5>
-                        <p> 
-                            Lorem Ipsum is simply dummy text. 
-                        </p>
-                        <!--<h4><a class="btn" href="product_details.jsp">VIEW</a> <span class="pull-right">$222.00</span></h4>-->
-                    </div>
-                </div>
-            </li> 
+            <li style="border:0"></li>
+            </ui:repeat>
         </ul>
     </div>
 </html>

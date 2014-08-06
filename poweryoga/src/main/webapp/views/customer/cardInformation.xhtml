@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+
+    </h:head>
+    <body>
+        <ui:composition template="../template/templateCustomer.xhtml">
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="span12">
+                        <h3>Card Information</h3>	
+                        <hr class="soft"/>
+                        <div class="well">
+                            <h:form class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label" for="holderName">Cardholder Name </label>
+                                    <div class="controls">
+                                        <h:inputText id="holderName" value="#{purchaseOrderController.creditCard.cardholderName}" maxlength="50"/>
+                                    </div>
+                                    <h:message for="holderName"/>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="cardNumber">Card Number </label>
+                                    <div class="controls">
+                                        <h:inputText id="cardNumber" value="#{purchaseOrderController.creditCard.cardNumber}" maxlength="50"/>
+                                    </div>
+                                    <h:message for="cardNumber"/>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="expiryDate">Expiry Date </label>
+                                    <div class="controls">
+                                        <h:inputText id="expiryDate" value="#{purchaseOrderController.creditCard.expiryDate}" maxlength="50"/>
+                                    </div>
+                                    <h:message for="expiryDate"/>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="securityCode">Security Code </label>
+                                    <div class="controls">
+                                        <h:inputText id="securityCode" value="#{purchaseOrderController.creditCard.securityCode}" maxlength="5"/>
+                                    </div>
+                                    <h:message for="securityCode"/>
+                                </div>
+
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <h:commandButton class="btn btn-small" value="Next" action="#{purchaseOrderController.saveCreditCard()}"/>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

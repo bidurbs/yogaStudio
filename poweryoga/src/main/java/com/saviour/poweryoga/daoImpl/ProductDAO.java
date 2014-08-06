@@ -87,4 +87,9 @@ public class ProductDAO implements IProductDAO {
         return products;
     }
 
+    public List<Product> findAllFeatured() {
+        Query q = sessionFactory.getCurrentSession().getNamedQuery("Product.getAllFeatured");
+        return (List<Product>) q.list();
+    }
+
 }

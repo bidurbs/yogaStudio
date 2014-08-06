@@ -23,7 +23,6 @@ public class ProductService implements IProductService {
     @Autowired
     private IProductDAO productDao;
 
-    @Autowired
     private CRUDFacadeImpl crudfacade;
 
     @Transactional
@@ -65,6 +64,17 @@ public class ProductService implements IProductService {
             return null;
 
         }
+    }
+
+    /**
+     * This method will return list of newest 2 products
+     *
+     *
+     * @return Product List
+     */
+    @Override
+    public List<Product> getFeaturedProducts() {
+        return crudfacade.findWithNamedQuery("Product.findAllFeatured");
     }
 
 }

@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
 
         <div class="navbar navbar-fixed-top">
@@ -17,12 +18,16 @@
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/${CourseController.displayCourses()}">Course</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/#{productSearchController.displayProducts()}">Products</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/contact.xhtml">Contact</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
+                            <c:choose>
+                                <c:when test="#{userController.isCustomer}">
+                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
+                                </c:when>
+                            </c:choose>
 
                         </ul>
-                        <h:form class="navbar-search pull-left">                            
+                        <h:form class="navbar-search pull-left" style="width: 400px !important">                            
                             <h:inputText value="#{productSearchController.productName}" class="search-query span5"/>
-                            <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden"/>
+                            <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
                         </h:form>
                         <ul class="nav pull-right">
                             <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
