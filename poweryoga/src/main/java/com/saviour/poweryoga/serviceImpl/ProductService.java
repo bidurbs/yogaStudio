@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.serviceImpl;
 
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.daoI.IProductDAO;
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.serviceI.IProductService;
@@ -23,6 +24,9 @@ public class ProductService implements IProductService {
 
     @Autowired
     private IProductDAO productDao;
+    
+    @Autowired
+    private CRUDFacadeImpl crudfacade;
 
     @Transactional
     public void saveProduct(Product product) {
@@ -54,6 +58,17 @@ public class ProductService implements IProductService {
      */
     public List<Product> searchProduct(String name) {
         return productDao.searchProduct(name);
+    }
+
+    /**
+     * This method will return list of newest 2 products
+     *
+     *
+     * @return Product List
+     */
+    @Override
+    public List<Product> getFeaturedProducts() {
+        return crudfacade.findWithNamedQuery("Product.findAllFeatured");
     }
 
 }

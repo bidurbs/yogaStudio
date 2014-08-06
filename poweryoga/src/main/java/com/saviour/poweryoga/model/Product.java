@@ -17,14 +17,15 @@ import javax.persistence.Table;
 /**
  * This class is for Product and contains Product features.
  *
- * @author TalakB 
+ * @author TalakB
  * @version 0.0.1
  */
 @Entity
-@Table(name="PRODUCT")
-@NamedQueries(
-@NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname")
-)
+@Table(name = "PRODUCT")
+@NamedQueries({
+        @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname"),
+        @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by id desc limit 2")
+})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;

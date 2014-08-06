@@ -21,4 +21,6 @@ public interface IProductService {
 
     public List<Product> searchProduct(String name);
 
+    public List<Product> getFeaturedProducts();
+
 }
