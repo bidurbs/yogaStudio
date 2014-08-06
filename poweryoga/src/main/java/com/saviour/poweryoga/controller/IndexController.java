@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Course;
@@ -30,6 +25,9 @@ public class IndexController implements Serializable {
     @Autowired
     private ICourseService CourseService;
 
+    private String errorMsg = null;
+    private String successMsg = null;
+
     private List<Course> ListOfCourses;
     private List<Product> listOfProducts;
     private List<Product> listOfFeaturedProducts;
@@ -52,10 +50,26 @@ public class IndexController implements Serializable {
         return listOfProducts;
     }
 
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
     public void setListOfProducts(List<Product> listOfProducts) {
         this.listOfProducts = listOfProducts;
     }
-    
+
     public List<Product> getListOfFeaturedProducts() {
         return listOfFeaturedProducts;
     }
@@ -63,7 +77,6 @@ public class IndexController implements Serializable {
     public void setListOfFeaturedProducts(List<Product> listOfFeaturedProducts) {
         this.listOfFeaturedProducts = listOfFeaturedProducts;
     }
-
 
     public List<Product> getFeaturedProducts() {
         listOfFeaturedProducts = ProductService.getFeaturedProducts();

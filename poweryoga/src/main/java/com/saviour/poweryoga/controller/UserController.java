@@ -121,6 +121,7 @@ public class UserController implements Serializable {
             if (user != null) {
                 //set the authenticated user info. on the session  
                 setUserSessionData(user);
+                
 
                 //check user code 
                 int userRoleCode = user.getRole().getUserCode();
@@ -147,7 +148,7 @@ public class UserController implements Serializable {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Login failed.";
+            errorMsg = "Login failed. Please cehck username/password.";
             successMsg = null;
         }
         return null;

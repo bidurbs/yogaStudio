@@ -6,19 +6,22 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
-
     </h:head>
     <body>
         <ui:composition template="template/template.xhtml">
             <ui:define name="successFailure">
-                <div class="alert fade in">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Success</strong>
-                </div>
-                <div class="alert alert-block alert-error fade in">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Failure</strong>
-                </div>
+                <h:panelGrid rendered="#{userController.successMsg != null}">
+                    <div class="alert fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{userController.successMsg}</strong>
+                    </div>
+                </h:panelGrid>
+                <h:panelGrid rendered="#{userController.errorMsg != null}">
+                    <div class="alert alert-block alert-error fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{userController.errorMsg}</strong>
+                    </div>
+                </h:panelGrid>
             </ui:define>
             <ui:define name="content">
                 <h3>Login</h3>	
