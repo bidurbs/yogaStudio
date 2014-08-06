@@ -36,7 +36,6 @@ public class CustomerController implements Serializable {
 
     private Customer customer;
     private Address address;
-
     private String errorMsg = null;
 
     private String successMsg = null;
@@ -55,7 +54,6 @@ public class CustomerController implements Serializable {
             if (findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
                 customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
-
                 Role custRRole = roleService.getRoleByUserCode(UserController.ROLE_CUSTOMER_CODE);
 
                 customer.setRole(custRRole);
@@ -161,4 +159,5 @@ public class CustomerController implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
+
 }

@@ -69,7 +69,7 @@ public class Users implements Serializable {
 
     @Column(name = "Country")
     private String country;
-    
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Role role;
 
@@ -144,7 +144,7 @@ public class Users implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     public Role getRole() {
         return role;
     }
