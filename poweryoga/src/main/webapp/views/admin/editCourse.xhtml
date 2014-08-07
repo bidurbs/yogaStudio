@@ -20,45 +20,39 @@
                         <h:form class="form-horizontal">
                            
                             <div class="control-group">
-                                <label class="control-label" for="name">Product Name <sup>*</sup></label>
+                                <label class="control-label" for="name">Course Code <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="name" value="#{productController.product.name}" />
+                                    <h:inputText id="courseName1" value="#{courseController.course.courseCode}" />
                                 </div>
-                                <h:message for="name"/>
+                                <h:message for="courseCourse"/>
                             </div>
 
                             <div class="control-group">
+                                <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
+                                <div class="controls">
+                                    <h:inputTextarea id="courseName" value="#{courseController.course.courseName}" />
+                                </div>
+                                <h:message for="courseName"/>
+                            </div>
+                            <div class="control-group">
                                 <label class="control-label" for="description">Description <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputTextarea id="description" value="#{productController.product.description}" />
+                                    <h:inputText id="imageURL" value="#{courseController.course.description}" />
                                 </div>
                                 <h:message for="description"/>
                             </div>
                             <div class="control-group">
-                                <label class="control-label" for="imageURL">Image URL <sup>*</sup></label>
+                                <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="imageURL" value="#{productController.product.imageURL}" />
+                                    <h:inputText id="price" value="#{courseController.course.courseFee}" />
                                 </div>
-                                <h:message for="imageURL"/>
+                                <h:message for="courseFee"/>
                             </div>
-                            <div class="control-group">
-                                <label class="control-label" for="price">Price <sup>*</sup></label>
-                                <div class="controls">
-                                    <h:inputText id="price" value="#{productController.product.price}" />
-                                </div>
-                                <h:message for="price"/>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="quantity">Quantity <sup>*</sup></label>
-                                <div class="controls">
-                                    <h:inputText id="quantity" value="#{productController.product.quantity}" />
-                                </div>
-                                <h:message for="quantity"/>
-                            </div>
+                            
                             <div class="control-group">
                                 <div class="controls">
-                                    <h:inputHidden id="id" value="#{productController.product.id}" />
-                                    <h:commandButton class="btn btn-large" value="Save" action="#{productController.updateProduct()}"/>
+                                    <h:inputHidden id="id" value="#{courseController.course.id}" />
+                                    <h:commandButton class="btn btn-large" value="Update" action="#{courseController.updateCourse()}"/>
                                     <!--<input class="btn btn-large" type="submit" value="Register" />-->
                                 </div>
                             </div>

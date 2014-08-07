@@ -23,7 +23,7 @@ public interface IFacultyService {
     
     public Faculty getFacultyById(long Id);
     
-    public void deleteFaculty(long Id);
+    public void deleteFaculty(Faculty faculty);
     
     public List<Section> getMySections(Faculty faculty);
 }

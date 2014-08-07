@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.model.Faculty;
 import com.saviour.poweryoga.model.Role;
@@ -73,7 +74,7 @@ public class FacultyController implements Serializable {
     }
 
     /**
-     * Save Course data
+     * Save faculty data
      *
      * @return
      */
@@ -100,7 +101,7 @@ public class FacultyController implements Serializable {
     }
 
     /**
-     * Display update Course data page
+     * Display update faculty data page
      *
      * @return
      */
@@ -120,7 +121,7 @@ public class FacultyController implements Serializable {
     }
 
     /**
-     * Update Course data
+     * Update Faculty data
      *
      * @param Id
      * @return
@@ -131,13 +132,14 @@ public class FacultyController implements Serializable {
     }
 
     /**
-     * Delete Course entry
+     * Delete Faculty entry
      *
      * @param Id
      * @return
      */
     public String deleteFaculty(long Id) {
-        FacultyService.deleteFaculty(Id);
+        faculty = FacultyService.getFacultyById(Id);
+        FacultyService.deleteFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
 

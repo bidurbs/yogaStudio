@@ -20,9 +20,9 @@ public interface ICourseService {
 
     public void updateCourse(Course course);
 
-    public Course getCourseById(int Id);
+    public Course getCourseById(long Id);
 
-    public void deleteCourse(int Id);
+    public void deleteCourse(Course course);
 
     public Course findByName(String cname);
 }
