@@ -81,8 +81,9 @@ public class SectionService implements ISectionService {
     }
 
     @Override
-    public void deleteSection(Long Id) {
-        crudfacade.delete(getSectionById(Id));
+    public void deleteSection(Section section) {
+      
+        crudfacade.delete(section);
     }
 
     @Override

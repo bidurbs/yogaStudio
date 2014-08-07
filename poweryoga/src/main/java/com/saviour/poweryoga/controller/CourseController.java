@@ -1,5 +1,6 @@
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.serviceI.ICourseService;
 import java.io.Serializable;
@@ -62,7 +63,7 @@ public class CourseController implements Serializable {
      * @param Id
      * @return 
      */
-    public String editCourse(int Id) {
+    public String editCourse(long Id) {
         course = CourseService.getCourseById(Id);
         return "editCourse";
     }
@@ -74,7 +75,8 @@ public class CourseController implements Serializable {
      * @return 
      */
     public String deleteCourse(int Id) {
-        CourseService.deleteCourse(Id);
+        course = CourseService.getCourseById(Id);
+        CourseService.deleteCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
 

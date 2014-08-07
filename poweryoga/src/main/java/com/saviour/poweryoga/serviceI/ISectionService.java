@@ -23,7 +23,7 @@ public interface ISectionService {
 
     public Section getSectionById(Long Id);
 
-    public void deleteSection(Long Id);
+    public void deleteSection(Section section);
 
     public List<Section> listSectionByCourseId(Long Id);
 
