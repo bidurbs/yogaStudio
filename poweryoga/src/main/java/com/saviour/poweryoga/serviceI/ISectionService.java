@@ -6,6 +6,7 @@
 package com.saviour.poweryoga.serviceI;
 
 import com.saviour.poweryoga.model.Course;
+import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Users;
 import java.util.List;
@@ -30,7 +31,7 @@ public interface ISectionService {
 
     public List<Course> getAllCourses();
 
-    public Boolean checkCustomerEnrolled(Section section, Users customer);
+    public Enrollment checkCustomerEnrolled(Section section, Users customer);
     
 
 }

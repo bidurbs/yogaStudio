@@ -5,14 +5,15 @@
  */
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.model.Customer;
+import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
-import com.saviour.poweryoga.model.Users;
+import com.saviour.poweryoga.serviceI.IEnrollmentService;
 import com.saviour.poweryoga.serviceI.ISectionService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 
 /**
  *
@@ -28,9 +29,12 @@ public class WithdrawalController implements Serializable {
     
     @Autowired
     private UserController userController;
+    
+    @Autowired
+    private IEnrollmentService enrollmentService;
 
     private Section section;
-    private Users customer;
+    private Customer customer;
     
     public WithdrawalController() {
         
@@ -44,11 +48,11 @@ public class WithdrawalController implements Serializable {
         this.section = section;
     }
 
-    public Users getUser() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setUser(Users customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
     
@@ -60,16 +64,12 @@ public class WithdrawalController implements Serializable {
      */
     public void requestWithdrawal(Section section){
         //check if customer is entolled to this section previously
-        Boolean isEnrolled = false;
-        customer = userController.getUser();
-        isEnrolled = SectionService.checkCustomerEnrolled(section, customer);
+        customer = (Customer) userController.getUser();
+        Enrollment enrollment = enrollmentService.isRegistered(customer, section);
         
-        if(isEnrolled){
-            section.getWithdrawalList().add(customer);
-            //TODO: remove customer from enrollment table
-            
-            SectionService.updateSection(section); // update section table
+        if(enrollment !=null){
+            enrollment.setStatus("Withdrawal");
+            enrollmentService.updateEnrollment(enrollment);
         }
-        
     }
 }

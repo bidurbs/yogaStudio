@@ -27,7 +27,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SECTION")
 @NamedQueries({
-    @NamedQuery(name = "Section.findAll", query = "from Section s")
+    @NamedQuery(name = "Section.findAll", query = "from Section s"),
+    @NamedQuery(name = "Section.findUserInSection", query = "from Section s"),
+    
 })
 public class Section implements Serializable {
 
@@ -47,9 +49,7 @@ public class Section implements Serializable {
     @ManyToMany(mappedBy = "sections")
     private List<Users> users = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    private List<Users> withdrawalList;
-
+    
     public Section() {
     }
 
@@ -109,13 +109,5 @@ public class Section implements Serializable {
         this.users = users;
     }
     
-    public List<Users> getWithdrawalList() {
-        return withdrawalList;
-    }
-
-    public void setWithdrawalList(List<Users> withdrawalList) {
-        this.withdrawalList = withdrawalList;
-    }
-
 
 }

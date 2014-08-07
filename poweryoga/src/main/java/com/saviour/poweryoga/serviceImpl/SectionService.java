@@ -7,10 +7,13 @@ package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
+import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.ISectionService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,8 +76,9 @@ public class SectionService implements ISectionService {
     }
 
     @Override
-    public Boolean checkCustomerEnrolled(Section section, Users customer) {
-        return true;
+    public Enrollment checkCustomerEnrolled(Section section, Users customer) {
+        Enrollment enrollment = (Enrollment) crudfacade.findWithNamedQuery("Enrollment.findCustomerInSection");
+        return enrollment;
     }
 
 }
