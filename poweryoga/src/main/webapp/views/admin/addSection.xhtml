@@ -22,7 +22,7 @@
                         <div class="control-group">
                             <label class="control-label" for="sectionName">Section Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="sectionName" value="#{SectionController.section.sectionName}" />
+                                <h:inputText id="sectionName" value="#{sectionController.section.sectionName}" />
                             </div>
                             <h:message for="sectionName"/>
                         </div>
@@ -30,7 +30,7 @@
                         <div class="control-group">
                             <label class="control-label" for="maxNoStudent">Max Student Limit <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="maxNoStudent" value="#{SectionController.section.maxNoStudent}" />
+                                <h:inputText id="maxNoStudent" value="#{sectionController.section.maxNoStudent}" />
                             </div>
                             <h:message for="maxNoStudent"/>
                         </div>
@@ -38,7 +38,7 @@
                         <div class="control-group">
                             <label class="control-label" for="roomNumber">Room Number <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="roomNumber" value="#{SectionController.section.roomNumber}" />
+                                <h:inputText id="roomNumber" value="#{sectionController.section.roomNumber}" />
                             </div>
                             <h:message for="roomNumber"/>
                         </div>
@@ -46,8 +46,8 @@
                         <div class="control-group">
                             <label class="control-label" for="course">Course <sup>*</sup></label>
                             <div class="controls">
-                                <h:selectOneMenu value="#{SectionController.selectedCourse}">
-                                    <f:selectItems value="#{SectionController.listOfCourse}" var="item"
+                                <h:selectOneMenu value="#{sectionController.selectedCourse}">
+                                    <f:selectItems value="#{sectionController.listOfCourse}" var="item"
                                                    itemLabel="#{item.courseName}" 
                                                    itemValue="#{item.courseName}" />
                                 </h:selectOneMenu>
@@ -57,7 +57,7 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{SectionController.saveSection()}"/>
+                                <h:commandButton class="btn btn-large" value="Save" action="#{sectionController.saveSection()}"/>
                             </div>
                         </div>
                     </h:form>

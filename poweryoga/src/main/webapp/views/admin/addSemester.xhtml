@@ -21,28 +21,28 @@
                         <div class="control-group">
                             <label class="control-label" for="semesterName">Semester Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="semesterName" value="#{SemesterController.semester.semesterName}" />
+                                <h:inputText id="semesterName" value="#{semesterController.semester.semesterName}" />
                             </div>
                             <h:message for="semesterName"/>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="startDate">Start Date <sup>*</sup></label>
                             <div class="controls">
-                                <p:calendar value="#{SemesterController.semester.startDate}" id="popupCals"/>
+                                <p:calendar value="#{semesterController.semester.startDate}" id="popupCals"/>
                             </div>
                             <h:message for="startDate"/>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="endDate">End Date <sup>*</sup></label>
                             <div class="controls">
-                                <p:calendar value="#{SemesterController.semester.endDate}" id="popupCale"/>
+                                <p:calendar value="#{semesterController.semester.endDate}" id="popupCale"/>
                             </div>
                             <h:message for="endDate"/>
                         </div>
 
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{SemesterController.saveSemester()}"/>
+                                <h:commandButton class="btn btn-large" value="Save" action="#{semesterController.saveSemester()}"/>
                                 <!--<input class="btn btn-large" type="submit" value="Register" />-->
                             </div>
                         </div>

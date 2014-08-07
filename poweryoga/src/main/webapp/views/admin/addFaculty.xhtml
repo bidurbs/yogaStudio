@@ -22,7 +22,7 @@
                         <div class="control-group">
                             <label class="control-label" for="firstname">First Name<sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="firstName" value="#{FacultyController.faculty.firstName}"/>
+                                <h:inputText id="firstName" value="#{facultyController.faculty.firstName}"/>
                             </div>
                             <h:message for="firstName"/>
                         </div>
@@ -30,14 +30,14 @@
                         <div class="control-group">
                             <label class="control-label" for="firstname">Last Name<sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="lastName" value="#{FacultyController.faculty.lastName}"/>
+                                <h:inputText id="lastName" value="#{facultyController.faculty.lastName}"/>
                             </div>
                             <h:message for="lastName"/>
                         </div>
                          <div class="control-group">
                             <label class="control-label" for="femail">Email<sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="fmailin" value="#{FacultyController.faculty.email}"/>
+                                <h:inputText id="fmailin" value="#{facultyController.faculty.email}"/>
                             </div>
                             <h:message for="femail"/>
                         </div>
@@ -45,7 +45,7 @@
                         <div class="control-group">
                             <label class="control-label" for="password">Password <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputSecret id="password" value="#{FacultyController.faculty.password}" />
+                                <h:inputSecret id="password" value="#{facultyController.faculty.password}" />
                             </div>
                             <h:message for="password"/>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="control-group">
                             <label class="control-label" for="phone">Phone <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="phone" value="#{FacultyController.faculty.phone}" />
+                                <h:inputText id="phone" value="#{facultyController.faculty.phone}" />
                             </div>
                             <h:message for="phone"/>
                         </div>
@@ -61,7 +61,7 @@
                         <div class="control-group">
                             <label class="control-label" for="street">Street <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="street" value="#{FacultyController.faculty.street}" />
+                                <h:inputText id="street" value="#{facultyController.faculty.street}" />
                             </div>
                             <h:message for="street"/>
                         </div>
@@ -69,7 +69,7 @@
                         <div class="control-group">
                             <label class="control-label" for="city">City <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="city" value="#{FacultyController.faculty.city}" />   
+                                <h:inputText id="city" value="#{facultyController.faculty.city}" />   
                             </div>
                             <h:message for="city"/>
                         </div>
@@ -77,7 +77,7 @@
                         <div class="control-group">
                             <label class="control-label" for="state">State <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="state" value="#{FacultyController.faculty.state}" />   
+                                <h:inputText id="state" value="#{facultyController.faculty.state}" />   
                             </div>
                             <h:message for="state"/>
                         </div>
@@ -85,14 +85,14 @@
                         <div class="control-group">
                             <label class="control-label" for="zipcode"> Zip Code <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="zip" value="#{FacultyController.faculty.zip}" />   
+                                <h:inputText id="zip" value="#{facultyController.faculty.zip}" />   
                             </div>
                             <h:message for="zip"/>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="course">Section <sup>*</sup></label>
                             <div class="controls">
-                                <h:selectOneMenu value="#{FacultyController.selectedSectionId}">
+                                <h:selectOneMenu value="#{facultyController.selectedSectionId}">
                                     <f:selectItems value="#{SectionController.listOfSection}" var="item"
                                                    itemLabel="#{item.sectionName}" itemValue="#{item.id}" />
                                 </h:selectOneMenu>
@@ -102,7 +102,7 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{FacultyController.saveFaculty()}"/>
+                                <h:commandButton class="btn btn-large" value="Save" action="#{facultyController.saveFaculty()}"/>
                                 <!--<input class="btn btn-large" type="submit" value="Register" />-->
                             </div>
                         </div>
