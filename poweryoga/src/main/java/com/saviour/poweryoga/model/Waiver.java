@@ -45,7 +45,6 @@ public class Waiver implements Serializable {
     private Section section;
 
     public enum statusType {
-
         APPROVED, PENDING, NOTAPPROVED;
     }
 

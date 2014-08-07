@@ -174,7 +174,7 @@ public class FacultyController implements Serializable {
     public String approveWaiverRequest(Waiver waiver) {
         try {
              waiver.setStatus(Waiver.statusType.APPROVED);
-             facultyService.approveWaiver(waiver);
+             facultyService.updateWaiverRequest(waiver);
         } catch (Exception ex) {
             ex.printStackTrace();
 
@@ -183,14 +183,21 @@ public class FacultyController implements Serializable {
 
     }
 
-//    public String rejectWaiverRequest(Waiver waiver) {
-//        try {
-//            facultyService.rejectWaiver(waiver);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//
-//        }
-//        return "";
-//
-//    }
+/**
+     * Reject pending requests
+     *
+     * @param waiver
+     * @return
+     */
+    public String rejectWaiverRequest(Waiver waiver) {
+        try {
+             waiver.setStatus(Waiver.statusType.NOTAPPROVED);
+             facultyService.updateWaiverRequest(waiver);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+        return "";
+
+    }
 }

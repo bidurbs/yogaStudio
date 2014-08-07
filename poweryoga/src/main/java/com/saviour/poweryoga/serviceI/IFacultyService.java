@@ -28,7 +28,6 @@ public interface IFacultyService {
     
     public List<Section> getMySections(Faculty faculty);
     
-    public void approveWaiver(Waiver waiver);
-    
-    public void rejectWaiver(Waiver waiver);
+    public void updateWaiverRequest(Waiver waiver);
+   
 }

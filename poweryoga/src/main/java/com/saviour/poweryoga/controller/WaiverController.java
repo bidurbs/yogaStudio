@@ -96,18 +96,11 @@ public class WaiverController implements Serializable {
      * @return
      */
     public String waiveSection() {
-        //some code here
         try {
-//            Customer customer = (Customer) waiverService.getCustomer();//This customer must be instead obtained from the login user
-//            Section section = waiverService.getSectionOb(sectionId);
-//            // sectionId = " customerID= " + customer.getUserId();//+ " section id= "+section.getId();
-            //get user from session or by id. 
-            Section sec = sectionService.getSectionByName(selectedSectionName);
+          Section sec = sectionService.getSectionByName(selectedSectionName);
             Users user = usercontroller.getUser();
             waiver.setUser(user);
             waiver.setSection(sec);
-            // waiver.addCustSec(customer, section);
-            //set waiver status 
             waiver.setStatus(waiver.getStatus().PENDING);
 
             waiverService.saveWaiver(waiver);
@@ -121,6 +114,8 @@ public class WaiverController implements Serializable {
 
         }
     }
+    
+    
 
     
 

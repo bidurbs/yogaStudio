@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author AnurR
+ * @author TalakB
  * @version 0.0.1
  */
 @Service
@@ -69,18 +70,13 @@ public class FacultyService implements IFacultyService {
         return null;
     }
 
+    /**
+     * Approve or reject waiver. 
+     * The status is sent from the controller that would be "APPROVED" or "NOTAPPROVED", so only update is required. 
+     * @param waiver 
+     */
     @Override
-    public void approveWaiver(Waiver waiver) {
+    public void updateWaiverRequest(Waiver waiver) {
          crudfacade.update(waiver);
-    }
-
-//    @Override
-//    public void approveWaiver(Waiver waiver) {
-//        crudfacade.update(waiver);
-//    }
-
-    @Override
-    public void rejectWaiver(Waiver waiver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
