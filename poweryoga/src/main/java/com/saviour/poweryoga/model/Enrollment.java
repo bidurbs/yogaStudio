@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -26,10 +26,10 @@ import javax.persistence.Temporal;
 @Table(name = "ENROLLMENT")
 @NamedQueries({
     @NamedQuery(name = "Enrollment.findAll", query = "from Enrollment e"),
-    @NamedQuery(name = "Enrollment.findCustomerInSection", query = "from Enrollment e join Users u on u.id=e.user.id join Section s on s.id=e.section.id where e.user.id:userId and e.section.id:sectionId")
+    @NamedQuery(name = "Enrollment.findCustomerInSection", query = "from Enrollment e join Users u on u.id=e.user.id join Section s on s.id=e.section.id where e.user.userId:userId and e.section.id:sectionId")
 
 })
-public class Enrollment {
+public class Enrollment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
