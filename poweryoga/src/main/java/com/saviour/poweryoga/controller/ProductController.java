@@ -70,10 +70,10 @@ public class ProductController implements Serializable {
     /**
      * Delete Product entry
      *
-     * @param Id
+     * @param id
      * @return
      */
-    public String deleteProduct(Long id) {
+    public String deleteProduct(long id) {
         product = ProductService.getProductById(id);
         ProductService.deleteProduct(product);
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
