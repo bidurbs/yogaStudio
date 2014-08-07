@@ -2,72 +2,75 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:head>
-        
+
     </h:head>
     <body>
         <ui:composition template ="../template/templateAdmin.xhtml">
-        <ui:define name ="successFailure">
-            <div class="alert fade in">
-                <button type ="button" class="close" data-dismiss="alert">×</button>
-                <strong>Success</strong>
-            </div>
-            
-            <div class="alert alert-block alert-error fade in"> 
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>Failure</strong>
-            </div>
-        </ui:define>
-            
+            <ui:define name ="successFailure">
+                <h:panelGrid rendered="#{notificationController.successMsg != null}">
+                    <div class="alert fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{notificationController.successMsg}</strong>
+                    </div>
+                </h:panelGrid>
+                <h:panelGrid rendered="#{notificationController.errorMsg != null}">
+                    <div class="alert alert-block alert-error fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{notificationController.errorMsg}</strong>
+                    </div>
+                </h:panelGrid>
+            </ui:define>
+
             <ui:define name="content">
                 <h3>Faculty List </h3>
                 <hr class ="soft"/>
                 <a href="addFaculty.xhtml">Add Faculty</a>
                 <div class="well">
-                    <h:dataTable value="#{FacultyController.listOfFaculty}" var="item" class="table table-bordered">
+                    <h:dataTable value="#{facultyController.listOfFaculty}" var="item" class="table table-bordered">
                         <h:column>
                             <f:facet name="header">First Name</f:facet>
-                            #{item.firstName}    
+                                #{item.firstName}    
                         </h:column>
                         <h:column>
                             <f:facet name="header">Last Name</f:facet>
-                            #{item.lastName}    
+                                #{item.lastName}    
                         </h:column>
-                        
+
                         <h:column>
                             <f:facet name="header">Phone</f:facet>
-                            #{item.phone}  
+                                #{item.phone}  
                         </h:column>
-                        
-                         <h:column>
+
+                        <h:column>
                             <f:facet name="header">Street</f:facet>
-                            #{item.street}  
+                                #{item.street}  
                         </h:column>
-                        
-                         <h:column>
+
+                        <h:column>
                             <f:facet name="header">City</f:facet>
-                            #{item.city} 
+                                #{item.city} 
                         </h:column>
-                        
-                         <h:column>
+
+                        <h:column>
                             <f:facet name="header">State</f:facet>
-                            #{item.state}   
-                         </h:column>
-                        
+                                #{item.state}   
+                        </h:column>
+
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="#{FacultyController.editFaculty(item.userId)}" value="Edit" /> | <h:commandLink action="#{FacultyController.deleteFaculty(item.userId)}" value="Delete"/>
+                                <h:commandLink action="#{facultyController.editFaculty(item.userId)}" value="Edit" /> | <h:commandLink action="#{FacultyController.deleteFaculty(item.userId)}" value="Delete"/>
                             </h:form>
                         </h:column>
                     </h:dataTable>
                 </div>
             </ui:define>
         </ui:composition>          
-                 
+
     </body>
 </html>
 

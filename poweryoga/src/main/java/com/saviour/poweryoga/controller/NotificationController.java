@@ -1,11 +1,17 @@
 package com.saviour.poweryoga.controller;
 
+import java.io.Serializable;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
+
 /**
  * To handle success and failure message notifications. 
  * @author TalakB
  * @version 0.0.1 
  */
-public class NotificationController {
+@Named("notificationController")
+@Dependent
+public class NotificationController implements Serializable{
 
     public static String errorMsg = null;
 

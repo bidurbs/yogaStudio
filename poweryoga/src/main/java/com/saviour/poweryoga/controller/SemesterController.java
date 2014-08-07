@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author AnurR
  * @version 0.0.1
  */
-@Named("SemesterController")
+@Named("semesterController")
 @SessionScoped
 public class SemesterController implements Serializable {
 

@@ -15,7 +15,7 @@
                 <h3>My Sections</h3>	
                 <hr class="soft"/>
                 <div class="well">
-                    <h:dataTable value="#{FacultyController.mySections}" var="sec" class="table table-bordered">
+                    <h:dataTable value="#{facultyController.mySections}" var="sec" class="table table-bordered">
 
                         <h:column>
                             <f:facet name="header">Section Name</f:facet>
@@ -44,7 +44,7 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="" value="Send email to students" />
+                                <h:commandLink  value="Send email to students" />
                             </h:form>
                         </h:column>
                     </h:dataTable>

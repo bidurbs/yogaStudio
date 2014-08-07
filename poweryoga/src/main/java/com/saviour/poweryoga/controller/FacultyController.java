@@ -13,6 +13,7 @@ import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.ISectionService;
+import com.saviour.poweryoga.util.EmailManager;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 /**
  *
@@ -42,6 +44,9 @@ public class FacultyController implements Serializable {
 
     @Autowired
     private ISectionService sectionService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     private Faculty faculty;
     private List<Faculty> listOfFaculty;
@@ -139,12 +144,8 @@ public class FacultyController implements Serializable {
      * @return
      */
     public String deleteFaculty(long Id) {
-//<<<<<<< HEAD
-//        facultyService.deleteFaculty(Id);
-//=======
         faculty = facultyService.getFacultyById(Id);
         facultyService.deleteFaculty(faculty);
-//>>>>>>> origin/master
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
 
@@ -173,8 +174,11 @@ public class FacultyController implements Serializable {
      */
     public String approveWaiverRequest(Waiver waiver) {
         try {
-             waiver.setStatus(Waiver.statusType.APPROVED);
-             facultyService.updateWaiverRequest(waiver);
+            waiver.setStatus(Waiver.statusType.APPROVED);
+            facultyService.updateWaiverRequest(waiver);
+
+            //send email to the customer 
+            notifyWaiverRequestDecision(waiver);
         } catch (Exception ex) {
             ex.printStackTrace();
 
@@ -183,7 +187,9 @@ public class FacultyController implements Serializable {
 
     }
 
-/**
+    
+
+    /**
      * Reject pending requests
      *
      * @param waiver
@@ -191,13 +197,25 @@ public class FacultyController implements Serializable {
      */
     public String rejectWaiverRequest(Waiver waiver) {
         try {
-             waiver.setStatus(Waiver.statusType.NOTAPPROVED);
-             facultyService.updateWaiverRequest(waiver);
+            waiver.setStatus(Waiver.statusType.NOTAPPROVED);
+            facultyService.updateWaiverRequest(waiver);
+             //send email to the customer 
+            notifyWaiverRequestDecision(waiver);
         } catch (Exception ex) {
             ex.printStackTrace();
 
         }
         return "";
 
+    }
+    
+    /**
+     * Notify user about the waiver decision. 
+     * @param waiver 
+     */
+    public void notifyWaiverRequestDecision(Waiver waiver) {
+        EmailManager.sendEmail(mailSender, "Waiver request +" + waiver.getStatus().toString().toLowerCase(),
+                "Your waiver request for the section" + waiver.getSection().getSectionName() + " is " + waiver.getStatus().toString().toLowerCase(),
+                waiver.getUser().getEmail());
     }
 }

@@ -10,7 +10,8 @@ import sun.misc.BASE64Encoder;
 /**
  * This class handles password encryption
  *
- * @author TalakB version 1.0.0
+ * @author TalakB 
+ * @version 1.0.0
  */
 public class PasswordService implements Serializable {
 

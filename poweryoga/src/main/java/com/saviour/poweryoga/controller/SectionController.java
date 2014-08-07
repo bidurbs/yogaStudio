@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author TalakB
  * @version 0.0.1
  */
-@Named("SectionController")
+@Named("sectionController")
 @SessionScoped
 public class SectionController implements Serializable {
 

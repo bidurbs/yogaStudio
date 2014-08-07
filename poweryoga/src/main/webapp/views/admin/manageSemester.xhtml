@@ -25,7 +25,7 @@
                 <hr class="soft"/>
                 <a href="addSemester.xhtml">Add Semester</a>
                 <div class="well">
-                    <h:dataTable value="#{SemesterController.listOfSemester}" var="item" class="table table-bordered">
+                    <h:dataTable value="#{semesterController.listOfSemester}" var="item" class="table table-bordered">
                         <h:column>
                             <f:facet name="header">Semester Name</f:facet>
                             #{item.semesterName}
@@ -41,7 +41,7 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink action="#{SemesterController.editSemester(item.id)}" value="Edit" /> | <h:commandLink action="#{SemesterController.deleteSemester(item.id)}" value="Delete"/>
+                                <h:commandLink action="#{semesterController.editSemester(item.id)}" value="Edit" /> | <h:commandLink action="#{semesterController.deleteSemester(item.id)}" value="Delete"/>
                             </h:form>
                         </h:column>
                     </h:dataTable>
