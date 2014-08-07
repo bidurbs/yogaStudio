@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.crudfacade.CRUDEntityFacade;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.ICourseService;
@@ -91,7 +92,8 @@ public class SectionController implements Serializable {
      * @return
      */
     public String deleteSection(Long Id) {
-        SectionService.deleteSection(Id);
+        section = SectionService.getSectionById(Id);
+        SectionService.deleteSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
 

@@ -29,25 +29,6 @@ public class CourseService implements ICourseService {
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
-//    public void saveCourse(Course course) {
-//        courseDao.save(course);
-//    }
-//
-//    public List<Course> getAllCourses() {
-//        return courseDao.getAll();
-//    }
-//
-//    public void updateCourse(Course course) {
-//        courseDao.update(course);
-//    }
-//
-//    public Course getCourseById(int Id) {
-//        return courseDao.get(Id);
-//    }
-//
-//    public void deleteCourse(int Id) {
-//        courseDao.delete(Id);
-//    }
     /**
      * Find course by course name
      *
@@ -75,16 +56,16 @@ public class CourseService implements ICourseService {
 
     @Override
     public void updateCourse(Course course) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        crudfacade.update(course);
     }
 
     @Override
-    public Course getCourseById(int Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Course getCourseById(long Id) {
+        return (Course) crudfacade.read(Id, Course.class);
     }
 
     @Override
-    public void deleteCourse(int Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteCourse(Course course) {
+        crudfacade.delete(course);
     }
 }

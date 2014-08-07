@@ -38,17 +38,17 @@ public class FacultyService implements IFacultyService {
 
     @Override
     public void updateFaculty(Faculty faculty) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        crudfacade.update(faculty);
     }
 
     @Override
     public Faculty getFacultyById(long Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (Faculty) crudfacade.read(Id, Faculty.class);
     }
 
     @Override
-    public void deleteFaculty(long Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteFaculty(Faculty faculty) {
+       crudfacade.delete(faculty);
     }
 
     /**

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,15 +22,16 @@ import javax.persistence.Table;
  *
  * @author Guest
  * @author TalakB
- * @version 0.0.1 
+ * @version 0.0.1
  *
  */
 @Entity
 @Table(name = "SECTION")
 @NamedQueries({
     @NamedQuery(name = "Section.findAll", query = "from Section s"),
-      @NamedQuery(name = "Section.findByName", query = "FROM Section s WHERE s.sectionName=:sname") 
-        
+    @NamedQuery(name = "Section.findByName", query = "FROM Section s WHERE s.sectionName=:sname"),
+    @NamedQuery(name = "Section.findUserInSection", query = "from Section s")
+
 })
 public class Section implements Serializable {
 
@@ -39,10 +42,10 @@ public class Section implements Serializable {
     private int maxNoStudent;
     private int roomNumber;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Semester semester;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Course course;
 
     @ManyToMany(mappedBy = "sections")
