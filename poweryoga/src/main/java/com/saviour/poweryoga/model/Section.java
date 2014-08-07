@@ -26,7 +26,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SECTION")
 @NamedQueries({
-    @NamedQuery(name = "Section.findAll", query = "from Section s")
+    @NamedQuery(name = "Section.findAll", query = "from Section s"),
+      @NamedQuery(name = "Section.findByName", query = "FROM Section s WHERE s.sectionName=:sname") 
+        
 })
 public class Section implements Serializable {
 

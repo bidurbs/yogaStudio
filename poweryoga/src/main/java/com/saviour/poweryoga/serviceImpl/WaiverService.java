@@ -10,7 +10,9 @@ import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IWaiverService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,24 +21,41 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Guest
  * @author TalakB
- * @version 0.0.1 
+ * @version 0.0.1
  */
 @Service
 @Transactional
 public class WaiverService implements IWaiverService {
 
-    
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
     @Override
     public void saveWaiver(Waiver waiver) {
         crudfacade.create(waiver);
+
     }
 
     @Override
     public List<Waiver> getAllWaiver() {
         return crudfacade.findWithNamedQuery("Waiver.findAllWaivers");
+    }
+
+    @Override
+    public List<Waiver> showPendingWaivers() {
+        try {
+            Map<String, Waiver.statusType> paramaters = new HashMap<>(1);
+            paramaters.put("wstatus", Waiver.statusType.PENDING);
+
+            List pendingWaivers = crudfacade.findWithNamedQuery("Waiver.showPendingWaivers", paramaters);
+
+            return (pendingWaivers);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+
     }
 
     @Override
@@ -69,7 +88,4 @@ public class WaiverService implements IWaiverService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-
-    
 }

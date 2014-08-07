@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  *
  * @author bidur
+ * @author TalakB
  * @version 0.0.1
  */
 @Named("SectionController")

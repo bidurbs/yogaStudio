@@ -32,4 +32,6 @@ public interface IWaiverService {
     public Users getCustomer();
     
     public Section getSectionOb(Long Id);
+    
+    public List<Waiver> showPendingWaivers();
 }

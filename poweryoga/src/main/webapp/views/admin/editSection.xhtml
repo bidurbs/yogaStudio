@@ -42,14 +42,12 @@
                             </div>
                             <h:message for="roomNumber"/>
                         </div>
-                        
+
                         <div class="control-group">
                             <label class="control-label" for="course">Course <sup>*</sup></label>
                             <div class="controls">
                                 <h:selectOneMenu value="#{SectionController.section.course}">
-                                    <ui:repeat value="#{SectionController.listOfCourse}" var="item">
-                                        <f:selectItem itemValue="#{item}" itemLabel="#{item.courseName}" />
-                                    </ui:repeat>
+                                    <f:selectItem itemValue="#{item}" itemLabel="#{item.courseName}" />
                                 </h:selectOneMenu>
                             </div>
                             <h:message for="course"/>
@@ -57,9 +55,6 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <h:inputHidden id="course" value="#{SectionController.section.course}" />
-                                <h:inputHidden id="sectionId" value="#{SectionController.section.id}" />
-
                                 <h:commandButton class="btn btn-large" value="Save" action="#{SectionController.updateSection()}"/>
                             </div>
                         </div>

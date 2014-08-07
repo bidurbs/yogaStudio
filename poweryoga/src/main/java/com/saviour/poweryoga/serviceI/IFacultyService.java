@@ -8,6 +8,7 @@ package com.saviour.poweryoga.serviceI;
 
 import com.saviour.poweryoga.model.Faculty;
 import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.model.Waiver;
 import java.util.List;
 /**
  *
@@ -26,4 +27,8 @@ public interface IFacultyService {
     public void deleteFaculty(long Id);
     
     public List<Section> getMySections(Faculty faculty);
+    
+    public void approveWaiver(Waiver waiver);
+    
+    public void rejectWaiver(Waiver waiver);
 }

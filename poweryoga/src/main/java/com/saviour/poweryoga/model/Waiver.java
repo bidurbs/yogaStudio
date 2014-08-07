@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,28 +23,37 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "WAIVER")
 @NamedQueries({
-    @NamedQuery(name = "Waiver.findAllWaivers", query = "from Waiver w")
+    @NamedQuery(name = "Waiver.findAllWaivers", query = "from Waiver w"),
+    @NamedQuery(name = "Waiver.showPendingWaivers", query = "FROM Waiver w WHERE w.status=:wstatus"),
+    
 })
 public class Waiver implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String reason;
-    
+
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date requestDate = new Date();
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+    private Date requestDate;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Users user;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Section section;
+
     public enum statusType {
+
         APPROVED, PENDING, NOTAPPROVED;
     }
+
+    @Enumerated(EnumType.STRING)
     private statusType status;
+
+    public Waiver() {
+    }
 
     public Long getId() {
         return id;

@@ -34,9 +34,11 @@ public class CustomerController implements Serializable {
     private List<Customer> customers;
 
     private Customer customer;
+    
     private Address address;
+    
     private String errorMsg = null;
-
+    
     private String successMsg = null;
 
     private String rePassword;

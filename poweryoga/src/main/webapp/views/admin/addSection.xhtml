@@ -48,7 +48,8 @@
                             <div class="controls">
                                 <h:selectOneMenu value="#{SectionController.selectedCourse}">
                                     <f:selectItems value="#{SectionController.listOfCourse}" var="item"
-                                                   itemLabel="#{item.courseName}" itemValue="#{item.courseName}" />
+                                                   itemLabel="#{item.courseName}" 
+                                                   itemValue="#{item.courseName}" />
                                 </h:selectOneMenu>
                             </div>
                             <h:message for="course"/>

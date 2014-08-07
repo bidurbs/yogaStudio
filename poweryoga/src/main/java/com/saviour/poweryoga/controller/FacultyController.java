@@ -9,9 +9,9 @@ import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.model.Faculty;
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.ISectionService;
-import com.saviour.poweryoga.serviceImpl.RoleService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,14 +23,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  *
  * @author AnurR
+ * @author TalakB
  * @version 0.0.1
  */
-@Named("FacultyController")
+@Named("facultyController")
 @SessionScoped
 public class FacultyController implements Serializable {
 
     @Autowired
-    private IFacultyService FacultyService;
+    private IFacultyService facultyService;
 
     @Autowired
     private IRoleService roleService;
@@ -39,7 +40,7 @@ public class FacultyController implements Serializable {
     private UserController usercontroller;
 
     @Autowired
-    private ISectionService SectionService;
+    private ISectionService sectionService;
 
     private Faculty faculty;
     private List<Faculty> listOfFaculty;
@@ -80,7 +81,7 @@ public class FacultyController implements Serializable {
     public String saveFaculty() {
 
         try {
-            Section sectionsAssigned = SectionService.getSectionById(selectedSectionId);
+            Section sectionsAssigned = sectionService.getSectionById(selectedSectionId);
             sectionList.add(sectionsAssigned);
             faculty.setSections(sectionList);
 
@@ -90,7 +91,7 @@ public class FacultyController implements Serializable {
             faculty.setPassword(PasswordService.encrypt(faculty.getPassword()));
 
             faculty.setRole(facRRole);
-            FacultyService.saveFaculty(faculty);
+            facultyService.saveFaculty(faculty);
             return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -105,7 +106,7 @@ public class FacultyController implements Serializable {
      * @return
      */
     public String updateFaculty() {
-        FacultyService.updateFaculty(faculty);
+        facultyService.updateFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
 
@@ -126,7 +127,7 @@ public class FacultyController implements Serializable {
      * @return
      */
     public String editFaculty(long Id) {
-        faculty = FacultyService.getFacultyById(Id);
+        faculty = facultyService.getFacultyById(Id);
         return "editFaculty";
     }
 
@@ -137,7 +138,7 @@ public class FacultyController implements Serializable {
      * @return
      */
     public String deleteFaculty(long Id) {
-        FacultyService.deleteFaculty(Id);
+        facultyService.deleteFaculty(Id);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
 
@@ -150,11 +151,40 @@ public class FacultyController implements Serializable {
     }
 
     public List<Faculty> getListOfFaculty() {
-        listOfFaculty = FacultyService.getListOfFaculty();
+        listOfFaculty = facultyService.getListOfFaculty();
         return listOfFaculty;
     }
 
     public void setListOfFaculty(List<Faculty> listOfFaculty) {
         this.listOfFaculty = listOfFaculty;
     }
+
+    /**
+     * Approve pending requests
+     *
+     * @param waiver
+     * @return
+     */
+    public String approveWaiverRequest(Waiver waiver) {
+        try {
+             waiver.setStatus(Waiver.statusType.APPROVED);
+             facultyService.approveWaiver(waiver);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+        return "";
+
+    }
+
+//    public String rejectWaiverRequest(Waiver waiver) {
+//        try {
+//            facultyService.rejectWaiver(waiver);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//
+//        }
+//        return "";
+//
+//    }
 }

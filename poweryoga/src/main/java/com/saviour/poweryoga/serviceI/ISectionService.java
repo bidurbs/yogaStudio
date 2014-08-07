@@ -23,11 +23,12 @@ public interface ISectionService {
 
     public Section getSectionById(Long Id);
 
+    public Section getSectionByName(String sectionName);
+
     public void deleteSection(Long Id);
 
     public List<Section> listSectionByCourseId(Long Id);
 
     public List<Course> getAllCourses();
-    
 
 }

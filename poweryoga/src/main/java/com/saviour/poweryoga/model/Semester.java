@@ -20,9 +20,12 @@ public class Semester implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String semesterName;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;
 

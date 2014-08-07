@@ -23,11 +23,11 @@ public class ProductService implements IProductService {
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
-    public void deleteProduct(Long Id) {
-        //  productDao.delete(Id);
-        Product prod = (Product) crudfacade.read(Id, Product.class);
-        crudfacade.delete(prod);
-    }
+//    public void deleteProduct(Long Id) {
+//        //  productDao.delete(Id);
+//        Product prod = (Product) crudfacade.read(Id, Product.class);
+//        crudfacade.delete(prod);
+//    }
 
     /**
      * This method will return list of product matched with the parameter name

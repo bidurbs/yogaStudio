@@ -39,9 +39,14 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     public T create(T entity) throws EntityExistsException,
             IllegalStateException, IllegalArgumentException,
             TransactionRequiredException {
-        sessionFactory.getCurrentSession().persist(entity);
-        // manager.flush();
-        return entity;
+        try {
+            sessionFactory.getCurrentSession().persist(entity);
+            // manager.flush();
+            return entity;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     /**

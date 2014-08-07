@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
 
@@ -12,43 +12,48 @@
     <body>
         <ui:composition template="../template/templateCustomer.xhtml">
             <ui:define name="successFailure">
-
-
-                <h:panelGrid rendered="#{customerController.successMsg != null}">
+                <h:panelGrid rendered="#{waiverController.successMsg != null}">
                     <div class="alert fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{customerController.successMsg}</strong>
+                        <strong>#{waiverController.successMsg}</strong>
                     </div>
                 </h:panelGrid>
-                <h:panelGrid rendered="#{customerController.errorMsg != null}">
+                <h:panelGrid rendered="#{waiverController.errorMsg != null}">
                     <div class="alert alert-block alert-error fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{customerController.errorMsg}</strong>
+                        <strong>#{waiverController.errorMsg}</strong>
                     </div>
                 </h:panelGrid>
             </ui:define>
             <ui:define name="content">
                 <h:form>
-                    <h:panelGrid columns="3">
-                        Date:
-                        <h:inputText id="requestDate" value="#{waiverController.waiver.requestDate}">
-                            <f:convertDateTime type="date"/>
-                        </h:inputText>
-                        <h:message for="requestDate"/>
-                        Course ID:
-                        <h:selectOneMenu id="sections" value="#{waiverController.sectionId}" >
-                            <f:selectItems value="#{waiverController.sections}" var="waive" 
-                                           itemValue="#{waive.id}" itemLabel="#{waive.course.courseName}"/>
-                        </h:selectOneMenu>
-                        <h:message for="sections"/>
-                        Reason:
-                        <h:inputTextarea cols="30" value="#{waiverController.waiver.reason}"/>
-                        <h:message for="sections"/>              
+                    <h:panelGrid columns="2">
+                        <div class="control-group">
+                            <label class="control-label" for="endDate">Date <sup>*</sup></label>
+                            <div class="controls">
+                                <p:calendar value="#{waiverController.waiver.requestDate}" id="popupCale"/>
+                            </div>
 
-                        &nbsp;
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="secID">Section ID: <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu value="#{waiverController.selectedSectionName}" >
+                                    <f:selectItems value="#{waiverController.section}" var="waive" 
+                                                   itemValue="#{waive.sectionName}" 
+                                                   itemLabel="#{waive.sectionName}"/>
+                                </h:selectOneMenu>
+                            </div>
+
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="reason">Reason: <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputTextarea cols="30" value="#{waiverController.waiver.reason}"/>
+                            </div>
+                        </div>
                         <h:commandButton value="Waive" action="#{waiverController.waiveSection()}"/>
                     </h:panelGrid>
-                    <h:outputText value="#{waiverController.sectionId}"/>
                 </h:form>
             </ui:define>
         </ui:composition>
