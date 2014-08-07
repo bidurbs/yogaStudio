@@ -12,7 +12,9 @@ import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IEnrollmentService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,7 +83,10 @@ public class EnrollmentService implements IEnrollmentService {
 
     @Override
     public Enrollment isRegistered(Customer customer, Section section) {
-        List<Enrollment> enrollment = crudfacade.findWithNamedQuery("Enrollment.isRegistered");
+        Map<String, Long> paramaters = new HashMap<>(2);
+        paramaters.put("userId", customer.getUserId());
+        paramaters.put("sectionId", section.getId());
+        List<Enrollment> enrollment = crudfacade.findWithNamedQuery("Enrollment.findCustomerInSection");
         return (Enrollment) enrollment.get(0);
     }
 
