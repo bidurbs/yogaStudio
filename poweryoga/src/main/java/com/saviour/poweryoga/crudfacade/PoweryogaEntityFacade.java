@@ -35,4 +35,5 @@ public interface PoweryogaEntityFacade<T> {
 
     public List findWithNamedQuery(String namedQueryName, Map<String, String> parameters, int resultLimit);
 
+    public Object findWithNativeQuery(String queryName);
 }
