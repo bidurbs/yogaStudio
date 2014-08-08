@@ -1,7 +1,5 @@
 package com.saviour.poweryoga.controller;
 
-import static com.saviour.poweryoga.controller.NotificationController.errorMsg;
-import static com.saviour.poweryoga.controller.NotificationController.successMsg;
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
@@ -24,10 +22,10 @@ public class UserController implements Serializable {
 
     @Autowired
     private IUserService userService;
-    
+
     //for success and error message notifications 
-//    @Autowired
-//    private NotificationController notoficationController; 
+    @Autowired
+    private NotificationController notoficationController;
 //    
     private Users user;
     private Role userRole;
@@ -44,14 +42,10 @@ public class UserController implements Serializable {
     private boolean isCustomer;
     private boolean isLoggedin;
 
-
-
     public UserController() {
         user = new Users();
         userRole = new Role();
     }
-
-    
 
     public Users getUser() {
         return user;
@@ -100,7 +94,7 @@ public class UserController implements Serializable {
     public void setIsLoggedin(boolean isLoggedin) {
         this.isLoggedin = isLoggedin;
     }
-   
+
     /**
      * Authenticate user and redirect to the respective home page based on role.
      *
@@ -145,7 +139,7 @@ public class UserController implements Serializable {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-        //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
+            //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
         }
         return null;
 
@@ -164,10 +158,10 @@ public class UserController implements Serializable {
         activeSession.setAttribute("loggedUserId", user.getUserId());
         activeSession.setAttribute("loggedUserFname", user.getFirstName());
     }
-    
-    
+
     /**
      * Logout user -Invalidate the session and redirect to home page
+     *
      * @return to home page
      */
     public String logoutUser() {
@@ -195,13 +189,13 @@ public class UserController implements Serializable {
                     encPass = PasswordService.encrypt(newPassword);
                     usr.setPassword(encPass);
                     userService.updateUser(usr);
-                    successMsg = "Password updated successfully";
-                    errorMsg = null;
+                    notoficationController.successMsg = "Password updated successfully";
+                    notoficationController.errorMsg = null;
                     return;
                 }
             }
-            successMsg = null;
-            errorMsg = "Password doesn't match";
+            notoficationController.successMsg = null;
+            notoficationController.errorMsg = "Password doesn't match";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -211,8 +205,8 @@ public class UserController implements Serializable {
         if (password.equals(rePassword)) {
             return true;
         }
-        successMsg = null;
-        errorMsg = "Password and RePassword doesn't match";
+        notoficationController.successMsg = null;
+        notoficationController.errorMsg = "Password and RePassword doesn't match";
         return false;
     }
 
