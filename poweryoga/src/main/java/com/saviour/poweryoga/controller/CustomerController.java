@@ -55,6 +55,7 @@ public class CustomerController extends NotificationController implements Serial
     /**
      * Customer registration.
      */
+
     public void saveCustomer() {
         try {
             if (validateEmail(customer.getEmail()) && findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
@@ -64,8 +65,8 @@ public class CustomerController extends NotificationController implements Serial
 
                 //set role 
                 customer.setRole(custRRole);
-
                 //assign advisor 
+
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);

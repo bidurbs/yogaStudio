@@ -25,13 +25,16 @@ public class UserController implements Serializable {
 
     @Autowired
     private IUserService userService;
+    
+    //for success and error message notifications 
+    @Autowired
+    private NotificationController notoficationController; 
+    
     private Users user;
     private Role userRole;
 
     //to keep user relaed data on the session 
     private HttpSession activeSession;
-//    = (HttpSession) FacesContext
-//            .getCurrentInstance().getExternalContext().getSession(true);
 
     public static final int ROLE_ADMIN_CODE = 1;
     public static final int ROLE_FACULTY_CODE = 2;
@@ -40,31 +43,16 @@ public class UserController implements Serializable {
     private boolean isAdmin;
     private boolean isFaculty;
     private boolean isCustomer;
+    private boolean isLoggedin;
 
-    private String errorMsg = null;
 
-    private String successMsg = null;
 
     public UserController() {
         user = new Users();
         userRole = new Role();
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public String getSuccessMsg() {
-        return successMsg;
-    }
-
-    public void setSuccessMsg(String successMsg) {
-        this.successMsg = successMsg;
-    }
+    
 
     public Users getUser() {
         return user;
@@ -105,6 +93,16 @@ public class UserController implements Serializable {
     public void setIsCustomer(boolean isCustomer) {
         this.isCustomer = isCustomer;
     }
+
+    public boolean isIsLoggedin() {
+        return isLoggedin;
+    }
+
+    public void setIsLoggedin(boolean isLoggedin) {
+        this.isLoggedin = isLoggedin;
+    }
+    
+    
 
     /**
      * Authenticate user and redirect to the respective home page based on role.
@@ -150,11 +148,9 @@ public class UserController implements Serializable {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Login failed. Please cehck username/password.";
-            successMsg = null;
+            notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
         }
         return null;
-        //username/password error 
 
     }
 
@@ -164,7 +160,8 @@ public class UserController implements Serializable {
      * @param user
      */
     public void setUserSessionData(Users user) {
-
+        //set loggedin flag true 
+        isLoggedin = true;
         activeSession = (HttpSession) FacesContext
                 .getCurrentInstance().getExternalContext().getSession(true);
         activeSession.setAttribute("loggedUserId", user.getUserId());
