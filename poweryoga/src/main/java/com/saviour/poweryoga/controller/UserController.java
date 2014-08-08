@@ -24,9 +24,9 @@ public class UserController implements Serializable {
     private IUserService userService;
     
     //for success and error message notifications 
-    @Autowired
-    private NotificationController notoficationController; 
-    
+//    @Autowired
+//    private NotificationController notoficationController; 
+//    
     private Users user;
     private Role userRole;
 
@@ -146,7 +146,7 @@ public class UserController implements Serializable {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
+        //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
         }
         return null;
 
@@ -164,6 +164,18 @@ public class UserController implements Serializable {
                 .getCurrentInstance().getExternalContext().getSession(true);
         activeSession.setAttribute("loggedUserId", user.getUserId());
         activeSession.setAttribute("loggedUserFname", user.getFirstName());
+    }
+    
+    
+    /**
+     * Logout user -Invalidate the session and redirect to home page
+     * @return to home page
+     */
+    public String logoutUser() {
+        activeSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        activeSession.invalidate();
+        isLoggedin = false;
+        return "/views/index";
     }
 
 }
