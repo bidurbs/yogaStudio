@@ -43,20 +43,22 @@
                             <h:message for="roomNumber"/>
                         </div>
                         
-<!--                        <div class="control-group">
->>>>>>> origin/master
-                            <label class="control-label" for="course">Course <sup>*</sup></label>
+                        <div class="control-group">
+                            <label class="control-label" for="course">Courses <sup>*</sup></label>
                             <div class="controls">
-                                <h:selectOneMenu value="#{sectionController.section.course}">
-                                    <f:selectItem itemValue="#{item}" itemLabel="#{item.courseName}" />
+                                <h:selectOneMenu value="#{sectionController.listOfCourse}">
+                                    <f:selectItems value="#{sectionController.listOfCourse}" var="item"
+                                                   itemLabel="#{item.courseName}" 
+                                                   itemValue="#{item.courseName}" />
                                 </h:selectOneMenu>
                             </div>
                             <h:message for="course"/>
-                        </div>-->
+                        </div>
+
 
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{sectionController.updateSection()}"/>
+                                <h:commandButton class="btn btn-large" value="Update" action="#{sectionController.updateSection()}"/>
                   </div>
                         </div>
                     </h:form>
