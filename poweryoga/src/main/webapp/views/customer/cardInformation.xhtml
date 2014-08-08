@@ -24,31 +24,40 @@
                                     <div class="controls">
                                         <h:inputText id="holderName" value="#{purchaseOrderController.creditCard.cardholderName}" maxlength="50"/>
                                     </div>
-                                    <h:message for="holderName"/>
+                                    <h:message for="holderName" class="error"/>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label" for="cardNumber">Card Number </label>
                                     <div class="controls">
-                                        <h:inputText id="cardNumber" value="#{purchaseOrderController.creditCard.cardNumber}" maxlength="50"/>
+                                        <h:inputText id="cardNumber" value="#{purchaseOrderController.creditCard.cardNumber}" maxlength="16" label="Credit Card" validatorMessage="Length of the Credit Card must be 16 digits." converterMessage="Only positive integer values are allowed for Credit Card number.">
+                                            <f:convertNumber integerOnly="true" pattern="################"/>
+                                            <f:validateLength maximum="16" minimum="16"/>
+                                            <f:validateRequired/>
+                                        </h:inputText>
                                     </div>
-                                    <h:message for="cardNumber"/>
+                                    <h:message for="cardNumber" class="error"/>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label" for="expiryDate">Expiry Date </label>
                                     <div class="controls">
-                                        <h:inputText id="expiryDate" value="#{purchaseOrderController.creditCard.expiryDate}" maxlength="50"/>
+                                        <h:inputText id="expiryDate" value="#{purchaseOrderController.creditCard.expiryDate}" maxlength="5" label="Expiry Date" 
+                                            validatorMessage="ExpiredDate should be in MM/yy format">
+                                            <f:validateRegex pattern="(0[1-9]|1[0-2])/[0-9]{2}" />
+                                        </h:inputText>
                                     </div>
-                                    <h:message for="expiryDate"/>
+                                    <h:message for="expiryDate" class="error"/>
                                 </div>
 
                                 <div class="control-group">
                                     <label class="control-label" for="securityCode">Security Code </label>
                                     <div class="controls">
-                                        <h:inputText id="securityCode" value="#{purchaseOrderController.creditCard.securityCode}" maxlength="5"/>
+                                        <h:inputText id="securityCode" value="#{purchaseOrderController.creditCard.securityCode}" maxlength="3" label="Security Code" validatorMessage="Length of the Security code must be 3">
+                                            <f:validateLength maximum="3" minimum="3"/>
+                                        </h:inputText>
                                     </div>
-                                    <h:message for="securityCode"/>
+                                    <h:message for="securityCode" class="error"/>
                                 </div>
 
                                 <div class="control-group">

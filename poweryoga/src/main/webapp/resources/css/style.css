@@ -71,3 +71,4 @@ input[type="url"], input[type="search"], input[type="tel"], input[type="color"],
 #footerSection  #socialMedia a{ min-width:25px; display:inline; margin-right:6px; text-align:center; line-height:1.5em;}
 #footerSection  #socialMedia a:hover{background:none;}
 /* ===================================================== */
+.error{color:red;}

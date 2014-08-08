@@ -18,7 +18,7 @@
                         <h3>Billing and Shipping Information</h3>	
                         <hr class="soft"/>
                         <div class="well">
-                            <h:form class="form-horizontal">
+                            <h:form class="form-horizontal" id="frmAddress">
                                 <h4>Billing Address</h4>
                                 <div class="control-group">
                                     <label class="control-label" for="street">Street </label>
@@ -66,6 +66,9 @@
                                 </div>
 
                                 <h4>Shipping Address</h4>
+                                <h:selectBooleanCheckbox id="chkShip" value="#{purchaseOrderController.checkShipping}" valueChangeListener="#{purchaseOrderController.changeShippingCheckBox()}" onchange="submit()">
+                                </h:selectBooleanCheckbox>
+                                Same as billing address
                                 <div class="control-group">
                                     <label class="control-label" for="streetId">Street </label>
                                     <div class="controls">

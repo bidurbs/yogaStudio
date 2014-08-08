@@ -1,5 +1,8 @@
 package com.saviour.poweryoga.controller;
 
+import static com.saviour.poweryoga.controller.NotificationController.errorMsg;
+import static com.saviour.poweryoga.controller.NotificationController.successMsg;
+import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
@@ -110,7 +113,7 @@ public class UserController implements Serializable {
      * @throws Exception
      */
     public String loginUser() throws Exception {
-        
+
         //encrypt password to check it against the DB. 
         String encPass = PasswordService.encrypt(user.getPassword());
         user.setPassword(encPass);
@@ -121,7 +124,6 @@ public class UserController implements Serializable {
             if (user != null) {
                 //set the authenticated user info. on the session  
                 setUserSessionData(user);
-                
 
                 //check user code 
                 int userRoleCode = user.getRole().getUserCode();
@@ -167,6 +169,78 @@ public class UserController implements Serializable {
                 .getCurrentInstance().getExternalContext().getSession(true);
         activeSession.setAttribute("loggedUserId", user.getUserId());
         activeSession.setAttribute("loggedUserFname", user.getFirstName());
+    }
+
+    // CHANGE PASSWORD
+    private String currentPassword;
+    private String newPassword;
+    private String newRePassword;
+
+    public void changePassword() {
+        try {
+            Users usr = getCurrentUser();
+            String encPass = PasswordService.encrypt(currentPassword);
+            usr.setPassword(encPass);
+
+            usr = userService.authenticateUser(usr);
+
+            if (usr != null) {
+                if (checkPassword(newPassword, newRePassword)) {
+                    encPass = PasswordService.encrypt(newPassword);
+                    usr.setPassword(encPass);
+                    userService.updateUser(usr);
+                    successMsg = "Password updated successfully";
+                    errorMsg = null;
+                    return;
+                }
+            }
+            successMsg = null;
+            errorMsg = "Password doesn't match";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checkPassword(String password, String rePassword) {
+        if (password.equals(rePassword)) {
+            return true;
+        }
+        successMsg = null;
+        errorMsg = "Password and RePassword doesn't match";
+        return false;
+    }
+
+    public Users getCurrentUser() {
+        HttpSession activeSession = (HttpSession) FacesContext
+                .getCurrentInstance().getExternalContext().getSession(true);
+
+        Long userId = (Long) activeSession.getAttribute("loggedUserId");
+
+        return userService.findUserById(userId);
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getNewRePassword() {
+        return newRePassword;
+    }
+
+    public void setNewRePassword(String newRePassword) {
+        this.newRePassword = newRePassword;
     }
 
 }

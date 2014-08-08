@@ -29,8 +29,7 @@ public class UserService implements IUserService {
     private CRUDFacadeImpl crudfacade;
 
     //for password encription 
-   // private PasswordService encpass = new PasswordService();
-
+    // private PasswordService encpass = new PasswordService();
     private String errorMsg = null;
 
     private String successMsg = null;
@@ -97,6 +96,11 @@ public class UserService implements IUserService {
             return null;
 
         }
+    }
+
+    @Override
+    public Users findUserById(Long userId) {
+        return (Users) crudfacade.read(userId, Users.class);
     }
 
 }

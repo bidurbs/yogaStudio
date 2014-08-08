@@ -36,7 +36,7 @@ public class ProductService implements IProductService {
 
         try {
             Map<String, String> paramaters = new HashMap<>(1);
-            paramaters.put("pname", name);
+            paramaters.put("pname", "%"+name+"%");
             return crudfacade.findWithNamedQuery("Product.searchProduct", paramaters);
         } catch (Exception ex) {
             return null;
