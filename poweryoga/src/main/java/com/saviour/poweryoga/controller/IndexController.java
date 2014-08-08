@@ -25,12 +25,9 @@ public class IndexController implements Serializable {
     @Autowired
     private ICourseService CourseService;
 
-    private String errorMsg = null;
-    private String successMsg = null;
-
     private List<Course> ListOfCourses;
     private List<Product> listOfProducts;
-    private List<Product> listOfFeaturedProducts;
+    private List<Product> featuredProducts;
 
     public IndexController() {
 
@@ -50,37 +47,18 @@ public class IndexController implements Serializable {
         return listOfProducts;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public String getSuccessMsg() {
-        return successMsg;
-    }
-
-    public void setSuccessMsg(String successMsg) {
-        this.successMsg = successMsg;
-    }
-
     public void setListOfProducts(List<Product> listOfProducts) {
         this.listOfProducts = listOfProducts;
     }
 
-    public List<Product> getListOfFeaturedProducts() {
-        return listOfFeaturedProducts;
-    }
 
-    public void setListOfFeaturedProducts(List<Product> listOfFeaturedProducts) {
-        this.listOfFeaturedProducts = listOfFeaturedProducts;
+    public void setFeaturedProducts(List<Product> featuredProducts) {
+        this.featuredProducts = featuredProducts;
     }
 
     public List<Product> getFeaturedProducts() {
-        listOfFeaturedProducts = ProductService.getFeaturedProducts();
-        return listOfFeaturedProducts;
+        featuredProducts = ProductService.getFeaturedProducts();
+        return featuredProducts.subList(0, 2);
     }
 
 }
