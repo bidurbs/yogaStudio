@@ -93,7 +93,7 @@
                             <label class="control-label" for="course">Section <sup>*</sup></label>
                             <div class="controls">
                                 <h:selectOneMenu value="#{facultyController.selectedSectionId}">
-                                    <f:selectItems value="#{SectionController.listOfSection}" var="item"
+                                    <f:selectItems value="#{sectionController.listOfSection}" var="item"
                                                    itemLabel="#{item.sectionName}" itemValue="#{item.id}" />
                                 </h:selectOneMenu>
                             </div>

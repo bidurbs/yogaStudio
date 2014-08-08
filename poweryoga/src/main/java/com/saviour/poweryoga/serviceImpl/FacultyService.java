@@ -1,11 +1,14 @@
 package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
+import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Faculty;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IFacultyService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +25,6 @@ public class FacultyService implements IFacultyService {
 
     @Autowired
     private CRUDFacadeImpl crudfacade;
-
 
     @Override
     public void saveFaculty(Faculty faculty) {
@@ -49,7 +51,7 @@ public class FacultyService implements IFacultyService {
 
     @Override
     public void deleteFaculty(Faculty faculty) {
-       crudfacade.delete(faculty);
+        crudfacade.delete(faculty);
     }
 
     /**
@@ -71,12 +73,60 @@ public class FacultyService implements IFacultyService {
     }
 
     /**
-     * Approve or reject waiver. 
-     * The status is sent from the controller that would be "APPROVED" or "NOTAPPROVED", so only update is required. 
-     * @param waiver 
+     * Approve or reject waiver. The status is sent from the controller that
+     * would be "APPROVED" or "NOTAPPROVED", so only update is required.
+     *
+     * @param waiver
      */
     @Override
     public void updateWaiverRequest(Waiver waiver) {
-         crudfacade.update(waiver);
+        crudfacade.update(waiver);
     }
+
+    /**
+     * Select an advisor from a list of Faculty who has minimum no of advisee.
+     *
+     * @return
+     */
+    @Override
+    public Faculty pickAdvisor() {
+        String pickAdv = "select myAdvisor_userId from(select myAdvisor_userId, count(myAdvisor_userId) as totalAdvisee from USERS where DTYPE='Customer' group by myAdvisor_userId order by totalAdvisee asc LIMIT 1) as USER";
+       // Object obj = crudfacade.findWithNativeQuery(pickAdv);
+        String qResult =   crudfacade.findWithNativeQuery(pickAdv).toString();
+
+        Faculty selectedAdvisor = (Faculty) crudfacade.read(Long.valueOf(qResult), Faculty.class);
+        //List<Faculty> facultyNew = crudfacade.findWithNativeQuery(pickAdv);
+        // return facultyNew.get(0);
+        return selectedAdvisor;
+    }
+
+    @Override
+    public List<Customer> myAdvisee(Faculty faculty) {
+        try {
+            Map<String, Long> paramaters = new HashMap<>(1);
+            paramaters.put("fid", faculty.getUserId());
+            List advisee = crudfacade.findWithNamedQuery("Faculty.listMyAdvisee",
+                    paramaters);
+            return advisee;
+        } catch (Exception ex) {
+            return null;
+
+        }
+
+    }
+
+    @Override
+    public Faculty myAdvisor(Customer customer) {
+        try {
+            Map<String, Long> paramaters = new HashMap<>(1);
+            paramaters.put("fid", customer.getUserId());
+            List advisor = crudfacade.findWithNamedQuery("Customer.MyAdvisor",
+                    paramaters);
+            return (Faculty) advisor.get(0);
+        } catch (Exception ex) {
+            return null;
+
+        }
+    }
+
 }

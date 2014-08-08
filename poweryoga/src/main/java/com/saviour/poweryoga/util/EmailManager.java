@@ -5,6 +5,7 @@
  */
 package com.saviour.poweryoga.util;
 
+import javax.inject.Singleton;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  * @version 0.0.1
  */
 @Component
+@Singleton
 public class EmailManager {
 
     public static void sendEmail(JavaMailSender mailSender, String subject, String body, String mailTo) {

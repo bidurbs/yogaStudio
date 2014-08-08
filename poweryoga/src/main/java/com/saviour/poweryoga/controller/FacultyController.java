@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.controller;
 
-import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
+import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.model.Faculty;
 import com.saviour.poweryoga.model.Role;
@@ -53,6 +48,8 @@ public class FacultyController implements Serializable {
 
     private List<Section> sectionList = new ArrayList<>();
 
+    private List<Customer> myadvisee;
+
     private Long selectedSectionId;
 
     private String errorMsg = null;
@@ -77,6 +74,16 @@ public class FacultyController implements Serializable {
 
     public void setSectionList(List<Section> sectionList) {
         this.sectionList = sectionList;
+    }
+
+    public List<Customer> getMyadvisee() {
+        Faculty fac = (Faculty) usercontroller.getUser();
+        myadvisee = facultyService.myAdvisee(fac);
+        return myadvisee;
+    }
+
+    public void setMyadvisee(List<Customer> myadvisee) {
+        this.myadvisee = myadvisee;
     }
 
     /**
@@ -187,8 +194,6 @@ public class FacultyController implements Serializable {
 
     }
 
-    
-
     /**
      * Reject pending requests
      *
@@ -199,7 +204,7 @@ public class FacultyController implements Serializable {
         try {
             waiver.setStatus(Waiver.statusType.NOTAPPROVED);
             facultyService.updateWaiverRequest(waiver);
-             //send email to the customer 
+            //send email to the customer 
             notifyWaiverRequestDecision(waiver);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -208,10 +213,11 @@ public class FacultyController implements Serializable {
         return "";
 
     }
-    
+
     /**
-     * Notify user about the waiver decision. 
-     * @param waiver 
+     * Notify user about the waiver decision.
+     *
+     * @param waiver
      */
     public void notifyWaiverRequestDecision(Waiver waiver) {
         EmailManager.sendEmail(mailSender, "Waiver request +" + waiver.getStatus().toString().toLowerCase(),

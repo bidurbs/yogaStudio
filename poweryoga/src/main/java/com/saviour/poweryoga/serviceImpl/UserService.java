@@ -27,13 +27,6 @@ public class UserService implements IUserService {
 
     @Autowired
     private CRUDFacadeImpl crudfacade;
-
-    //for password encription 
-    // private PasswordService encpass = new PasswordService();
-    private String errorMsg = null;
-
-    private String successMsg = null;
-
     /**
      * Save the user and return Users object if it is saved successfully.
      *
@@ -46,6 +39,8 @@ public class UserService implements IUserService {
         boolean userSaved = false;
         try {
             crudfacade.create(user);
+            
+            //assign faculty for this registered user. 
             userSaved = true;
         } catch (Exception ex) {
         }

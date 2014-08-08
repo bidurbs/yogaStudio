@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT")
 @NamedQueries({
         @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname"),
-        @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by id desc limit 2"),
+        @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by rand()"),
         @NamedQuery(name = "Product.findAllProducts", query = "FROM Product p")        
         
 })

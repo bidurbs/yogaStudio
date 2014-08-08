@@ -46,7 +46,7 @@
                             <div class="control-group">
                                 <label class="control-label" for="street">Street <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputTextarea id="street" value="#{facultyController.faculty.street}" />
+                                    <h:inputText id="street" value="#{facultyController.faculty.street}" />
                                 </div>
                                 <h:message for="street"/>
                             </div>
@@ -61,7 +61,7 @@
                              <div class="control-group">
                                 <label class="control-label" for="state">State <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputTextarea id="state" value="#{facultyController.faculty.state}" />
+                                    <h:inputText id="state" value="#{facultyController.faculty.state}" />
                                 </div>
                                 <h:message for="state"/>
                             </div>
@@ -73,6 +73,16 @@
                                 </div>
                                 <h:message for="zip"/>
                             </div>
+                            <div class="control-group">
+                            <label class="control-label" for="course">Section <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu value="#{facultyController.selectedSectionId}">
+                                    <f:selectItems value="#{sectionController.listOfSection}" var="item"
+                                                   itemLabel="#{item.sectionName}" itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <h:message for="course"/>
+                        </div>
                             <div class="control-group">
                                 <div class="controls">
                                     <h:commandButton class="btn btn-large" value="Update" action="#{facultyController.updateFaculty()}"/>

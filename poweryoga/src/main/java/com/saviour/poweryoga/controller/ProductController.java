@@ -5,7 +5,6 @@
  */
 package com.saviour.poweryoga.controller;
 
-import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Product;
 import com.saviour.poweryoga.serviceI.IProductService;
 import java.io.Serializable;
@@ -26,9 +25,6 @@ public class ProductController implements Serializable {
     @Autowired
     private IProductService ProductService;
     
-//    @Autowired
-//    private CRUDFacadeImpl crudfacade;
-
     private Product product;
     private List<Product> listOfProducts;
 

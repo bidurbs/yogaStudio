@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,6 +19,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CUSTOMER")
+@NamedQueries({
+    @NamedQuery(name = "Customer.MyAdvisor", query = "from Customer c WHERE c.myAdvisor.userId = :fid")
+})
 public class Customer extends Users implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -23,6 +29,9 @@ public class Customer extends Users implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
     private List<CreditCard> creditCards=new ArrayList<>();
+    
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Faculty myAdvisor;
 
 
     public List<PurchaseOrder> getOrders() {
@@ -44,5 +53,17 @@ public class Customer extends Users implements Serializable {
     public void addCreditCard(CreditCard card) {
         creditCards.add(card);
     }
+
+    public Faculty getMyAdvisor() {
+        return myAdvisor;
+    }
+
+    public void setMyAdvisor(Faculty myAdvisor) {
+        this.myAdvisor = myAdvisor;
+    }
+
+   
+    
+    
 
 }

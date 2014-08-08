@@ -1,5 +1,6 @@
 package com.saviour.poweryoga.crudfacade;
 
+import com.saviour.poweryoga.model.Faculty;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityExistsException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
@@ -159,13 +161,32 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      */
     @Override
     public List findWithNamedQuery(String namedQueryName, Map<String, String> parameters, int resultLimit) {
-        Query query = sessionFactory.openSession().getNamedQuery(namedQueryName);
+        try {
+            Query query = sessionFactory.openSession().getNamedQuery(namedQueryName);
 
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            query.setParameter(entry.getKey(), entry.getValue());
+            for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                query.setParameter(entry.getKey(), entry.getValue());
+            }
+
+            return query.list().subList(0, resultLimit - 1);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Object findWithNativeQuery(String nativeQuery) {
+        try {
+            Query query = sessionFactory.openSession().createSQLQuery(nativeQuery);
+            Object result = query.uniqueResult();
+
+            return result;
+        } catch (HibernateException hibernateException) {
+            hibernateException.printStackTrace();
+            return null;
         }
 
-        return query.list().subList(0, resultLimit - 1);
     }
 
 }

@@ -52,7 +52,9 @@ public class ProductService implements IProductService {
      */
     @Override
     public List<Product> getFeaturedProducts() {
-        return crudfacade.findWithNamedQuery("Product.findAllFeatured");
+        return crudfacade.findWithNamedQuery("Product.findAllProducts");
+        //List <Product> product =  crudfacade.findWithNamedQuery("Product.findAllProducts");
+        //return product.subList(0, 2);
     }
 
     @Override
