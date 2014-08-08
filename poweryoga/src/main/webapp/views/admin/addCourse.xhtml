@@ -49,7 +49,19 @@
                             </div>
                             <h:message for="courseFee"/>
                         </div>
-
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="course">Prerequisite Courses <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectManyListbox  value="#{courseController.course.prerequisites}">
+                                    <f:selectItems value="#{courseController.listOfCourses}" var="item"
+                                                   itemLabel="#{item.courseName}" 
+                                                   itemValue="#{item.courseName}" />
+                                </h:selectManyListbox >
+                            </div>
+                            <h:message for="course"/>
+                        </div>   
+                        
                         <div class="control-group">
                             <div class="controls">
                                 <h:commandButton class="btn btn-large" value="Save" action="#{courseController.saveCourse()}"/>
