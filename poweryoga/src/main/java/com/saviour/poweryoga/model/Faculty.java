@@ -25,7 +25,6 @@ import javax.persistence.Table;
             query = "FROM Customer c where c.myAdvisor.userId = :fid")
 })
 public class Faculty extends Users implements Serializable {
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "myAdvisor")
     private List<Customer> myAdvisee;
 

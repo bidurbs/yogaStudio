@@ -42,7 +42,7 @@ public class Course implements Serializable {
     private String description;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Course prerequisites;
 
 
