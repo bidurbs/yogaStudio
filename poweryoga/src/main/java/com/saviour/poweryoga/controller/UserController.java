@@ -104,6 +104,16 @@ public class UserController implements Serializable {
     
     
 
+    public boolean isIsLoggedin() {
+        return isLoggedin;
+    }
+
+    public void setIsLoggedin(boolean isLoggedin) {
+        this.isLoggedin = isLoggedin;
+    }
+    
+    
+
     /**
      * Authenticate user and redirect to the respective home page based on role.
      *

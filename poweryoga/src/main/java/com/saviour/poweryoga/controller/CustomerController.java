@@ -34,8 +34,10 @@ public class CustomerController extends NotificationController implements Serial
     @Autowired
     private IRoleService roleService;
 
+    
     @Autowired
-    private IFacultyService facultyService;
+    private IFacultyService facultyService; 
+    
 
     private List<Customer> customers;
 
@@ -53,6 +55,7 @@ public class CustomerController extends NotificationController implements Serial
     }
 
     /**
+     * 
      * Customer registration.
      */
 
@@ -66,7 +69,6 @@ public class CustomerController extends NotificationController implements Serial
                 //set role 
                 customer.setRole(custRRole);
                 //assign advisor 
-
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
