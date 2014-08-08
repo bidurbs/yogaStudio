@@ -2,7 +2,6 @@ package com.saviour.poweryoga.controller;
 
 import static com.saviour.poweryoga.controller.NotificationController.errorMsg;
 import static com.saviour.poweryoga.controller.NotificationController.successMsg;
-import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Role;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
@@ -101,19 +100,7 @@ public class UserController implements Serializable {
     public void setIsLoggedin(boolean isLoggedin) {
         this.isLoggedin = isLoggedin;
     }
-    
-    
-
-    public boolean isIsLoggedin() {
-        return isLoggedin;
-    }
-
-    public void setIsLoggedin(boolean isLoggedin) {
-        this.isLoggedin = isLoggedin;
-    }
-    
-    
-
+   
     /**
      * Authenticate user and redirect to the respective home page based on role.
      *
