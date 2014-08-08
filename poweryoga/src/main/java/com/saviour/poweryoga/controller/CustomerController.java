@@ -8,6 +8,7 @@ import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
+import com.saviour.poweryoga.util.YogaValidator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +26,17 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Named(value = "customerController")
 @SessionScoped
-public class CustomerController implements Serializable {
+public class CustomerController extends NotificationController implements Serializable {
 
     @Autowired
     private IUserService userService;
 
     @Autowired
     private IRoleService roleService;
+
     
     @Autowired
     private IFacultyService facultyService; 
-    
     
 
     private List<Customer> customers;
@@ -43,10 +44,6 @@ public class CustomerController implements Serializable {
     private Customer customer;
 
     private Address address;
-
-    private String errorMsg = null;
-
-    private String successMsg = null;
 
     private String rePassword;
 
@@ -58,21 +55,20 @@ public class CustomerController implements Serializable {
     }
 
     /**
-     * Customer registration. 
+     * 
+     * Customer registration.
      */
 
     public void saveCustomer() {
         try {
-            if (findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
+            if (validateEmail(customer.getEmail()) && findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
                 customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
                 Role custRRole = roleService.getRoleByUserCode(UserController.ROLE_CUSTOMER_CODE);
 
                 //set role 
                 customer.setRole(custRRole);
-                
                 //assign advisor 
-                
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
@@ -84,6 +80,15 @@ public class CustomerController implements Serializable {
             errorMsg = "Customer saving failed";
             successMsg = null;
         }
+    }
+
+    public boolean validateEmail(String email) {
+        if (YogaValidator.emailValidator(customer.getEmail()) == false) {
+            successMsg = null;
+            errorMsg = "Invalid email format";
+            return false;
+        }
+        return true;
     }
 
     public boolean findCustomerByEmail(String email) {
@@ -144,22 +149,6 @@ public class CustomerController implements Serializable {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public String getSuccessMsg() {
-        return successMsg;
-    }
-
-    public void setSuccessMsg(String successMsg) {
-        this.successMsg = successMsg;
     }
 
     public String getRePassword() {

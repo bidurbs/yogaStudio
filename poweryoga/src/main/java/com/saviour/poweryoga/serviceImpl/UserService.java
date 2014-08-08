@@ -28,7 +28,7 @@ public class UserService implements IUserService {
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
-    
+
     /**
      * Save the user and return Users object if it is saved successfully.
      *
@@ -93,6 +93,11 @@ public class UserService implements IUserService {
             return null;
 
         }
+    }
+
+    @Override
+    public Users findUserById(Long userId) {
+        return (Users) crudfacade.read(userId, Users.class);
     }
 
 }
