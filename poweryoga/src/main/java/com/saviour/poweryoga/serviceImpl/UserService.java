@@ -1,7 +1,6 @@
 package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
-import com.saviour.poweryoga.daoI.IUserDAO;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
@@ -23,11 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService implements IUserService {
 
     @Autowired
-    private IUserDAO userDao;
-
-    @Autowired
     private CRUDFacadeImpl crudfacade;
-
 
     /**
      * Save the user and return Users object if it is saved successfully.
@@ -41,7 +36,7 @@ public class UserService implements IUserService {
         boolean userSaved = false;
         try {
             crudfacade.create(user);
-            
+
             //assign faculty for this registered user. 
             userSaved = true;
         } catch (Exception ex) {
@@ -55,17 +50,22 @@ public class UserService implements IUserService {
 
     @Override
     public List<Customer> findAllCustomer() {
-        return userDao.findAllCustomer();
+        return crudfacade.findWithNamedQuery("Users.findAllCustomer");
     }
 
     @Override
     public Customer findCustomerById(long customerId) {
-        return userDao.findCustomerById(customerId);
+        return (Customer) crudfacade.read(customerId, Customer.class);
     }
 
     @Override
     public Customer findCustomerByEmail(String email) {
-        return userDao.findCustomerByEmail(email);
+        Map<String, String> paramaters = new HashMap<>(1);
+        paramaters.put("email", email);
+        
+        List<Customer> customer =  crudfacade.findWithNamedQuery("Users.findCustomerByEmail", paramaters);
+        
+        return (Customer) customer.get(0);
     }
 
     @Override

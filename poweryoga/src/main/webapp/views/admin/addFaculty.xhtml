@@ -34,7 +34,7 @@
                             </div>
                             <h:message for="lastName"/>
                         </div>
-                         <div class="control-group">
+                        <div class="control-group">
                             <label class="control-label" for="femail">Email<sup>*</sup></label>
                             <div class="controls">
                                 <h:inputText id="fmailin" value="#{facultyController.faculty.email}"/>
@@ -93,6 +93,8 @@
                             <label class="control-label" for="course">Section <sup>*</sup></label>
                             <div class="controls">
                                 <h:selectOneMenu value="#{facultyController.selectedSectionId}">
+                                    <f:selectItem itemValue="#{item.id}" itemLabel="Choose a Section" />
+                                    <f:selectItem itemValue="#{item.id}" itemLabel="NOT_ASSIGNED" />
                                     <f:selectItems value="#{sectionController.listOfSection}" var="item"
                                                    itemLabel="#{item.sectionName}" itemValue="#{item.id}" />
                                 </h:selectOneMenu>
@@ -102,7 +104,9 @@
 
                         <div class="control-group">
                             <div class="controls">
-                                <h:commandButton class="btn btn-large" value="Save" action="#{facultyController.saveFaculty()}"/>
+                                <h:commandButton class="btn btn-large" 
+                                                 value="Save" 
+                                                 action="#{facultyController.saveFaculty()}"/>
                             </div>
                         </div>
                     </h:form>
