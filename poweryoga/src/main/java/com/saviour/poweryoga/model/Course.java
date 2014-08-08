@@ -2,13 +2,17 @@ package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -37,16 +41,19 @@ public class Course implements Serializable {
 
     private String description;
 
-    @OneToMany
-    private List<Course> prerequisites;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Course prerequisites;
+
 
     @OneToMany(mappedBy = "course")
     private List<Section> sections;
 
-    public Course(String courseName, double courseFee, String description) {
+    public Course(String courseName, double courseFee, String description, Course prerequisites) {
         this.courseName = courseName;
         this.courseFee = courseFee;
         this.description = description;
+        this.prerequisites = prerequisites;
     }
 
     public Course() {
@@ -93,11 +100,11 @@ public class Course implements Serializable {
         this.description = description;
     }
 
-    public List<Course> getPrerequisites() {
+    public Course getPrerequisites() {
         return prerequisites;
     }
 
-    public void setPrerequisites(List<Course> prerequisites) {
+    public void setPrerequisites(Course prerequisites) {
         this.prerequisites = prerequisites;
     }
 
