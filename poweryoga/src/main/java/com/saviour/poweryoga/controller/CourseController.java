@@ -1,6 +1,5 @@
 package com.saviour.poweryoga.controller;
 
-import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.serviceI.ICourseService;
 import java.io.Serializable;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author bidur
  * @version 0.0.1
  */
-
 @Named("courseController")
 @SessionScoped
 public class CourseController implements Serializable {
@@ -25,6 +23,7 @@ public class CourseController implements Serializable {
     private Course course;
     private List<Course> listOfCourses;
     private int noOfCourses;
+    private Long selectedPrerequisiteId;
 
     public int getNoOfCourses() {
         return noOfCourses;
@@ -37,42 +36,53 @@ public class CourseController implements Serializable {
     public CourseController() {
         course = new Course();
     }
-    
+
     /**
      * Save Course data
      *
-     * @return 
+     * @return
      */
     public String saveCourse() {
-        CourseService.saveCourse(course);
-        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
+        try {
+            if (selectedPrerequisiteId != null) {
+                Course pre = CourseService.getCourseById(selectedPrerequisiteId);
+                course.setPrerequisites(pre);
+            }
+            CourseService.saveCourse(course);
+            return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //errorMsg = "Customer saving failed";
+        }
+        return null;
     }
-    
+
     /**
      * Display update Course data page
      *
-     * @return 
+     * @return
      */
     public String updateCourse() {
         CourseService.updateCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Update Course data
+     *
      * @param Id
-     * @return 
+     * @return
      */
     public String editCourse(long Id) {
         course = CourseService.getCourseById(Id);
         return "editCourse";
     }
-    
+
     /**
      * Delete Course entry
      *
      * @param Id
-     * @return 
+     * @return
      */
     public String deleteCourse(int Id) {
         course = CourseService.getCourseById(Id);
@@ -96,14 +106,23 @@ public class CourseController implements Serializable {
     public void setListOfCourses(List<Course> listOfCourses) {
         this.listOfCourses = listOfCourses;
     }
-    
+
     /**
      * Display list of Courses for customer
      *
-     * @return 
+     * @return
      */
     public String displayCourses() {
         noOfCourses = getListOfCourses().size();
         return ("/views/customer/course.xhtml?faces-redirect=true");
     }
+
+    public Long getSelectedPrerequisiteId() {
+        return selectedPrerequisiteId;
+    }
+
+    public void setSelectedPrerequisiteId(Long selectedPrerequisiteId) {
+        this.selectedPrerequisiteId = selectedPrerequisiteId;
+    }
+
 }
