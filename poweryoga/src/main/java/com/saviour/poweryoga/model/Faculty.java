@@ -19,8 +19,6 @@ import javax.persistence.Table;
 
 @NamedQueries({
     @NamedQuery(name = "Faculty.findAll", query = "from Faculty f"),
-    @NamedQuery(name = "Faculty.pickAdvisor",
-            query = "FROM Faculty f"),
     @NamedQuery(name = "Faculty.listMyAdvisee",
             query = "FROM Customer c where c.myAdvisor.userId = :fid")
 })

@@ -90,7 +90,7 @@ public class FacultyService implements IFacultyService {
      */
     @Override
     public Faculty pickAdvisor() {
-        String pickAdv = "select myAdvisor_userId from(select myAdvisor_userId, count(myAdvisor_userId) as totalAdvisee from USERS where DTYPE='Customer' group by myAdvisor_userId order by totalAdvisee asc LIMIT 1) as USER";
+        String pickAdv = "select FACULTY.userId from (select FACULTY.userId, count(myAdvisor_userId) as totalAdvisee from FACULTY LEFT JOIN CUSTOMER on CUSTOMER.myAdvisor_userId = FACULTY.userId group by myAdvisor_userId order by totalAdvisee asc limit 1) as FACULTY";
        // Object obj = crudfacade.findWithNativeQuery(pickAdv);
         String qResult =   crudfacade.findWithNativeQuery(pickAdv).toString();
 

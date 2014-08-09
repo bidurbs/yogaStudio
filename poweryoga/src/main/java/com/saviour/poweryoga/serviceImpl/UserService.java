@@ -60,12 +60,16 @@ public class UserService implements IUserService {
 
     @Override
     public Customer findCustomerByEmail(String email) {
+
         Map<String, String> paramaters = new HashMap<>(1);
         paramaters.put("email", email);
-        
-        List<Customer> customer =  crudfacade.findWithNamedQuery("Users.findCustomerByEmail", paramaters);
-        
-        return (Customer) customer.get(0);
+
+        List<Customer> customer = crudfacade.findWithNamedQuery("Users.findCustomerByEmail", paramaters);
+        if (!customer.isEmpty()) {
+            return (Customer) customer.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override

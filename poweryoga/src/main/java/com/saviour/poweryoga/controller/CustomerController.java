@@ -59,9 +59,12 @@ public class CustomerController implements Serializable {
      *
      * Customer registration.
      */
-    public void saveCustomer() {
+    public String saveCustomer() {
+        String redirect = null;
         try {
-            if (validateEmail(customer.getEmail()) && findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
+            if (validateEmail(customer.getEmail())
+                    && findCustomerByEmail(customer.getEmail()) == false
+                    && checkPassword(customer.getPassword(), rePassword)) {
                 customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
                 Role custRRole = roleService.getRoleByUserCode(UserController.ROLE_CUSTOMER_CODE);
@@ -74,12 +77,16 @@ public class CustomerController implements Serializable {
                 userService.saveUser(customer);
                 notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " saved successfully");
                 //  errorMsg = null;
+                redirect = "/views/index.xhtml?faces-redirect=true";
+                return (redirect);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             notificationController.setErrorMsg("Customer saving failed");
             // successMsg = null;
+            return redirect;
         }
+        return redirect;
     }
 
     public boolean validateEmail(String email) {
@@ -92,14 +99,19 @@ public class CustomerController implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     public boolean findCustomerByEmail(String email) {
-        Customer customer = userService.findCustomerByEmail(email.trim());
-        if (customer == null) {
+        Customer cust = userService.findCustomerByEmail(email.trim());
+        if (cust == null) {
             return false;
         }
         //  successMsg = null;
         notificationController.setErrorMsg("This email already registered");
-        
+
         return true;
     }
 
@@ -107,7 +119,7 @@ public class CustomerController implements Serializable {
         if (password.equals(rePassword)) {
             return true;
         }
-      //  notificationController.setSuccessMsg = null;
+        //  notificationController.setSuccessMsg = null;
         notificationController.setErrorMsg("Password and RePassword doesn't match");
         return false;
     }
@@ -116,10 +128,10 @@ public class CustomerController implements Serializable {
         try {
             userService.updateUser(customer);
             notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " updated successfully");
-        //    errorMsg = null;
+            //    errorMsg = null;
         } catch (Exception ex) {
             ex.printStackTrace();
-          notificationController.setErrorMsg("Customer updatation failed");
+            notificationController.setErrorMsg("Customer updatation failed");
             //successMsg = null;
         }
     }

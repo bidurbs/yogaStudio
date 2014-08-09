@@ -5,6 +5,7 @@ import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -17,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 0.0.1
  */
 @Named("userController")
-@SessionScoped
+@Dependent
 public class UserController implements Serializable {
 
     @Autowired

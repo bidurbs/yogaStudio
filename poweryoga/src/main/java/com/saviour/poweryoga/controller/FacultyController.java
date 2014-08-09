@@ -1,5 +1,6 @@
 package com.saviour.poweryoga.controller;
 
+import com.saviour.poweryoga.model.Address;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.model.Faculty;
@@ -43,6 +44,9 @@ public class FacultyController implements Serializable {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private NotificationController notificationController;
+
     private Faculty faculty;
     private List<Faculty> listOfFaculty;
 
@@ -50,14 +54,13 @@ public class FacultyController implements Serializable {
 
     private List<Customer> myadvisee;
 
+    private Address address;
+
     private Long selectedSectionId;
-
-    private String errorMsg = null;
-
-    private String successMsg = null;
 
     public FacultyController() {
         faculty = new Faculty();
+        address = new Address();
     }
 
     public Long getSelectedSectionId() {
@@ -86,6 +89,14 @@ public class FacultyController implements Serializable {
         this.myadvisee = myadvisee;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     /**
      * Save faculty data
      *
@@ -103,12 +114,16 @@ public class FacultyController implements Serializable {
             //  facRRole.setUserCode(UserController.ROLE_FACULTY_CODE);
             faculty.setPassword(PasswordService.encrypt(faculty.getPassword()));
 
+            //set address 
+            faculty.setAddress(address);
+            
+            //set role 
             faculty.setRole(facRRole);
             facultyService.saveFaculty(faculty);
             return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Customer saving failed";
+            notificationController.setErrorMsg("Customer saving failed");
         }
         return null;
     }

@@ -30,7 +30,7 @@ public class Customer extends Users implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
     private List<CreditCard> creditCards=new ArrayList<>();
     
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Faculty myAdvisor;
 
 
