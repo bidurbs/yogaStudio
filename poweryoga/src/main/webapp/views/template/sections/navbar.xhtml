@@ -35,7 +35,7 @@
                         <ul class="nav pull-right">
                             <c:choose>
                                 <c:when test="#{userController.isLoggedin}">
-                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
+                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">Welcome #{userController.activeSession.getAttribute("loggedUserFname")}</a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
