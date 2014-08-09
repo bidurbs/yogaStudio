@@ -6,6 +6,9 @@ import com.saviour.poweryoga.model.PurchaseOrder;
 import com.saviour.poweryoga.model.ShoppingCart;
 import com.saviour.poweryoga.serviceI.IPurchaseOrderService;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,15 @@ public class PurchaseOrderService implements IPurchaseOrderService {
         PurchaseOrder purchaseOrder = new PurchaseOrder(buyDate, shoppingCart, customer);
         return (PurchaseOrder) crudfacade.create(purchaseOrder);
 
+    }
+
+    @Override
+    public List<PurchaseOrder> findOrderByCustomerId(Long customerId) {
+        Map<String, Long> paramaters = new HashMap<>(1);
+        paramaters.put("customerId", customerId);
+
+        List<PurchaseOrder> orders = crudfacade.findWithNamedQuery("PurchaseOrder.findOrderByCustomerId", paramaters);
+        return orders;
     }
 
 }

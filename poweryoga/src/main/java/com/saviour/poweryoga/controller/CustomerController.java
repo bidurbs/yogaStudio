@@ -3,10 +3,13 @@ package com.saviour.poweryoga.controller;
 import com.saviour.poweryoga.model.Address;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Faculty;
+import com.saviour.poweryoga.model.PurchaseOrder;
 import com.saviour.poweryoga.model.Role;
+import com.saviour.poweryoga.model.ShoppingCartItem;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.IUserService;
+import com.saviour.poweryoga.util.EmailManager;
 import com.saviour.poweryoga.util.PasswordService;
 import com.saviour.poweryoga.util.YogaValidator;
 import java.io.Serializable;
@@ -17,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 /**
  *
@@ -48,6 +52,9 @@ public class CustomerController implements Serializable {
 
     private String rePassword;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     public CustomerController() {
         customer = new Customer();
         address = new Address();
@@ -76,7 +83,7 @@ public class CustomerController implements Serializable {
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
                 notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " saved successfully");
-                //  errorMsg = null;
+                sendRegistrationEmail(customer);
                 redirect = "/views/index.xhtml?faces-redirect=true";
                 return (redirect);
             }
@@ -87,6 +94,15 @@ public class CustomerController implements Serializable {
             return redirect;
         }
         return redirect;
+    }
+
+    public void sendRegistrationEmail(Customer mycustomer) {
+        //EMAIL SENDING
+        StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
+        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n   Password:   ********");
+        body.append("\n\n");
+        body.append("Regards\n-PowerYoga Team");
+        EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());
     }
 
     public boolean validateEmail(String email) {
