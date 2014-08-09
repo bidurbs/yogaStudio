@@ -8,6 +8,7 @@ import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
+import com.saviour.poweryoga.util.YogaValidator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,21 +33,18 @@ public class CustomerController implements Serializable {
 
     @Autowired
     private IRoleService roleService;
-    
+
     @Autowired
-    private IFacultyService facultyService; 
-    
-    
+    private IFacultyService facultyService;
+
+    @Autowired
+    private NotificationController notificationController;
 
     private List<Customer> customers;
 
     private Customer customer;
 
     private Address address;
-
-    private String errorMsg = null;
-
-    private String successMsg = null;
 
     private String rePassword;
 
@@ -58,41 +56,62 @@ public class CustomerController implements Serializable {
     }
 
     /**
-     * Customer registration. 
+     *
+     * Customer registration.
      */
-
-    public void saveCustomer() {
+    public String saveCustomer() {
+        String redirect = null;
         try {
-            if (findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
+            if (validateEmail(customer.getEmail())
+                    && findCustomerByEmail(customer.getEmail()) == false
+                    && checkPassword(customer.getPassword(), rePassword)) {
                 customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
                 Role custRRole = roleService.getRoleByUserCode(UserController.ROLE_CUSTOMER_CODE);
 
                 //set role 
                 customer.setRole(custRRole);
-                
                 //assign advisor 
-                
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
-                successMsg = "Customer " + customer.getFirstName() + " saved successfully";
-                errorMsg = null;
+                notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " saved successfully");
+                //  errorMsg = null;
+                redirect = "/views/index.xhtml?faces-redirect=true";
+                return (redirect);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Customer saving failed";
-            successMsg = null;
+            notificationController.setErrorMsg("Customer saving failed");
+            // successMsg = null;
+            return redirect;
         }
+        return redirect;
     }
 
-    public boolean findCustomerByEmail(String email) {
-        Customer customer = userService.findCustomerByEmail(email.trim());
-        if (customer == null) {
+    public boolean validateEmail(String email) {
+        if (YogaValidator.emailValidator(customer.getEmail()) == false) {
+            // successMsg = null;
+            notificationController.setErrorMsg("Invalid email format");
+            // errorMsg = "Invalid email format";
             return false;
         }
-        successMsg = null;
-        errorMsg = "This email already registered";
+        return true;
+    }
+
+    /**
+     *
+     * @param email
+     * @return
+     */
+    public boolean findCustomerByEmail(String email) {
+        Customer cust = userService.findCustomerByEmail(email.trim());
+        if (cust == null) {
+            return false;
+        }
+        //  successMsg = null;
+        notificationController.setErrorMsg("This email already registered");
+
         return true;
     }
 
@@ -100,20 +119,20 @@ public class CustomerController implements Serializable {
         if (password.equals(rePassword)) {
             return true;
         }
-        successMsg = null;
-        errorMsg = "Password and RePassword doesn't match";
+        //  notificationController.setSuccessMsg = null;
+        notificationController.setErrorMsg("Password and RePassword doesn't match");
         return false;
     }
 
     public void updateCustomer() {
         try {
             userService.updateUser(customer);
-            successMsg = "Customer " + customer.getFirstName() + " updated successfully";
-            errorMsg = null;
+            notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " updated successfully");
+            //    errorMsg = null;
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Customer updatation failed";
-            successMsg = null;
+            notificationController.setErrorMsg("Customer updatation failed");
+            //successMsg = null;
         }
     }
 
@@ -144,22 +163,6 @@ public class CustomerController implements Serializable {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public String getSuccessMsg() {
-        return successMsg;
-    }
-
-    public void setSuccessMsg(String successMsg) {
-        this.successMsg = successMsg;
     }
 
     public String getRePassword() {

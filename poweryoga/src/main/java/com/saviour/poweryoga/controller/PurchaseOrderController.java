@@ -70,6 +70,8 @@ public class PurchaseOrderController implements Serializable {
 
     private CreditCard creditCard;
 
+    private Boolean checkShipping;
+
     public PurchaseOrderController() {
         shoppingCart = new ShoppingCart();
         purchaseOrder = new PurchaseOrder();
@@ -77,6 +79,7 @@ public class PurchaseOrderController implements Serializable {
         shippingAddress = new Address();
         creditCard = new CreditCard();
         productQty = 1;
+        checkShipping = false;
     }
 
     public String addToCart(Long productId) {
@@ -147,7 +150,16 @@ public class PurchaseOrderController implements Serializable {
         if (purchaseOrder != null) {
 
             //EMAIL SENDING
-            EmailManager.sendEmail(mailSender, "Your shopping receipt", "Thank you for shopping", "shahin.kuet@gmail.com");
+            StringBuilder body=new StringBuilder("Thank you for shopping with PowerYoga.com.\n\n Your shopping detail\n\n");
+            int count=0;
+            for(ShoppingCartItem item:purchaseOrder.getShoppingCart().getShoppingCartItems()){
+                count++;
+                body.append(count+"   "+item.getProduct().getName()+"   "+item.getQuantity()+"   "+item.getPrice());
+                body.append("\n");
+            }
+            body.append("\n");
+            body.append("Regards\n-PowerYoga Team");
+            EmailManager.sendEmail(mailSender, "Shopping Information", body.toString(), customer.getEmail());
 
             successMsg = "Thank you for shopping with us. Please check your email for order detail";
             errorMsg = null;
@@ -254,6 +266,14 @@ public class PurchaseOrderController implements Serializable {
         this.creditCard = creditCard;
     }
 
+    public Boolean getCheckShipping() {
+        return checkShipping;
+    }
+
+    public void setCheckShipping(Boolean checkShipping) {
+        this.checkShipping = checkShipping;
+    }
+
     public String saveAddress() {
 
         customer = getCurrentCustomer();
@@ -281,4 +301,13 @@ public class PurchaseOrderController implements Serializable {
         return customerService.findCustomerById(customerId);
     }
 
+    public void changeShippingCheckBox() {
+        if (checkShipping) {
+            shippingAddress.setStreet(billingAddress.getStreet());
+            shippingAddress.setCity(billingAddress.getCity());
+            shippingAddress.setState(billingAddress.getState());
+            shippingAddress.setZip(billingAddress.getZip());
+            shippingAddress.setCountry(billingAddress.getCountry());
+        }
+    }
 }

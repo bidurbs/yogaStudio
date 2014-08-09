@@ -37,18 +37,17 @@ public class ProductSearchController implements Serializable {
 
     public String searchProduct() {
         products = productService.searchProduct(productName);
-        noOfAvailableProducts = getProducts().size();
+        noOfAvailableProducts = products.size();
         return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
     public String displayProducts() {
-        products = productService.searchProduct(productName);
-        noOfAvailableProducts = getProducts().size();
+        products = productService.getAllProducts();
+        noOfAvailableProducts = products.size();
         return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
     public List<Product> getProducts() {
-        products = productService.getAllProducts();
         return products;
     }
 

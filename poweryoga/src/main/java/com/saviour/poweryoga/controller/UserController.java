@@ -6,6 +6,7 @@ import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -22,11 +23,11 @@ public class UserController implements Serializable {
 
     @Autowired
     private IUserService userService;
-    
+
     //for success and error message notifications 
     @Autowired
-    private NotificationController notoficationController; 
-    
+    private NotificationController notoficationController;
+//    
     private Users user;
     private Role userRole;
 
@@ -42,14 +43,10 @@ public class UserController implements Serializable {
     private boolean isCustomer;
     private boolean isLoggedin;
 
-
-
     public UserController() {
         user = new Users();
         userRole = new Role();
     }
-
-    
 
     public Users getUser() {
         return user;
@@ -98,8 +95,6 @@ public class UserController implements Serializable {
     public void setIsLoggedin(boolean isLoggedin) {
         this.isLoggedin = isLoggedin;
     }
-    
-    
 
     /**
      * Authenticate user and redirect to the respective home page based on role.
@@ -108,7 +103,7 @@ public class UserController implements Serializable {
      * @throws Exception
      */
     public String loginUser() throws Exception {
-        
+
         //encrypt password to check it against the DB. 
         String encPass = PasswordService.encrypt(user.getPassword());
         user.setPassword(encPass);
@@ -119,7 +114,6 @@ public class UserController implements Serializable {
             if (user != null) {
                 //set the authenticated user info. on the session  
                 setUserSessionData(user);
-                
 
                 //check user code 
                 int userRoleCode = user.getRole().getUserCode();
@@ -146,7 +140,7 @@ public class UserController implements Serializable {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
+            //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
         }
         return null;
 
@@ -164,6 +158,87 @@ public class UserController implements Serializable {
                 .getCurrentInstance().getExternalContext().getSession(true);
         activeSession.setAttribute("loggedUserId", user.getUserId());
         activeSession.setAttribute("loggedUserFname", user.getFirstName());
+    }
+
+    /**
+     * Logout user -Invalidate the session and redirect to home page
+     *
+     * @return to home page
+     */
+    public String logoutUser() {
+        activeSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        activeSession.invalidate();
+        isLoggedin = false;
+        return "/views/index";
+    }
+
+    // CHANGE PASSWORD
+    private String currentPassword;
+    private String newPassword;
+    private String newRePassword;
+
+    public void changePassword() {
+        try {
+            Users usr = getCurrentUser();
+            String encPass = PasswordService.encrypt(currentPassword);
+            usr.setPassword(encPass);
+
+            usr = userService.authenticateUser(usr);
+
+            if (usr != null) {
+                if (checkPassword(newPassword, newRePassword)) {
+                    encPass = PasswordService.encrypt(newPassword);
+                    usr.setPassword(encPass);
+                    userService.updateUser(usr);
+                    notoficationController.setErrorMsg("Password updated successfully");
+                    return;
+                }
+            }
+            notoficationController.setErrorMsg("Password doesn't match");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checkPassword(String password, String rePassword) {
+        if (password.equals(rePassword)) {
+            return true;
+        }
+        notoficationController.setErrorMsg("Password and RePassword doesn't match");
+        return false;
+    }
+
+    public Users getCurrentUser() {
+        HttpSession activeSession = (HttpSession) FacesContext
+                .getCurrentInstance().getExternalContext().getSession(true);
+
+        Long userId = (Long) activeSession.getAttribute("loggedUserId");
+
+        return userService.findUserById(userId);
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getNewRePassword() {
+        return newRePassword;
+    }
+
+    public void setNewRePassword(String newRePassword) {
+        this.newRePassword = newRePassword;
     }
 
 }

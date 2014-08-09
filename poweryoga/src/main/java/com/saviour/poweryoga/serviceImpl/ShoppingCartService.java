@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.serviceImpl;
 
-import com.saviour.poweryoga.daoI.IShoppingCartDAO;
+import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.ShoppingCart;
 import com.saviour.poweryoga.model.ShoppingCartItem;
 import com.saviour.poweryoga.serviceI.IShoppingCartService;
@@ -16,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author Md Mojahidul Islam
+ * @author TalakB
  * @version 0.0.1
  */
 @Transactional
@@ -23,15 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class ShoppingCartService implements IShoppingCartService {
 
     @Autowired
-    private IShoppingCartDAO shoppingCartDao;
+    private CRUDFacadeImpl crudfacade;
 
     @Override
     public ShoppingCart addToCart(ShoppingCart cart) {
-        return shoppingCartDao.addToCart(cart);
+        return (ShoppingCart) crudfacade.create(cart);
     }
 
     @Override
     public ShoppingCart removeFromCart(ShoppingCart cart, ShoppingCartItem item) {
-        return shoppingCartDao.removeFromCart(cart, item);
+        cart.getShoppingCartItems().remove(item);
+        ShoppingCartItem it = (ShoppingCartItem) crudfacade.read(item.getId(), ShoppingCartItem.class);
+        crudfacade.delete(it);
+        return cart;
     }
 }

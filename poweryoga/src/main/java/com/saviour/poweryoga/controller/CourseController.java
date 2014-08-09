@@ -63,6 +63,8 @@ public class CourseController implements Serializable {
      * @return
      */
     public String updateCourse() {
+        Course pre = CourseService.getCourseById(selectedPrerequisiteId);
+        course.setPrerequisites(pre);
         CourseService.updateCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }

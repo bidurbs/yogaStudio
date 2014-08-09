@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.saviour.poweryoga.serviceImpl;
 
-
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
-import com.saviour.poweryoga.daoI.ISemesterDAO;
 import com.saviour.poweryoga.model.Semester;
 import com.saviour.poweryoga.serviceI.ISemesterService;
 import java.util.List;
@@ -18,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author AnurR
+ * @author TalakB
  * @version 0.0.1
  */
 @Service
@@ -25,29 +19,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class SemesterService implements ISemesterService {
 
     @Autowired
-    private ISemesterDAO semesterDao;
-
-    @Autowired
     private CRUDFacadeImpl crudfacade;
 
+    @Override
     public void saveSemester(Semester semester) {
         crudfacade.create(semester);
     }
 
-
+    @Override
     public List<Semester> getAllSemester() {
-        return semesterDao.getAll();
+        return crudfacade.findWithNamedQuery("Semester.findAll");
     }
 
-    public void updateSemester(Semester semester) {
-        semesterDao.update(semester);
+    @Override
+    public boolean updateSemester(Semester semester) {
+
+        return crudfacade.update(semester);
     }
 
+    @Override
     public Semester getSemesterById(long Id) {
-        return semesterDao.get(Id);
+        return (Semester) crudfacade.read(Id, Semester.class);
     }
 
-    public void deleteSemester(long Id) {
-        semesterDao.delete(Id);
+    @Override
+    public boolean deleteSemester(long Id) {
+        return crudfacade.delete(Id);
     }
 }
