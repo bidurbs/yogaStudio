@@ -11,36 +11,41 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="span12">
-                        <h3>Order Detail</h3>	
+                        <h3>Purchase Order List</h3>	
                         <hr class="soft"/>
                         <div class="well">
                             <h:form class="form-horizontal">
-                                <h:dataTable headerClass="cart_menu" styleClass="table table-condensed" value="#{purchaseOrderController.purchaseOrder.shoppingCart.shoppingCartItems}" var="item">
+                                <h:dataTable headerClass="cart_menu" styleClass="table table-condensed" value="#{purchaseOrderViewController.purchaseOrders}" var="item">
 
                                     <h:column>
-                                        <f:facet name="header">Item</f:facet>
-                                        <h:graphicImage style="width: 140px; height: 120px;" value="#{item.product.imageURL}" alt="Product_Image"/>
+                                        <f:facet name="header">Order Id</f:facet>
+                                            #{item.id}
 
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Price</f:facet>
-                                            #{item.product.price}                                
+                                        <f:facet name="header">Order Date</f:facet>
+                                            #{item.buyingDate}
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Quantity</f:facet>
-                                            #{item.quantity}
+                                        <f:facet name="header">Number of Items</f:facet>
+                                            #{item.shoppingCart.shoppingCartItems.size()}
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Total</f:facet>
-                                            #{item.price}
+                                        <f:facet name="header">Total Price</f:facet>
+                                            #{item.shoppingCart.totalPrice}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">View Detail</f:facet>
+                                        <h:commandLink action="#{purchaseOrderViewController.viewMyOrderDetail(item)}" value="Detail"/>
                                     </h:column>
 
 
                                 </h:dataTable>
-                                <h:commandButton class="btn btn-default check_out" value="Go Home" action="/views/customer/customerHome"/>
+
                             </h:form>
                         </div>
                     </div>
