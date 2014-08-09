@@ -4,7 +4,7 @@
     <div id="sidebar" class="span3">
         <br class="clr"/>
         <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
-            <li class="subMenu"><a> COURSE OFFERED </a>
+            <li class="subMenu"><a> COURSES OFFERED </a>
                 <ul>
                     <ui:repeat value="#{indexController.listOfCourses}" var="course">
                         <li><a href="${facesContext.externalContext.requestContextPath}#{SectionController.displaySection(course.id)}">${course.courseName}</a></li>

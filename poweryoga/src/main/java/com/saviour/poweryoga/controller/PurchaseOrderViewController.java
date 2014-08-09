@@ -7,6 +7,7 @@ package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.PurchaseOrder;
+import com.saviour.poweryoga.serviceI.IPurchaseOrderService;
 import com.saviour.poweryoga.serviceI.IUserService;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -28,21 +30,24 @@ public class PurchaseOrderViewController implements Serializable {
 
     @Autowired
     private IUserService customerService;
+    
+    @Autowired
+    private IPurchaseOrderService purchaseOrderService;
 
     private List<PurchaseOrder> purchaseOrders;
-    
+
     private PurchaseOrder purchaseOrder;
 
     public PurchaseOrderViewController() {
-        purchaseOrder=new PurchaseOrder();
+        purchaseOrder = new PurchaseOrder();
         purchaseOrders = new ArrayList<>();
     }
 
     public String viewMyOrders() {
         Customer customer = getCurrentCustomer();
 
-        purchaseOrders = customer.getOrders();
-        
+        purchaseOrders = purchaseOrderService.findOrderByCustomerId(customer.getUserId());
+
         return "/views/customer/viewPurchase";
 
     }
@@ -65,7 +70,7 @@ public class PurchaseOrderViewController implements Serializable {
     }
 
     public String viewMyOrderDetail(PurchaseOrder order) {
-        purchaseOrder=order;
+        purchaseOrder = order;
         return "/views/customer/viewPurchaseDetail";
     }
 

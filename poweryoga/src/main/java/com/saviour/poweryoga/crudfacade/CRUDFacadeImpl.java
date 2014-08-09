@@ -1,7 +1,7 @@
 package com.saviour.poweryoga.crudfacade;
 
-import com.saviour.poweryoga.model.Faculty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -29,6 +29,7 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     private boolean operationSuccessful;
 
     /**
+     * Persist an entity.
      *
      * @param entity
      * @return
@@ -43,7 +44,6 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             TransactionRequiredException {
         try {
             sessionFactory.getCurrentSession().persist(entity);
-            // manager.flush();
             return entity;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -52,6 +52,7 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     }
 
     /**
+     * Find by Id (Primary key).
      *
      * @param primaryKey
      * @return
@@ -61,10 +62,17 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     @Override
     public T read(final Serializable primaryKey, Class entClass) throws IllegalStateException,
             IllegalArgumentException {
-        return (T) sessionFactory.getCurrentSession().get(entClass, primaryKey);
+        try {
+            return (T) sessionFactory.getCurrentSession().get(entClass, primaryKey);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
     }
 
     /**
+     * Update an entity.
      *
      * @param entity
      * @return
@@ -79,12 +87,15 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             sessionFactory.getCurrentSession().update(entity);
             operationSuccessful = true;
         } catch (Exception ex) {
+            ex.printStackTrace();
+            operationSuccessful = false;
 
         }
         return operationSuccessful;
     }
 
     /**
+     * Delete an entity.
      *
      * @param entity
      * @return
@@ -101,6 +112,8 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             sessionFactory.getCurrentSession().delete(entity);
             operationSuccessful = true;
         } catch (Exception ex) {
+            ex.printStackTrace();
+            operationSuccessful = false;
 
         }
         return operationSuccessful;
@@ -108,19 +121,29 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     }
 
     /**
-     * named query without parameter
+     * Named query without parameter
      *
      * @param queryName
      * @return
      */
     @Override
     public List findWithNamedQuery(String queryName) {
-        Query query = sessionFactory.openSession().getNamedQuery(queryName);
-        return query.list();
+        try {
+            Query query = sessionFactory.openSession().getNamedQuery(queryName);
+            List qResult = query.list();
+            if (!qResult.isEmpty()) {
+                return qResult;
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     /**
-     * named query with limited number of results
+     * Named query with limited number of results
      *
      * @param queryName
      * @param resultLimit
@@ -128,8 +151,18 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      */
     @Override
     public List findWithNamedQuery(String queryName, int resultLimit) {
-        Query query = sessionFactory.openSession().getNamedQuery(queryName);
-        return query.list();
+        try {
+            Query query = sessionFactory.openSession().getNamedQuery(queryName);
+            List qResult = query.list();
+            if (!qResult.isEmpty()) {
+                return qResult;
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -141,14 +174,26 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      */
     @Override
     public List findWithNamedQuery(String namedQueryName, Map<String, String> parameters) {
-        //  Set parameters = parameters.entrySet();
-        Query query = sessionFactory.openSession().getNamedQuery(namedQueryName);
+        try {
+            //  Set parameters = parameters.entrySet();
+            List qResult = new ArrayList();
+            Query query = sessionFactory.openSession().getNamedQuery(namedQueryName);
 
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            query.setParameter(entry.getKey(), entry.getValue());
+            for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                query.setParameter(entry.getKey(), entry.getValue());
+            }
+            qResult = query.list();
+            if (!qResult.isEmpty()) {
+                return qResult;
+            } else {
+                //
+                return qResult;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
 
-        return query.list();
     }
 
     /**
@@ -167,20 +212,28 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             for (Map.Entry<String, String> entry : parameters.entrySet()) {
                 query.setParameter(entry.getKey(), entry.getValue());
             }
-
-            return query.list().subList(0, resultLimit - 1);
+            List qResult = query.list().subList(0, resultLimit - 1);
+            if (!qResult.isEmpty()) {
+                return qResult;
+            } else {
+                return null;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
+    /**
+     * Send native query. The result type depends on the type of query that is sent to mySQL.
+     * @param nativeQuery
+     * @return 
+     */
     @Override
     public Object findWithNativeQuery(String nativeQuery) {
         try {
             Query query = sessionFactory.openSession().createSQLQuery(nativeQuery);
             Object result = query.uniqueResult();
-
             return result;
         } catch (HibernateException hibernateException) {
             hibernateException.printStackTrace();

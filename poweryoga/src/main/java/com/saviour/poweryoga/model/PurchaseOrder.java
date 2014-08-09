@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,6 +24,9 @@ import javax.persistence.Temporal;
  * @version 0.0.1
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "PurchaseOrder.findOrderByCustomerId", query = "from PurchaseOrder p where p.customer.userId=:customerId")
+})
 @Table(name = "PURCHASE_ORDER")
 public class PurchaseOrder implements Serializable {
 

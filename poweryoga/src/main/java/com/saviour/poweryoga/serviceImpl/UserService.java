@@ -53,6 +53,7 @@ public class UserService implements IUserService {
         return crudfacade.findWithNamedQuery("Users.findAllCustomer");
     }
 
+    @Transactional
     @Override
     public Customer findCustomerById(long customerId) {
         return (Customer) crudfacade.read(customerId, Customer.class);

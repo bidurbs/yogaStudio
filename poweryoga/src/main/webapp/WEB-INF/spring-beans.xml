@@ -68,6 +68,7 @@
                 <value>com.saviour.poweryoga.model.ShoppingCartItem</value>
                 <value>com.saviour.poweryoga.model.Transcript</value>
                  <value>com.saviour.poweryoga.model.Address</value>
+                 <value>com.saviour.poweryoga.model.Waiver</value>
             </list>
         </property>
 
