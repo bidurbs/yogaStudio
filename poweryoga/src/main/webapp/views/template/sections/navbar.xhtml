@@ -6,32 +6,50 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a id="logoM" href="${facesContext.externalContext.requestContextPath}"><img src="${facesContext.externalContext.requestContextPath}/resources/img/logo.png" alt="Bootsshop"/></a>
-                    <a data-target="#sidebar" data-toggle="collapse" class="btn btn-navbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
+                    
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="active"><a href="${facesContext.externalContext.requestContextPath}">Home</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/${CourseController.displayCourses()}">Course</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/#{productSearchController.displayProducts()}">Products</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/contact.xhtml">Contact</a></li>
-                            <c:choose>
-                                <c:when test="#{userController.isCustomer}">
-                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
-                                </c:when>
-                            </c:choose>
 
                         </ul>
-                        <h:form class="navbar-search pull-left" style="width: 400px !important">                            
-                            <h:inputText value="#{productSearchController.productName}" class="search-query span5"/>
-                            <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
-                        </h:form>
+                        <c:choose>
+                            <c:when test="#{userController.isLoggedin==false}">
+                                <h:form class="navbar-search pull-left" style="width: 400px !important; margin-left: 120px">                            
+                                    <h:inputText value="#{productSearchController.productName}" class="search-query span5"/>
+                                    <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
+                                </h:form>
+                            </c:when>
+                            <c:when test="#{userController.isCustomer}">
+                                <h:form class="navbar-search pull-left" style="width: 400px !important; margin-left: 120px">                            
+                                    <h:inputText value="#{productSearchController.productName}" class="search-query span5"/>
+                                    <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
+                                </h:form>
+                            </c:when>
+                        </c:choose>
+
+
                         <ul class="nav pull-right">
-                            <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
-                            <li><a href="${facesContext.externalContext.requestContextPath}/views/userLogin.xhtml">Login</a></li>
+                            <c:choose>
+                                <c:when test="#{userController.isLoggedin}">
+                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:choose>
+                                <c:when test="#{userController.isLoggedin}">
+                                    <li><a href="${facesContext.externalContext.requestContextPath}#{userController.logoutUser()}">Logout</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${facesContext.externalContext.requestContextPath}/views/userLogin.xhtml">Login</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
                         </ul>
                     </div><!-- /.nav-collapse -->
                 </div>
