@@ -126,7 +126,7 @@ public class CustomerController implements Serializable {
             return false;
         }
         //  successMsg = null;
-        notificationController.setErrorMsg("This email already registered");
+        notificationController.setErrorMsg("Email ID already exists.");
 
         return true;
     }
@@ -136,7 +136,7 @@ public class CustomerController implements Serializable {
             return true;
         }
         //  notificationController.setSuccessMsg = null;
-        notificationController.setErrorMsg("Password and RePassword doesn't match");
+        notificationController.setErrorMsg("Password and confirm password  mismatch");
         return false;
     }
 
@@ -147,7 +147,7 @@ public class CustomerController implements Serializable {
             //    errorMsg = null;
         } catch (Exception ex) {
             ex.printStackTrace();
-            notificationController.setErrorMsg("Customer updatation failed");
+            notificationController.setErrorMsg("Customer update failed");
             //successMsg = null;
         }
     }
