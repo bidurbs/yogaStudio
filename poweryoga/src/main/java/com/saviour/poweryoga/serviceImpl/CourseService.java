@@ -68,4 +68,9 @@ public class CourseService implements ICourseService {
     public void deleteCourse(Course course) {
         crudfacade.delete(course);
     }
+
+    @Override
+    public List<Course> getAllCompletedCourse(Long userId) {
+        return crudfacade.findWithNamedQuery("Course.findAll");
+    }
 }
