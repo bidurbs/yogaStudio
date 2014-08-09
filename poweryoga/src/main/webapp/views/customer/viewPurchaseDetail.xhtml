@@ -11,13 +11,13 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="span12">
-                        <h3>Order Detail</h3>	
+                        <h3>Purchase Order Detail</h3>	
                         <hr class="soft"/>
                         <div class="well">
                             <h:form class="form-horizontal">
-                                <h:dataTable headerClass="cart_menu" styleClass="table table-condensed" value="#{purchaseOrderController.purchaseOrder.shoppingCart.shoppingCartItems}" var="item">
+                                <h:dataTable headerClass="cart_menu" styleClass="table table-condensed" value="#{purchaseOrderViewController.purchaseOrder.shoppingCart.shoppingCartItems}" var="item">
 
-                                    <h:column>
+                                   <h:column>
                                         <f:facet name="header">Item</f:facet>
                                         <h:graphicImage style="width: 140px; height: 120px;" value="#{item.product.imageURL}" alt="Product_Image"/>
 
@@ -40,7 +40,7 @@
 
 
                                 </h:dataTable>
-                                <h:commandButton class="btn btn-default check_out" value="Go Home" action="/views/customer/customerHome"/>
+
                             </h:form>
                         </div>
                     </div>
