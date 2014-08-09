@@ -67,7 +67,6 @@ public class CustomerController implements Serializable {
      * Customer registration.
      */
     public String saveCustomer() {
-        String redirect = null;
         try {
             if (validateEmail(customer.getEmail())
                     && findCustomerByEmail(customer.getEmail()) == false
@@ -82,18 +81,16 @@ public class CustomerController implements Serializable {
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
-                notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " saved successfully");
                 sendRegistrationEmail(customer);
-                redirect = "/views/index.xhtml?faces-redirect=true";
-                return (redirect);
+                //redirect = "/views/index.xhtml?faces-redirect=true";
+                //return (redirect);
+                notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email and you can proceed to Login.");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             notificationController.setErrorMsg("Customer saving failed");
-            // successMsg = null;
-            return redirect;
         }
-        return redirect;
+        return null;
     }
 
     public void sendRegistrationEmail(Customer mycustomer) {
