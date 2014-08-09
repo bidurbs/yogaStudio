@@ -16,13 +16,13 @@
                             <li><a href="${facesContext.externalContext.requestContextPath}">Home</a> <span class="divider">/</span></li>
                             <li class="active">Courses</li>
                         </ul>
-                        <h3> Courses <small class="pull-right"> #{CourseController.noOfCourses} Courses are available </small></h3>	
+                        <h3> Courses <small class="pull-right"> #{courseController.noOfCourses} Courses are available </small></h3>	
 
-                        <hr class="soft"/>
                         <br class="clr"/>
                         <div class="tab-content">
                             <div class="tab-pane active" id="listView">
-                                <ui:repeat value="#{CourseController.listOfCourses}" var="course">
+                                <ui:repeat value="#{courseController.listOfCourses}" var="course">
+                                    <hr class="soft"/>
                                     <div class="row">	  
                                         <div id="productView" class="span2">
                                             <img src="http://eps.roudneff.com/eps/photo/athletisme-course-3-figurine-3D.jpg" alt=""/>
@@ -34,18 +34,17 @@
                                             <p>
                                                 ${course.description}
                                             </p>
-                                            <a class="btn btn-small pull-right" href="#">View Details</a>
+                                            <!--<a class="btn btn-small pull-right" href="#">View Details</a>-->
                                             <br class="clr"/>
                                         </div>
                                         <div class="span3 alignR">
                                             <h:form class="form-horizontal qtyFrm">
                                                 <h3> $${course.courseFee}</h3>
-                                                <h:commandLink class="btn btn-large" action="#{SectionController.displaySection(course.id)}" value="VIEW" />
+                                                <h:commandLink class="btn btn-large" action="#{sectionController.displaySection(course.id)}" value="VIEW" />
                                                 <!--<a href="" class="btn btn-large">VIEW</a>-->
                                             </h:form>
                                         </div>
                                     </div>
-                                    <hr class="soft"/>
                                 </ui:repeat>
                             </div>
                         </div>
