@@ -1,6 +1,7 @@
 package com.saviour.poweryoga.crudfacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -175,16 +176,18 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     public List findWithNamedQuery(String namedQueryName, Map<String, String> parameters) {
         try {
             //  Set parameters = parameters.entrySet();
+            List qResult = new ArrayList();
             Query query = sessionFactory.openSession().getNamedQuery(namedQueryName);
 
             for (Map.Entry<String, String> entry : parameters.entrySet()) {
                 query.setParameter(entry.getKey(), entry.getValue());
             }
-            List qResult = query.list();
+            qResult = query.list();
             if (!qResult.isEmpty()) {
                 return qResult;
             } else {
-                return null;
+                //
+                return qResult;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
