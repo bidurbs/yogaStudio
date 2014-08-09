@@ -25,4 +25,6 @@ public interface ICourseService {
     public void deleteCourse(Course course);
 
     public Course findByName(String cname);
+
+    public List<Course> getAllCompletedCourse(Long userId);
 }
