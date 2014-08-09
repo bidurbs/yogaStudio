@@ -52,7 +52,7 @@ public class CourseController implements Serializable {
             return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
         } catch (Exception ex) {
             ex.printStackTrace();
-            //errorMsg = "Customer saving failed";
+            //errorMsg = "Course saving failed";
         }
         return null;
     }
