@@ -169,7 +169,7 @@ public class UserController implements Serializable {
         activeSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         activeSession.invalidate();
         isLoggedin = false;
-        return "/views/index";
+        return ("/views/index.xhtml?faces-redirect=true");
     }
 
     // CHANGE PASSWORD
@@ -209,7 +209,7 @@ public class UserController implements Serializable {
     }
 
     public Users getCurrentUser() {
-        HttpSession activeSession = (HttpSession) FacesContext
+        activeSession = (HttpSession) FacesContext
                 .getCurrentInstance().getExternalContext().getSession(true);
 
         Long userId = (Long) activeSession.getAttribute("loggedUserId");
