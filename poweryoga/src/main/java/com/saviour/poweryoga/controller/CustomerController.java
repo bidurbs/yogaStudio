@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Named(value = "customerController")
 @SessionScoped
-public class CustomerController extends NotificationController implements Serializable {
+public class CustomerController implements Serializable {
 
     @Autowired
     private IUserService userService;
@@ -34,10 +34,11 @@ public class CustomerController extends NotificationController implements Serial
     @Autowired
     private IRoleService roleService;
 
-    
     @Autowired
-    private IFacultyService facultyService; 
-    
+    private IFacultyService facultyService;
+
+    @Autowired
+    private NotificationController notificationController;
 
     private List<Customer> customers;
 
@@ -55,10 +56,9 @@ public class CustomerController extends NotificationController implements Serial
     }
 
     /**
-     * 
+     *
      * Customer registration.
      */
-
     public void saveCustomer() {
         try {
             if (validateEmail(customer.getEmail()) && findCustomerByEmail(customer.getEmail()) == false && checkPassword(customer.getPassword(), rePassword)) {
@@ -72,20 +72,21 @@ public class CustomerController extends NotificationController implements Serial
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
-                successMsg = "Customer " + customer.getFirstName() + " saved successfully";
-                errorMsg = null;
+                notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " saved successfully");
+                //  errorMsg = null;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Customer saving failed";
-            successMsg = null;
+            notificationController.setErrorMsg("Customer saving failed");
+            // successMsg = null;
         }
     }
 
     public boolean validateEmail(String email) {
         if (YogaValidator.emailValidator(customer.getEmail()) == false) {
-            successMsg = null;
-            errorMsg = "Invalid email format";
+            // successMsg = null;
+            notificationController.setErrorMsg("Invalid email format");
+            // errorMsg = "Invalid email format";
             return false;
         }
         return true;
@@ -96,8 +97,9 @@ public class CustomerController extends NotificationController implements Serial
         if (customer == null) {
             return false;
         }
-        successMsg = null;
-        errorMsg = "This email already registered";
+        //  successMsg = null;
+        notificationController.setErrorMsg("This email already registered");
+        
         return true;
     }
 
@@ -105,20 +107,20 @@ public class CustomerController extends NotificationController implements Serial
         if (password.equals(rePassword)) {
             return true;
         }
-        successMsg = null;
-        errorMsg = "Password and RePassword doesn't match";
+      //  notificationController.setSuccessMsg = null;
+        notificationController.setErrorMsg("Password and RePassword doesn't match");
         return false;
     }
 
     public void updateCustomer() {
         try {
             userService.updateUser(customer);
-            successMsg = "Customer " + customer.getFirstName() + " updated successfully";
-            errorMsg = null;
+            notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " updated successfully");
+        //    errorMsg = null;
         } catch (Exception ex) {
             ex.printStackTrace();
-            errorMsg = "Customer updatation failed";
-            successMsg = null;
+          notificationController.setErrorMsg("Customer updatation failed");
+            //successMsg = null;
         }
     }
 

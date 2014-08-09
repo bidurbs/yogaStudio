@@ -1,7 +1,6 @@
 package com.saviour.poweryoga.controller;
 
 import java.io.Serializable;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -14,9 +13,9 @@ import javax.inject.Named;
 @RequestScoped
 public class NotificationController implements Serializable{
 
-    public String errorMsg = null;
+    private String errorMsg = null;
 
-    public String successMsg = null;
+    private String successMsg = null;
 
     public String getErrorMsg() {
         return errorMsg;

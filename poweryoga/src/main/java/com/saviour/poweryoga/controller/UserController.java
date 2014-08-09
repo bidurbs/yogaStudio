@@ -5,7 +5,7 @@ import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 0.0.1
  */
 @Named("userController")
-@Dependent
+@SessionScoped
 public class UserController implements Serializable {
 
     @Autowired
@@ -189,13 +189,11 @@ public class UserController implements Serializable {
                     encPass = PasswordService.encrypt(newPassword);
                     usr.setPassword(encPass);
                     userService.updateUser(usr);
-                    notoficationController.successMsg = "Password updated successfully";
-                    notoficationController.errorMsg = null;
+                    notoficationController.setErrorMsg("Password updated successfully");
                     return;
                 }
             }
-            notoficationController.successMsg = null;
-            notoficationController.errorMsg = "Password doesn't match";
+            notoficationController.setErrorMsg("Password doesn't match");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -205,8 +203,7 @@ public class UserController implements Serializable {
         if (password.equals(rePassword)) {
             return true;
         }
-        notoficationController.successMsg = null;
-        notoficationController.errorMsg = "Password and RePassword doesn't match";
+        notoficationController.setErrorMsg("Password and RePassword doesn't match");
         return false;
     }
 
