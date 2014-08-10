@@ -30,7 +30,7 @@
                 <hr class ="soft"/>
                 <a href="addFaculty.xhtml">Add Faculty</a>
                 <div class="well">
-                    <h:dataTable value="#{facultyController.listOfFaculty}" var="item" class="table table-bordered">
+                    <h:dataTable value="#{facultyController.listOfActiveFaculty}" var="item" class="table table-bordered">
                         <h:column>
                             <f:facet name="header">First Name</f:facet>
                                 #{item.firstName}    

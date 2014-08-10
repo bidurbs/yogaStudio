@@ -81,14 +81,17 @@ public class CourseController implements Serializable {
     }
 
     /**
-     * Delete Course entry
+     * Delete Course entry( set its status INACTIVE).
      *
      * @param Id
      * @return
      */
-    public String deleteCourse(int Id) {
+    public String deleteCourse(Long Id) {
         course = CourseService.getCourseById(Id);
-        CourseService.deleteCourse(course);
+        
+        //Set its status inactive
+        course.setStatus(Course.statusType.INACTIVE);
+        CourseService.updateCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
 
@@ -100,8 +103,8 @@ public class CourseController implements Serializable {
         this.course = course;
     }
 
-    public List<Course> getListOfCourses() {
-        listOfCourses = CourseService.getAllCourses();
+    public List<Course> getListOfActiveCourses() {
+        listOfCourses = CourseService.getActiveCourses();
         return listOfCourses;
     }
 
@@ -115,7 +118,7 @@ public class CourseController implements Serializable {
      * @return
      */
     public String displayCourses() {
-        noOfCourses = getListOfCourses().size();
+        noOfCourses = getListOfActiveCourses().size();
         return ("/views/customer/course.xhtml?faces-redirect=true");
     }
 

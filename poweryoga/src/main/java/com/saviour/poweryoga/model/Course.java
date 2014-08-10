@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +26,10 @@ import javax.persistence.Table;
 @Table(name = "COURSE")
 @NamedQueries({
         @NamedQuery(name = "Course.findByName", query = "FROM Course c WHERE c.courseName=:cname"),
-        @NamedQuery(name = "Course.findAll", query = "FROM Course c")
+        @NamedQuery(name = "Course.findAll", query = "FROM Course c"),
+        @NamedQuery(name = "Course.findActiveCourses", 
+            query = "FROM Course c WHERE c.status=:cstatus"),
+    
 })
 public class Course implements Serializable {
 
@@ -39,13 +44,20 @@ public class Course implements Serializable {
     private double courseFee;
 
     private String description;
+    
+     public enum statusType {
+        ACTIVE, INACTIVE;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private statusType status;
 
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Course prerequisites;
 
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
     private List<Section> sections;
 
     public Course(String courseName, double courseFee, String description, Course prerequisites) {
@@ -86,6 +98,16 @@ public class Course implements Serializable {
     public double getCourseFee() {
         return courseFee;
     }
+
+    public statusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(statusType status) {
+        this.status = status;
+    }
+    
+    
 
     public void setCourseFee(double courseFee) {
         this.courseFee = courseFee;

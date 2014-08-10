@@ -24,7 +24,8 @@ import javax.persistence.Temporal;
 @Table(name = "WAIVER")
 @NamedQueries({
     @NamedQuery(name = "Waiver.findAllWaivers", query = "from Waiver w"),
-    @NamedQuery(name = "Waiver.showPendingWaivers", query = "FROM Waiver w WHERE w.status=:wstatus"),
+    @NamedQuery(name = "Waiver.showPendingWaivers", 
+            query = "FROM Waiver w WHERE w.status=:wstatus"),
     
 })
 public class Waiver implements Serializable {

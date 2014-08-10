@@ -6,6 +6,7 @@ import com.saviour.poweryoga.model.Faculty;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IFacultyService;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,8 +92,8 @@ public class FacultyService implements IFacultyService {
     @Override
     public Faculty pickAdvisor() {
         String pickAdv = "select FACULTY.userId from (select FACULTY.userId, count(myAdvisor_userId) as totalAdvisee from FACULTY LEFT JOIN CUSTOMER on CUSTOMER.myAdvisor_userId = FACULTY.userId group by myAdvisor_userId order by totalAdvisee asc limit 1) as FACULTY";
-       // Object obj = crudfacade.findWithNativeQuery(pickAdv);
-        String qResult =   crudfacade.findWithNativeQuery(pickAdv).toString();
+        // Object obj = crudfacade.findWithNativeQuery(pickAdv);
+        String qResult = crudfacade.findWithNativeQuery(pickAdv).toString();
 
         Faculty selectedAdvisor = (Faculty) crudfacade.read(Long.valueOf(qResult), Faculty.class);
         //List<Faculty> facultyNew = crudfacade.findWithNativeQuery(pickAdv);
@@ -127,6 +128,35 @@ public class FacultyService implements IFacultyService {
             return null;
 
         }
+    }
+
+    /**
+     * Get all Faculty either active or deactive faculty members.
+     *
+     * @param stauts
+     * @return
+     */
+    @Override
+    public List<Faculty> getListOfActiveFaculty() {
+
+        try {
+            Map<String, Faculty.statusType> paramaters = new HashMap<>(1);
+            paramaters.put("fstatus", Faculty.statusType.ACTIVE);
+
+            List<Object[]> facObj = crudfacade.findWithNamedQuery("Faculty.findActiveDeactive",
+                    paramaters);
+            
+            List<Faculty> faculty = new ArrayList<>();
+            for (Object[] f : facObj) {
+                faculty.add((Faculty) f[0]);
+            }
+            return faculty;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+
     }
 
 }

@@ -157,11 +157,6 @@ public class SectionController implements Serializable {
     public String displaySection(long courseId) {
         try {
             course = courseService.getCourseById(courseId);
-            Long prerequisite = course.getPrerequisites().getId();
-            if (prerequisite != null) {
-                coursePrerequisite = courseService.getCourseById(prerequisite);
-            }
-
             listOfSection = SectionService.listSectionByCourseId(courseId);
             return ("/views/customer/section.xhtml?faces-redirect=true");
         } catch (Exception ex) {

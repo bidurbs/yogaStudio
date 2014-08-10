@@ -118,7 +118,7 @@ public class PurchaseOrderController implements Serializable {
 
         }
         updateShoppingCartTotalCost();
-        return "/views/customer/shoppingCart";
+        return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
     private void updateShoppingCartTotalCost() {
