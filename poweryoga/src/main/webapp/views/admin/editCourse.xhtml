@@ -11,65 +11,68 @@
     <body>
         <ui:composition template="../template/templateAdmin.xhtml">
             <ui:define name="successFailure">
-                
+
             </ui:define>
             <ui:define name="content">
-                    <h3>Edit Course</h3>	
-                    <hr class="soft"/>
-                    <div class="well">
-                        <h:form class="form-horizontal">
-                           
-                            <div class="control-group">
-                                <label class="control-label" for="name">Course Code <sup>*</sup></label>
-                                <div class="controls">
-                                    <h:inputText id="courseName1" value="#{courseController.course.courseCode}" />
-                                </div>
-                                <h:message for="courseCourse"/>
-                            </div>
+                <h3>Edit Course</h3>	
+                <hr class="soft"/>
+                <div class="well">
+                    <h:form class="form-horizontal">
 
-                            <div class="control-group">
-                                <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
-                                <div class="controls">
-                                    <h:inputText id="courseName" value="#{courseController.course.courseName}" />
-                                </div>
-                                <h:message for="courseName"/>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="description">Description <sup>*</sup></label>
-                                <div class="controls">
-                                    <h:inputTextarea id="imageURL" value="#{courseController.course.description}" />
-                                </div>
-                                <h:message for="description"/>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
-                                <div class="controls">
-                                    <h:inputText id="price" value="#{courseController.course.courseFee}" />
-                                </div>
-                                <h:message for="courseFee"/>
-                            </div>
-                            
-                            <div class="control-group">
-                            <label class="control-label" for="course">Prerequisite Courses <sup>*</sup></label>
+                        <div class="control-group">
+                            <label class="control-label" for="name">Course Code <sup>*</sup></label>
                             <div class="controls">
-                                <h:selectOneMenu  value="#{courseController.selectedPrerequisiteId}">
-                                    <f:selectItem itemValue="" itemLabel="Choose a Course" />
-                                    <f:selectItems value="#{courseController.listOfCourses}" var="item"
+                                <h:inputText id="courseName1" value="#{courseController.course.courseCode}" />
+                            </div>
+                            <h:message for="courseCourse"/>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="courseName" value="#{courseController.course.courseName}" />
+                            </div>
+                            <h:message for="courseName"/>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="description">Description <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputTextarea id="imageURL" value="#{courseController.course.description}" />
+                            </div>
+                            <h:message for="description"/>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
+                            <div class="controls">
+                                <h:inputText id="price" value="#{courseController.course.courseFee}" />
+                            </div>
+                            <h:message for="courseFee"/>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="course">Prerequisite Course <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu id="preCourse" value="#{courseController.selectedPrerequisiteId}">
+                                    <f:selectItem itemValue="#{item.id}" itemLabel="None" />
+                                    <f:selectItems value="#{courseController.listOfActiveCourses}" var="item"
                                                    itemLabel="#{item.courseName}" 
-                                                   itemValue="#{item.id}" />
+                                                   itemValue="#{item.id}"/>
+                                    <f:ajax event="change" 
+                                            listener="#{courseController.validatePrerequisite}" 
+                                            render="preError"/>
                                 </h:selectOneMenu>
                             </div>
-                            <h:message for="course"/>
+                            <h:message for="preCourse" id="preError"  style="color:red"/>
                         </div>  
-                            
-                            <div class="control-group">
-                                <div class="controls">
-                                    <h:commandButton class="btn btn-large" value="Update" action="#{courseController.updateCourse()}"/>
-                                    <!--<input class="btn btn-large" type="submit" value="Register" />-->
-                                </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <h:commandButton class="btn btn-large" value="Update" 
+                                                 action="#{courseController.updateCourse()}"/>
                             </div>
-                        </h:form>
-                    </div>
+                        </div>
+                    </h:form>
+                </div>
             </ui:define>
         </ui:composition>
     </body>

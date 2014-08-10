@@ -1,7 +1,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
 
         <div class="navbar navbar-fixed-top">
@@ -19,7 +20,10 @@
                         <c:choose>
                             <c:when test="#{userController.isLoggedin==false}">
                                 <h:form class="navbar-search pull-left" style="width: 400px !important; margin-left: 120px">                            
-                                    <h:inputText value="#{productSearchController.productName}" class="search-query span5"/>
+                                    <h:inputText value="#{productSearchController.productName}" style="font-style: italic" class="search-query span5">
+                                        <f:passThroughAttribute name="placeholder"
+                                                                value="Search..."/>
+                                    </h:inputText>
                                     <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
                                 </h:form>
                             </c:when>

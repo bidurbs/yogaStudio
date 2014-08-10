@@ -36,9 +36,9 @@
                             </div>
                             
                             <div class="control-group">
-                                <label class="control-label" for="phone">Phone <sup>*</sup></label>
+                                <label class="control-label" for="phone">Email <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="phone" value="#{facultyController.faculty.phone}" />
+                                    <h:inputText id="phone" value="#{facultyController.faculty.email}" />
                                 </div>
                                 <h:message for="phone"/>
                             </div>
@@ -46,14 +46,14 @@
                             <div class="control-group">
                                 <label class="control-label" for="street">Street <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="street" value="#{facultyController.faculty.street}" />
+                                    <h:inputText id="street" value="#{facultyController.faculty.address.street}" />
                                 </div>
                                 <h:message for="street"/>
                             </div>
                             <div class="control-group">
                                 <label class="control-label" for="city">City <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="city" value="#{facultyController.faculty.city}" />
+                                    <h:inputText id="city" value="#{facultyController.faculty.address.city}" />
                                 </div>
                                 <h:message for="city"/>
                             </div>
@@ -61,7 +61,7 @@
                              <div class="control-group">
                                 <label class="control-label" for="state">State <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="state" value="#{facultyController.faculty.state}" />
+                                    <h:inputText id="state" value="#{facultyController.faculty.address.state}" />
                                 </div>
                                 <h:message for="state"/>
                             </div>
@@ -69,7 +69,7 @@
                             <div class="control-group">
                                 <label class="control-label" for="zip">Zip Code <sup>*</sup></label>
                                 <div class="controls">
-                                    <h:inputText id="zip" value="#{facultyController.faculty.zip}" />
+                                    <h:inputText id="zip" value="#{facultyController.faculty.address.zip}" />
                                 </div>
                                 <h:message for="zip"/>
                             </div>
