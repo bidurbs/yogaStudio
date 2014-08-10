@@ -32,7 +32,7 @@ public class ShoppingCartItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @OneToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private Product product;
     
     @ManyToOne(fetch = FetchType.LAZY)

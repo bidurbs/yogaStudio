@@ -96,7 +96,7 @@ public class CustomerController implements Serializable {
     public void sendRegistrationEmail(Customer mycustomer) {
         //EMAIL SENDING
         StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
-        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n   Password:   ********");
+        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail());
         body.append("\n\n");
         body.append("Regards\n-PowerYoga Team");
         EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());

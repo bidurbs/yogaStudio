@@ -10,17 +10,24 @@ import javax.persistence.TransactionRequiredException;
 /**
  *
  * @author TalakB
- * @version 0.0.1 
+ * @version 0.0.1
  */
 public interface PoweryogaEntityFacade<T> {
 
     public T create(T entity) throws EntityExistsException, IllegalStateException,
             IllegalArgumentException, TransactionRequiredException;
+    
+    public T save(T entity) throws EntityExistsException,
+            IllegalStateException, IllegalArgumentException,
+            TransactionRequiredException;
 
     public T read(Serializable primaryKey, Class c) throws IllegalStateException,
             IllegalArgumentException;
 
     public boolean update(T entity) throws IllegalStateException,
+            IllegalArgumentException, TransactionRequiredException;
+
+    public T merge(final T entity) throws IllegalStateException,
             IllegalArgumentException, TransactionRequiredException;
 
     public boolean delete(T entity) throws IllegalStateException,

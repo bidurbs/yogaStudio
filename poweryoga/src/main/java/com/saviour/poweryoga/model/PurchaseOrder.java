@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  * This class is for Product Order and contains Product Order features.
@@ -46,6 +47,9 @@ public class PurchaseOrder implements Serializable {
     //@OneToMany(mappedBy = "orders")
     @ManyToOne
     private Customer customer;
+
+    @Transient
+    private String buyDateStr;
 
     public PurchaseOrder() {
     }
@@ -86,6 +90,14 @@ public class PurchaseOrder implements Serializable {
 
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    public String getBuyDateStr() {
+        return buyDateStr;
+    }
+
+    public void setBuyDateStr(String buyDateStr) {
+        this.buyDateStr = buyDateStr;
     }
 
 }

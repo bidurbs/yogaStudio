@@ -23,7 +23,7 @@ public class ShoppingCartService implements IShoppingCartService {
 
     @Override
     public ShoppingCart addToCart(ShoppingCart cart) {
-        return (ShoppingCart) crudfacade.create(cart);
+        return (ShoppingCart) crudfacade.merge(cart);
     }
 
     @Override

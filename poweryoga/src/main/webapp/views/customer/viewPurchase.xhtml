@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
     </h:head>
     <h:body>
@@ -25,7 +26,8 @@
 
                                     <h:column>
                                         <f:facet name="header">Order Date</f:facet>
-                                            #{item.buyingDate}
+                                        <h:outputText value="#{item.buyDateStr}">
+                                        </h:outputText>
                                     </h:column>
 
                                     <h:column>

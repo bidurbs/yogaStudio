@@ -11,16 +11,16 @@
     <h:body>
         <ui:composition template="../template/templateCustomer.xhtml">
             <ui:define name="successFailure">
-                <h:panelGrid rendered="#{customerController.successMsg != null}">
+                <h:panelGrid rendered="#{notificationController.successMsg != null}">
                     <div class="alert fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{customerController.successMsg}</strong>
+                        <strong>#{notificationController.successMsg}</strong>
                     </div>
                 </h:panelGrid>
-                <h:panelGrid rendered="#{customerController.errorMsg != null}">
+                <h:panelGrid rendered="#{notificationController.errorMsg != null}">
                     <div class="alert alert-block alert-error fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{customerController.errorMsg}</strong>
+                        <strong>#{notificationController.errorMsg}</strong>
                     </div>
                 </h:panelGrid>
             </ui:define>
@@ -58,7 +58,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="phone">Phone </label>
                                     <div class="controls">
-                                        <h:inputText id="phone" value="#{customerController.customer.phone}" maxlength="50"/>
+                                        <h:inputText id="phone" value="#{customerController.customer.phone}" maxlength="14"/>
                                     </div>
                                     <h:message for="phone"/>
                                 </div>
@@ -66,7 +66,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="street">Street </label>
                                     <div class="controls">
-                                        <h:inputText id="street" value="#{customerController.customer.street}" maxlength="50"/>
+                                        <h:inputText id="street" value="#{customerController.customer.address.street}" maxlength="50"/>
                                     </div>
                                     <h:message for="street"/>
                                 </div>
@@ -74,7 +74,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="city">City </label>
                                     <div class="controls">
-                                        <h:inputText id="city" value="#{customerController.customer.city}" maxlength="50"/>
+                                        <h:inputText id="city" value="#{customerController.customer.address.city}" maxlength="50"/>
                                     </div>
                                     <h:message for="city"/>
                                 </div>
@@ -82,7 +82,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="state">State </label>
                                     <div class="controls">
-                                        <h:inputText id="state" value="#{customerController.customer.state}" maxlength="50"/>
+                                        <h:inputText id="state" value="#{customerController.customer.address.state}" maxlength="50"/>
                                     </div>
                                     <h:message for="state"/>
                                 </div>
@@ -90,7 +90,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="country">Country </label>
                                     <div class="controls">
-                                        <h:selectOneMenu id="country" value="#{customerController.customer.country}">
+                                        <h:selectOneMenu id="country" value="#{customerController.customer.address.country}">
                                             <f:selectItem itemLabel="United States" itemValue="United States"/>
                                             <f:selectItem itemLabel="Canada" itemValue="Canada"/>
                                             <f:selectItem itemLabel="Greenland" itemValue="Greenland"/>

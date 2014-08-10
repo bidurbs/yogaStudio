@@ -57,7 +57,7 @@ public class Course implements Serializable {
     private Course prerequisites;
 
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
     private List<Section> sections;
 
     public Course(String courseName, double courseFee, String description, Course prerequisites) {

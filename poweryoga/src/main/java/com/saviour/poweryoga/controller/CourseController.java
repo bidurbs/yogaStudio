@@ -111,7 +111,7 @@ public class CourseController implements Serializable {
      * @param Id
      * @return
      */
-    public String deleteCourse(int Id) {
+    public String deleteCourse(Long Id) {
         course = CourseService.getCourseById(Id);
 
         //Set its status inactive
@@ -128,7 +128,7 @@ public class CourseController implements Serializable {
         this.course = course;
     }
 
-    public List<Course> getListOfActiveCourses() {
+    public List<Course> getListOfCourses() {
         listOfCourses = CourseService.getActiveCourses();
         return listOfCourses;
     }
@@ -143,7 +143,7 @@ public class CourseController implements Serializable {
      * @return
      */
     public String displayCourses() {
-        noOfCourses = getListOfActiveCourses().size();
+        noOfCourses = getListOfCourses().size();
         return ("/views/customer/course.xhtml?faces-redirect=true");
     }
 
