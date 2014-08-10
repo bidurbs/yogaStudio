@@ -6,13 +6,15 @@
         <br class="clr"/>
         <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
             <li class="subMenu"><a> COURSES OFFERED </a>
-               
-                    <ul>
+                <ul>
+                    <h:form>
                         <ui:repeat value="#{indexController.listOfCourses}" var="course">
-                            <li> <h:form><h:commandLink  value="${course.courseName}" action="#{SectionController.displaySection(course.id)}"/></h:form></li>
+                            <li style="line-height: 30px;">
+                                <h:commandLink  value="${course.courseName}" action="#{sectionController.displaySection(course.id)}"/>
+                            </li>
                         </ui:repeat>
-                    </ul>
-                
+                    </h:form>
+                </ul>
             </li>
         </ul>
     </div>
