@@ -34,13 +34,13 @@ public class Customer extends Users implements Serializable {
     private Faculty myAdvisor;
 
 
-    public List<PurchaseOrder> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<PurchaseOrder> orders) {
-        this.orders = orders;
-    }
+//    public List<PurchaseOrder> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<PurchaseOrder> orders) {
+//        this.orders = orders;
+//    }
 
     public List<CreditCard> getCreditCards() {
         return creditCards;

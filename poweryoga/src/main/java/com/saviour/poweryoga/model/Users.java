@@ -55,7 +55,7 @@ public class Users implements Serializable {
     @Column(name = "Phone")
     private String phone;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Address address;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

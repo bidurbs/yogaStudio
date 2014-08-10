@@ -75,7 +75,7 @@ public class UserService implements IUserService {
 
     @Override
     public void updateUser(Users user) {
-        crudfacade.update(user);
+        crudfacade.merge(user);
     }
 
     /**

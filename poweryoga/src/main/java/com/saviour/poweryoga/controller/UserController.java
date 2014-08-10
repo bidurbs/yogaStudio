@@ -6,7 +6,6 @@ import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -190,7 +189,7 @@ public class UserController implements Serializable {
                     encPass = PasswordService.encrypt(newPassword);
                     usr.setPassword(encPass);
                     userService.updateUser(usr);
-                    notoficationController.setErrorMsg("Password updated successfully");
+                    notoficationController.setSuccessMsg("Password updated successfully");
                     return;
                 }
             }
@@ -209,10 +208,10 @@ public class UserController implements Serializable {
     }
 
     public Users getCurrentUser() {
-        activeSession = (HttpSession) FacesContext
+        HttpSession mySession = (HttpSession) FacesContext
                 .getCurrentInstance().getExternalContext().getSession(true);
 
-        Long userId = (Long) activeSession.getAttribute("loggedUserId");
+        Long userId = (Long) mySession.getAttribute("loggedUserId");
 
         return userService.findUserById(userId);
     }

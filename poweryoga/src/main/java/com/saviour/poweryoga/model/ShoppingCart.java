@@ -37,7 +37,7 @@ public class ShoppingCart implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     private Users user;
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -45,7 +45,7 @@ public class ShoppingCart implements Serializable {
 
     private double totalPrice;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy ="shoppingCart" )
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY,mappedBy ="shoppingCart" )
     private List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
 
     public ShoppingCart() {

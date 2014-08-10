@@ -44,7 +44,9 @@
 
                             <c:choose>
                                 <c:when test="#{userController.isLoggedin}">
-                                    <li><a href="${facesContext.externalContext.requestContextPath}#{userController.logoutUser()}">Logout</a></li>
+                                    <h:form>
+                                        <li><h:commandLink value="Logout" action="#{userController.logoutUser()}"></h:commandLink></li>
+                                    </h:form>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a href="${facesContext.externalContext.requestContextPath}/views/userLogin.xhtml">Login</a></li>

@@ -50,6 +50,19 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             return null;
         }
     }
+    
+    @Override
+    public T save(T entity) throws EntityExistsException,
+            IllegalStateException, IllegalArgumentException,
+            TransactionRequiredException {
+        try {
+            sessionFactory.getCurrentSession().save(entity);
+            return entity;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * Find by Id (Primary key).
@@ -92,6 +105,18 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
 
         }
         return operationSuccessful;
+    }
+
+    @Override
+    public T merge(final T entity) throws IllegalStateException,
+            IllegalArgumentException, TransactionRequiredException {
+        try {
+            return (T) sessionFactory.getCurrentSession().merge(entity);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
     }
 
     /**
@@ -225,9 +250,11 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
     }
 
     /**
-     * Send native query. The result type depends on the type of query that is sent to mySQL.
+     * Send native query. The result type depends on the type of query that is
+     * sent to mySQL.
+     *
      * @param nativeQuery
-     * @return 
+     * @return
      */
     @Override
     public Object findWithNativeQuery(String nativeQuery) {

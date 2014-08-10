@@ -28,7 +28,7 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Override
     public PurchaseOrder savePurchaseOrder(ShoppingCart shoppingCart, Customer customer, Calendar buyDate) {
         PurchaseOrder purchaseOrder = new PurchaseOrder(buyDate, shoppingCart, customer);
-        return (PurchaseOrder) crudfacade.create(purchaseOrder);
+        return (PurchaseOrder) crudfacade.save(purchaseOrder);
 
     }
 
