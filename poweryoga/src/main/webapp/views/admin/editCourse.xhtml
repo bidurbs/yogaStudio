@@ -54,7 +54,7 @@
                             <div class="controls">
                                 <h:selectOneMenu id="preCourse" value="#{courseController.selectedPrerequisiteId}">
                                     <f:selectItem itemValue="#{item.id}" itemLabel="None" />
-                                    <f:selectItems value="#{courseController.listOfActiveCourses}" var="item"
+                                    <f:selectItems value="#{courseController.listOfCourses}" var="item"
                                                    itemLabel="#{item.courseName}" 
                                                    itemValue="#{item.id}"/>
                                     <f:ajax event="change" 
