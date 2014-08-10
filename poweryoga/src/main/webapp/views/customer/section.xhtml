@@ -30,14 +30,16 @@
 
                         </div>
                         <c:choose>
-                            <c:when test="#{sectionController.coursePrerequisite.id != null}">
+                            <c:when test="#{sectionController.course.prerequisites.id != null}">
                                 <div class="span5 pull-right">
                                     <p>This course has following prerequisite, you need to take.</p>
-                                    <h3><a href="${facesContext.externalContext.requestContextPath}#{sectionController.displaySection(sectionController.coursePrerequisite.id)}">#{sectionController.coursePrerequisite.courseName}</a></h3>
+                                    <h3>#{sectionController.course.prerequisites.courseName}</h3>
                                     <p>
-                                        $#{sectionController.coursePrerequisite.courseFee}
+                                        $#{sectionController.course.prerequisites.courseFee}
                                     </p>
-                                    <a class="btn btn-small pull-left" href="${facesContext.externalContext.requestContextPath}#{sectionController.displaySection(sectionController.coursePrerequisite.id)}">View Details</a>
+                                    <h:form>
+                                        <h:commandLink class="btn btn-small pull-left" action="#{sectionController.displaySection(sectionController.course.prerequisites.id)}" value="View Details" />
+                                    </h:form>
                                 </div>
                             </c:when>
                         </c:choose>

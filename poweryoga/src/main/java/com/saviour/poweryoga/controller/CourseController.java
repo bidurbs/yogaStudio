@@ -86,7 +86,7 @@ public class CourseController implements Serializable {
      * @param Id
      * @return
      */
-    public String deleteCourse(int Id) {
+    public String deleteCourse(Long Id) {
         course = CourseService.getCourseById(Id);
         CourseService.deleteCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
