@@ -135,7 +135,7 @@ public class UserController implements Serializable {
 //                userLogged = true;
 //                isAdminUser = true;
                     isCustomer = true;
-                    return ("/views/customer/customerHome.xhtml?faces-redirect=true");
+                    return ("/views/index.xhtml?faces-redirect=true");
                 }
             }
         } catch (Exception ex) {

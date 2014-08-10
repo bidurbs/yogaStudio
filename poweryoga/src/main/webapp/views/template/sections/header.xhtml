@@ -3,8 +3,8 @@
         <div class="row">
             <div class="span12">
                 <div class="pull-right"> <br/>
-                    <a href="#"> <span class="btn btn-mini btn-warning"> <i class="icon-shopping-cart icon-white"></i> [ 3 ] </span> </a>
-                    <a href="#"><span class="btn btn-mini active">$155.00</span></a>
+                    <a href="${facesContext.externalContext.requestContextPath}/views/customer/shoppingCart.xhtml"> <span class="btn btn-mini btn-warning"> <i class="icon-shopping-cart icon-white"></i> [ #{purchaseOrderController.noOfItemsInTheCart} ] </span> </a>
+                    <a href="${facesContext.externalContext.requestContextPath}/views/customer/shoppingCart.xhtml"><span class="btn btn-mini active">$#{purchaseOrderController.shoppingCart.totalPrice}</span></a>
                 </div>
             </div>
         </div>

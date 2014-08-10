@@ -3,10 +3,13 @@ package com.saviour.poweryoga.controller;
 import com.saviour.poweryoga.model.Address;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Faculty;
+import com.saviour.poweryoga.model.PurchaseOrder;
 import com.saviour.poweryoga.model.Role;
+import com.saviour.poweryoga.model.ShoppingCartItem;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.IUserService;
+import com.saviour.poweryoga.util.EmailManager;
 import com.saviour.poweryoga.util.PasswordService;
 import com.saviour.poweryoga.util.YogaValidator;
 import java.io.Serializable;
@@ -17,6 +20,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 /**
  *
@@ -48,6 +52,9 @@ public class CustomerController implements Serializable {
 
     private String rePassword;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     public CustomerController() {
         customer = new Customer();
         address = new Address();
@@ -60,7 +67,6 @@ public class CustomerController implements Serializable {
      * Customer registration.
      */
     public String saveCustomer() {
-        String redirect = null;
         try {
             if (validateEmail(customer.getEmail())
                     && findCustomerByEmail(customer.getEmail()) == false
@@ -75,18 +81,25 @@ public class CustomerController implements Serializable {
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
                 userService.saveUser(customer);
-                notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " saved successfully");
-                //  errorMsg = null;
-                redirect = "/views/index.xhtml?faces-redirect=true";
-                return (redirect);
+                sendRegistrationEmail(customer);
+                //redirect = "/views/index.xhtml?faces-redirect=true";
+                //return (redirect);
+                notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email and you can proceed to Login.");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             notificationController.setErrorMsg("Customer saving failed");
-            // successMsg = null;
-            return redirect;
         }
-        return redirect;
+        return null;
+    }
+
+    public void sendRegistrationEmail(Customer mycustomer) {
+        //EMAIL SENDING
+        StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
+        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n   Password:   ********");
+        body.append("\n\n");
+        body.append("Regards\n-PowerYoga Team");
+        EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());
     }
 
     public boolean validateEmail(String email) {
@@ -110,7 +123,7 @@ public class CustomerController implements Serializable {
             return false;
         }
         //  successMsg = null;
-        notificationController.setErrorMsg("This email already registered");
+        notificationController.setErrorMsg("Email ID already exists.");
 
         return true;
     }
@@ -120,7 +133,7 @@ public class CustomerController implements Serializable {
             return true;
         }
         //  notificationController.setSuccessMsg = null;
-        notificationController.setErrorMsg("Password and RePassword doesn't match");
+        notificationController.setErrorMsg("Password and confirm password  mismatch");
         return false;
     }
 
@@ -131,7 +144,7 @@ public class CustomerController implements Serializable {
             //    errorMsg = null;
         } catch (Exception ex) {
             ex.printStackTrace();
-            notificationController.setErrorMsg("Customer updatation failed");
+            notificationController.setErrorMsg("Customer update failed");
             //successMsg = null;
         }
     }

@@ -1,3 +1,4 @@
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
@@ -6,12 +7,12 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    
+
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="active"><a href="${facesContext.externalContext.requestContextPath}">Home</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}/${courseController.displayCourses()}">Course</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}/#{productSearchController.displayProducts()}">Products</a></li>
+                            <li class=""><a href="${facesContext.externalContext.requestContextPath}${courseController.displayCourses()}">Course</a></li>
+                            <li class=""><a href="${facesContext.externalContext.requestContextPath}#{productSearchController.displayProducts()}">Products</a></li>
                             <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/contact.xhtml">Contact</a></li>
 
                         </ul>
@@ -34,7 +35,7 @@
                         <ul class="nav pull-right">
                             <c:choose>
                                 <c:when test="#{userController.isLoggedin}">
-                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">My Profile</a></li>
+                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">Welcome #{userController.activeSession.getAttribute("loggedUserFname")}</a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
@@ -43,7 +44,7 @@
 
                             <c:choose>
                                 <c:when test="#{userController.isLoggedin}">
-                                    <li><a href="${facesContext.externalContext.requestContextPath}#{userController.logoutUser()}">Logout</a></li>
+                                    <li><h:form><h:commandLink action="#{userController.logoutUser()}" value="Logout"/></h:form></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><a href="${facesContext.externalContext.requestContextPath}/views/userLogin.xhtml">Login</a></li>

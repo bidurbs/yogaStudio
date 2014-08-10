@@ -118,7 +118,7 @@ public class PurchaseOrderController implements Serializable {
 
         }
         updateShoppingCartTotalCost();
-        return "/views/customer/shoppingCart";
+        return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
     private void updateShoppingCartTotalCost() {
@@ -147,19 +147,7 @@ public class PurchaseOrderController implements Serializable {
 
     public String checkout() {
         purchaseOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
-        if (purchaseOrder != null) {
-
-            //EMAIL SENDING
-            StringBuilder body=new StringBuilder("Thank you for shopping with PowerYoga.com.\n\n Your shopping detail\n\n");
-            int count=0;
-            for(ShoppingCartItem item:purchaseOrder.getShoppingCart().getShoppingCartItems()){
-                count++;
-                body.append(count+"   "+item.getProduct().getName()+"   "+item.getQuantity()+"   "+item.getPrice());
-                body.append("\n");
-            }
-            body.append("\n");
-            body.append("Regards\n-PowerYoga Team");
-            EmailManager.sendEmail(mailSender, "Shopping Information", body.toString(), customer.getEmail());
+        if (purchaseOrder != null && sendPurchaseEmail(purchaseOrder)) {
 
             successMsg = "Thank you for shopping with us. Please check your email for order detail";
             errorMsg = null;
@@ -168,6 +156,25 @@ public class PurchaseOrderController implements Serializable {
         successMsg = null;
         errorMsg = "Ooops !!! something went wrong confirming your order";
         return null;
+    }
+
+    public boolean sendPurchaseEmail(PurchaseOrder myorder) {
+        //EMAIL SENDING
+        try {
+            StringBuilder body = new StringBuilder("Thank you for shopping with PowerYoga.com.\n\n Your shopping detail\n\n");
+            int count = 0;
+            for (ShoppingCartItem item : myorder.getShoppingCart().getShoppingCartItems()) {
+                count++;
+                body.append(count + "   " + item.getProduct().getName() + "   " + item.getQuantity() + "   " + item.getPrice());
+                body.append("\n");
+            }
+            body.append("\n");
+            body.append("Regards\n-PowerYoga Team");
+            EmailManager.sendEmail(mailSender, "Shopping Information", body.toString(), myorder.getCustomer().getEmail());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Address getBillingAddress() {
