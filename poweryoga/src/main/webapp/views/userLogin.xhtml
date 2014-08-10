@@ -32,17 +32,19 @@
                         <div class="control-group">
                             <label class="control-label" for="email">Email <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="email" value="#{userController.user.email}" />
+                                <h:inputText id="email" value="#{userController.user.email}" 
+                                             required="true" requiredMessage="Email is required." />
                             </div>
-                            <h:message for="email"/>
+                            <h:message for="email" id="emailError"  style="color:red"/>
                         </div>
 
                         <div class="control-group">
                             <label class="control-label" for="password">Password <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputSecret id="password" value="#{userController.user.password}" />
+                                <h:inputSecret id="password" required="true" requiredMessage="Password is required."
+                                               value="#{userController.user.password}" />
                             </div>
-                            <h:message for="password"/>
+                            <h:message for="password" id="passError"  style="color:red"/>
                         </div>
 
                         <div class="control-group">

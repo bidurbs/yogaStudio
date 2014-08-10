@@ -111,7 +111,7 @@ public class FacultyController implements Serializable {
             faculty.setSections(sectionList);
 
             //set faculty role from userController
-            Role facRRole = roleService.getRoleByUserCode(UserController.ROLE_FACULTY_CODE);
+            Role facRRole = roleService.getRoleByUserCode(Role.ROLE_FACULTY_CODE);
             //  facRRole.setUserCode(UserController.ROLE_FACULTY_CODE);
             faculty.setPassword(PasswordService.encrypt(faculty.getPassword()));
 
