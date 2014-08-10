@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
 
@@ -14,49 +15,63 @@
                     <div class="span12">
                         <ul class="breadcrumb">
                             <li><a href="${facesContext.externalContext.requestContextPath}">Home</a> <span class="divider">/</span></li>
-                            <li><a href="${facesContext.externalContext.requestContextPath}/${CourseController.displayCourses()}">Courses</a> <span class="divider">/</span></li>
+                            <li><a href="${facesContext.externalContext.requestContextPath}${courseController.displayCourses()}">Courses</a> <span class="divider">/</span></li>
                             <li class="active">Section</li>
                         </ul>
-                        <h3> Course : #{SectionController.section.course.courseName} <small class="pull-right"> #{CourseController.noOfCourses} Section are available </small></h3>	
+                        <h3> Course : #{sectionController.course.courseName} <small class="pull-right"> #{sectionController.listOfSection.size()} Section are available </small></h3>	
 
                         <hr class="soft"/>
                         <br class="clr"/>
-                        <div class="span8">
-                            <h3>$#{SectionController.section.course.courseName}</h3>
+                        <div class="span5">
+                            <h3>$#{sectionController.course.courseFee}</h3>
                             <p>
-                                #{SectionController.section.course.courseName}
+                                #{sectionController.course.description}
                             </p>
+
                         </div>
+                        <c:choose>
+                            <c:when test="#{sectionController.coursePrerequisite.id != null}">
+                                <div class="span5 pull-right">
+                                    <p>This course has following prerequisite, you need to take.</p>
+                                    <h3><a href="${facesContext.externalContext.requestContextPath}#{sectionController.displaySection(sectionController.coursePrerequisite.id)}">#{sectionController.coursePrerequisite.courseName}</a></h3>
+                                    <p>
+                                        $#{sectionController.coursePrerequisite.courseFee}
+                                    </p>
+                                    <a class="btn btn-small pull-left" href="${facesContext.externalContext.requestContextPath}#{sectionController.displaySection(sectionController.coursePrerequisite.id)}">View Details</a>
+                                </div>
+                            </c:when>
+                        </c:choose>
+
                         <br class="clr" />
+                        <hr class="soft"/>
+                        <h5>This course has offered the following section. You can choose any one of them.</h5>
+
                         <div class="tab-content">
-                            
-                             <hr class="soft"/>
                             <div class="tab-pane active" id="listView">
-                                <ui:repeat value="#{SectionController.listOfSection}" var="section">
+                                <ui:repeat value="#{sectionController.listOfSection}" var="section">
+                                    <hr class="soft"/>
                                     <div class="row">	  
                                         <div id="productView" class="span2">
                                             <img src="http://eps.roudneff.com/eps/photo/athletisme-course-3-figurine-3D.jpg" alt=""/>
                                         </div>
                                         <div class="span4">
-                                            <h3>New | Available</h3>				
+                                            <h5>${section.sectionName} </h5>			
                                             <hr class="soft"/>
-                                            <h5>${section.sectionName} </h5>
                                             <p>
-
+                                                Start Date: #{section.semester.startDate} <br/>
+                                               End Date: #{section.semester.endDate}
                                             </p>
-                                            <a class="btn btn-small pull-right" href="#">View Details</a>
                                             <br class="clr"/>
                                         </div>
                                         <div class="span3 alignR">
                                             <h:form class="form-horizontal qtyFrm">
                                                 <h:commandLink class="btn btn-large" action="#" value="Enroll Now" />
-                                                <!--<a href="" class="btn btn-large">VIEW</a>-->
                                             </h:form>
                                         </div>
                                     </div>
-                                    <hr class="soft"/>
                                 </ui:repeat>
                             </div>
+                            <br class="clr" />
                         </div>
                     </div>
                 </div>

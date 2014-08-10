@@ -5,7 +5,6 @@
  */
 package com.saviour.poweryoga.controller;
 
-import com.saviour.poweryoga.crudfacade.CRUDEntityFacade;
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.serviceI.ICourseService;
@@ -32,7 +31,8 @@ public class SectionController implements Serializable {
     @Autowired
     private ICourseService courseService;
 
-    //  private Course course;
+    private Course course;
+    private Course coursePrerequisite;
     private Section section;
     private List<Section> listOfSection;
     private List<Course> listOfCourse;
@@ -40,7 +40,6 @@ public class SectionController implements Serializable {
 
     public SectionController() {
         section = new Section();
-        //    course = new Course();
     }
 
     public String getSelectedCourse() {
@@ -58,7 +57,7 @@ public class SectionController implements Serializable {
      */
     public String saveSection() {
         // find the section based on selected course name and set course of this section 
-        Course course = courseService.findByName(selectedCourse);
+        course = courseService.findByName(selectedCourse);
         section.setCourse(course);
         SectionService.saveSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
@@ -132,6 +131,23 @@ public class SectionController implements Serializable {
     public void setListOfCourse(List<Course> listOfCourse) {
         this.listOfCourse = listOfCourse;
     }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Course getCoursePrerequisite() {
+        return coursePrerequisite;
+    }
+
+    public void setCoursePrerequisite(Course coursePrerequisite) {
+        this.coursePrerequisite = coursePrerequisite;
+    }
+
     /**
      * Display all the Section for requested course data for customer
      *
@@ -139,7 +155,17 @@ public class SectionController implements Serializable {
      * @return
      */
     public String displaySection(long courseId) {
-        listOfSection = SectionService.listSectionByCourseId(courseId);
-        return ("/views/customer/section.xhtml?faces-redirect=true");
+        try {
+            course = courseService.getCourseById(courseId);
+            Long prerequisite = course.getPrerequisites().getId();
+            if (prerequisite != null) {
+                coursePrerequisite = courseService.getCourseById(prerequisite);
+            }
+
+            listOfSection = SectionService.listSectionByCourseId(courseId);
+            return ("/views/customer/section.xhtml?faces-redirect=true");
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
