@@ -8,8 +8,32 @@
 
     <h:head>
 
+        <script>
+
+            function copyBillingAddress() {
+                //alert(document.getElementById("chkAddress").checked);
+                if (document.getElementById("chkAddress").checked === true) {
+                    //alert("OK");
+                    document.getElementById("frmAddress:streetId").value = document.getElementById("frmAddress:street").value;
+                    document.getElementById("frmAddress:cityId").value = document.getElementById("frmAddress:city").value;
+                    document.getElementById("frmAddress:stateId").value = document.getElementById("frmAddress:state").value;
+                    document.getElementById("frmAddress:zipId").value = document.getElementById("frmAddress:zip").value;
+                    document.getElementById("frmAddress:countryId").value = document.getElementById("frmAddress:country").value;
+                } else {
+                    document.getElementById("frmAddress:streetId").value = "";
+                    document.getElementById("frmAddress:cityId").value = "";
+                    document.getElementById("frmAddress:stateId").value = "";
+                    document.getElementById("frmAddress:zipId").value = "";
+                    document.getElementById("frmAddress:countryId").value = "United States";
+                    //alert("NOT OK");
+                }
+            }
+
+        </script>
+
+
     </h:head>
-    <body>
+    <h:body>
         <ui:composition template="../template/templateCustomer.xhtml">
 
             <ui:define name="content">
@@ -66,12 +90,7 @@
                                 </div>
 
                                 <h4>Shipping Address</h4>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <h:selectBooleanCheckbox id="chkShip" value="#{purchaseOrderController.checkShipping}" valueChangeListener="#{purchaseOrderController.changeShippingCheckBox()}" onchange="submit()" />
-                                    </div>
-                                    <label class="control-label" for="streetId">Same as billing address</label>
-                                </div>
+                                <input type="checkbox" id="chkAddress" name="chkAddress" onclick="copyBillingAddress()">Same as Billing address</input><br></br>
                                 <div class="control-group">
                                     <label class="control-label" for="streetId">Street </label>
                                     <div class="controls">
@@ -128,5 +147,5 @@
                 </div>
             </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>
