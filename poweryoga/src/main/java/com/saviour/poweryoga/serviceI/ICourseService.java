@@ -17,6 +17,8 @@ public interface ICourseService {
     public void saveCourse(Course course);
 
     public List<Course> getAllCourses();
+    
+    public List<Course> getActiveCourses();
 
     public void updateCourse(Course course);
 

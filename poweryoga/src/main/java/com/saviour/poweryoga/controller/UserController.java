@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @version 0.0.1
  */
 @Named("userController")
-@Dependent
+@SessionScoped
 public class UserController implements Serializable {
 
     @Autowired
@@ -34,9 +34,7 @@ public class UserController implements Serializable {
     //to keep user relaed data on the session 
     private HttpSession activeSession;
 
-    public static final int ROLE_ADMIN_CODE = 1;
-    public static final int ROLE_FACULTY_CODE = 2;
-    public static final int ROLE_CUSTOMER_CODE = 3;
+    
 
     private boolean isAdmin;
     private boolean isFaculty;
@@ -118,11 +116,11 @@ public class UserController implements Serializable {
                 //check user code 
                 int userRoleCode = user.getRole().getUserCode();
                 //admin
-                if (userRoleCode == ROLE_ADMIN_CODE) {
+                if (userRoleCode == Role.ROLE_ADMIN_CODE) {
                     isAdmin = true;
                     return ("/views/admin/adminHome.xhtml?faces-redirect=true");
                 } //faculty user 
-                else if (userRoleCode == ROLE_FACULTY_CODE) {
+                else if (userRoleCode == Role.ROLE_FACULTY_CODE) {
                     // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
@@ -130,7 +128,7 @@ public class UserController implements Serializable {
                     return ("/views/faculty/facultyHome.xhtml?faces-redirect=true");
 
                 } //vedor user
-                else if (userRoleCode == ROLE_CUSTOMER_CODE) {
+                else if (userRoleCode == Role.ROLE_CUSTOMER_CODE) {
                     // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;

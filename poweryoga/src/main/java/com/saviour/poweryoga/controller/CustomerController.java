@@ -73,7 +73,7 @@ public class CustomerController implements Serializable {
                     && checkPassword(customer.getPassword(), rePassword)) {
                 customer.setAddress(address);
                 customer.setPassword(PasswordService.encrypt(customer.getPassword()));
-                Role custRRole = roleService.getRoleByUserCode(UserController.ROLE_CUSTOMER_CODE);
+                Role custRRole = roleService.getRoleByUserCode(Role.ROLE_CUSTOMER_CODE);
 
                 //set role 
                 customer.setRole(custRRole);

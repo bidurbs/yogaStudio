@@ -25,7 +25,7 @@
                 <hr class="soft"/>
                 <a href="addCourse.xhtml">Add Course</a>
                 <div class="well">
-                    <h:dataTable value="#{courseController.listOfCourses}" var="item" class="table table-bordered">
+                    <h:dataTable value="#{courseController.listOfActiveCourses}" var="item" class="table table-bordered">
                         <h:column>
                             <f:facet name="header">Course Name</f:facet>
                                 #{item.courseName}
