@@ -33,7 +33,10 @@
                             <label class="control-label" for="email">Email <sup>*</sup></label>
                             <div class="controls">
                                 <h:inputText id="email" value="#{userController.user.email}" 
-                                             required="true" requiredMessage="Email is required." />
+                                             required="true" requiredMessage="Email is required." >
+                                    <f:passThroughAttribute name="placeholder"
+                                                            value="abc@yoga.com"/>
+                                </h:inputText>
                             </div>
                             <h:message for="email" id="emailError"  style="color:red"/>
                         </div>

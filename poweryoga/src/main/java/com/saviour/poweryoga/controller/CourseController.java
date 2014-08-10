@@ -5,6 +5,10 @@ import com.saviour.poweryoga.serviceI.ICourseService;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,6 +52,8 @@ public class CourseController implements Serializable {
                 Course pre = CourseService.getCourseById(selectedPrerequisiteId);
                 course.setPrerequisites(pre);
             }
+            //set course status 
+            course.setStatus(Course.statusType.ACTIVE);
             CourseService.saveCourse(course);
             return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
         } catch (Exception ex) {
@@ -63,10 +69,29 @@ public class CourseController implements Serializable {
      * @return
      */
     public String updateCourse() {
+
         Course pre = CourseService.getCourseById(selectedPrerequisiteId);
-        course.setPrerequisites(pre);
-        CourseService.updateCourse(course);
-        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
+        if (!pre.getId().equals(course.getId())) {
+            course.setPrerequisites(pre);
+            CourseService.updateCourse(course);
+            return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Validate if the selected prerequisite is the same as the course or not.  
+     * @param fc
+     * @param c
+     * @param value 
+     */
+    public void validatePrerequisite(FacesContext fc, UIComponent c, Object value) {
+       Course pre = CourseService.getCourseById(selectedPrerequisiteId);
+        if (pre.getId().equals(course.getId())){
+            throw new ValidatorException(
+                    new FacesMessage("The same course can't be a prerequsite."));
+        }
     }
 
     /**
@@ -88,7 +113,7 @@ public class CourseController implements Serializable {
      */
     public String deleteCourse(Long Id) {
         course = CourseService.getCourseById(Id);
-        
+
         //Set its status inactive
         course.setStatus(Course.statusType.INACTIVE);
         CourseService.updateCourse(course);
