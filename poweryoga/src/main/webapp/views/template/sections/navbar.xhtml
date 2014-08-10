@@ -9,13 +9,14 @@
                 <div class="container">
 
                     <div class="nav-collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="${facesContext.externalContext.requestContextPath}">Home</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}${courseController.displayCourses()}">Course</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}#{productSearchController.displayProducts()}">Products</a></li>
-                            <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/contact.xhtml">Contact</a></li>
+                        <h:form> 
+                            <ul class="nav">
+                                <li class="active"><a href="${facesContext.externalContext.requestContextPath}">Home</a></li>
+                                <li class=""><h:commandLink value="Courses" action="#{courseController.displayCourses()}" /></li>
+                                <li class=""><h:commandLink value="Products" action="#{productSearchController.displayProducts()}" /></li>
+                            </ul>
+                        </h:form>
 
-                        </ul>
                         <c:choose>
                             <c:when test="#{userController.isLoggedin==false}">
                                 <h:form class="navbar-search pull-left" style="width: 400px !important; margin-left: 120px">                            
@@ -30,30 +31,28 @@
                                 </h:form>
                             </c:when>
                         </c:choose>
+                        <h:form> 
+                            <ul class="nav pull-right">
+                                <c:choose>
+                                    <c:when test="#{userController.isLoggedin}">
+                                        <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">Welcome #{userController.activeSession.getAttribute("loggedUserFname")}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-
-                        <ul class="nav pull-right">
-                            <c:choose>
-                                <c:when test="#{userController.isLoggedin}">
-                                    <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">Welcome #{userController.activeSession.getAttribute("loggedUserFname")}</a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:choose>
-                                <c:when test="#{userController.isLoggedin}">
-                                    <h:form>
+                                <c:choose>
+                                    <c:when test="#{userController.isLoggedin}">
                                         <li><h:commandLink value="Logout" action="#{userController.logoutUser()}"></h:commandLink></li>
-                                    </h:form>
-                                </c:when>
-                                <c:otherwise>
-                                    <li><a href="${facesContext.externalContext.requestContextPath}/views/userLogin.xhtml">Login</a></li>
-                                </c:otherwise>
-                            </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="${facesContext.externalContext.requestContextPath}/views/userLogin.xhtml">Login</a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-                        </ul>
+                            </ul>
+                        </h:form>
                     </div><!-- /.nav-collapse -->
                 </div>
             </div><!-- /navbar-inner -->
