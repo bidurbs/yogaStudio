@@ -7,6 +7,7 @@ package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
+import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.ICourseService;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ *@author TalakB
  * @author bidur
  * @version 0.0.1
  */
@@ -73,4 +74,19 @@ public class CourseService implements ICourseService {
     public List<Course> getAllCompletedCourse(Long userId) {
         return crudfacade.findWithNamedQuery("Course.findAll");
     }
+
+    @Override
+    public List<Course> getActiveCourses() {
+         try {
+            Map<String, Course.statusType> paramaters = new HashMap<>(1);
+            paramaters.put("cstatus", Course.statusType.ACTIVE);
+
+            List<Course> activeCourses = crudfacade.findWithNamedQuery("Course.findActiveCourses", paramaters);
+
+            return (activeCourses);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+
+        } }
 }

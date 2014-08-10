@@ -21,6 +21,8 @@ public interface IFacultyService {
 
     public List<Faculty> getListOfFaculty();
 
+    public List<Faculty> getListOfActiveFaculty();
+
     public void updateFaculty(Faculty faculty);
 
     public Faculty getFacultyById(long Id);

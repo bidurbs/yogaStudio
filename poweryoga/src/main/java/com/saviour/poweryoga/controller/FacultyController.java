@@ -48,6 +48,7 @@ public class FacultyController implements Serializable {
     private NotificationController notificationController;
 
     private Faculty faculty;
+
     private List<Faculty> listOfFaculty;
 
     private List<Section> sectionList = new ArrayList<>();
@@ -116,9 +117,12 @@ public class FacultyController implements Serializable {
 
             //set address 
             faculty.setAddress(address);
-            
+
             //set role 
             faculty.setRole(facRRole);
+
+            //set stauts 
+            faculty.setStatus(Faculty.statusType.ACTIVE);
             facultyService.saveFaculty(faculty);
             return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
         } catch (Exception ex) {
@@ -160,14 +164,20 @@ public class FacultyController implements Serializable {
     }
 
     /**
-     * Delete Faculty entry
+     * Delete Faculty entry. A faculty status will be changed to DEACTIVE but it
+     * will not be deleted because it is referenced by customers.
      *
      * @param Id
      * @return
      */
     public String deleteFaculty(long Id) {
         faculty = facultyService.getFacultyById(Id);
-        facultyService.deleteFaculty(faculty);
+
+        //set status deactive. 
+        faculty.setStatus(Faculty.statusType.INACTIVE);
+
+        //update not Delete!
+        facultyService.updateFaculty(faculty);
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
 
@@ -179,8 +189,10 @@ public class FacultyController implements Serializable {
         this.faculty = faculty;
     }
 
-    public List<Faculty> getListOfFaculty() {
-        listOfFaculty = facultyService.getListOfFaculty();
+    public List<Faculty> getListOfActiveFaculty() {
+        List<Faculty> listOfFaculty = facultyService.getListOfActiveFaculty();
+       
+
         return listOfFaculty;
     }
 
