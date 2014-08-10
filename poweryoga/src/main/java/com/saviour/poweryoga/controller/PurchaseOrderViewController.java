@@ -12,12 +12,14 @@ import com.saviour.poweryoga.serviceI.IUserService;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.mail.internet.MailDateFormat;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -30,7 +32,7 @@ public class PurchaseOrderViewController implements Serializable {
 
     @Autowired
     private IUserService customerService;
-    
+
     @Autowired
     private IPurchaseOrderService purchaseOrderService;
 
@@ -47,9 +49,21 @@ public class PurchaseOrderViewController implements Serializable {
         Customer customer = getCurrentCustomer();
 
         purchaseOrders = purchaseOrderService.findOrderByCustomerId(customer.getUserId());
+        for (int i = 0; i < purchaseOrders.size(); i++) {
+            purchaseOrders.get(i).setBuyDateStr(refineDate(purchaseOrders.get(i).getBuyingDate()));
+        }
 
         return "/views/customer/viewPurchase";
 
+    }
+
+    public String refineDate(Calendar buyDate) {
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        if (buyDate != null) {
+            String nDate = df.format(buyDate.getTime());
+            return nDate;
+        }
+        return null;
     }
 
     public Customer getCurrentCustomer() {
