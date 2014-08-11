@@ -69,31 +69,40 @@ public class CourseController implements Serializable {
      * @return
      */
     public String updateCourse() {
-
-        Course pre = CourseService.getCourseById(selectedPrerequisiteId);
-        if (!pre.getId().equals(course.getId())) {
-            course.setPrerequisites(pre);
-            CourseService.updateCourse(course);
-            return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
-        } else {
-            return null;
+        if (selectedPrerequisiteId !=null) {
+            Course pre = CourseService.getCourseById(selectedPrerequisiteId);
+            if (!pre.getId().equals(course.getId())) {
+                course.setPrerequisites(pre);
+            }
         }
+        CourseService.updateCourse(course);
+        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
-    
+
     /**
-     * Validate if the selected prerequisite is the same as the course or not.  
+     * Validate if the selected prerequisite is the same as the course or not.
+     *
      * @param fc
      * @param c
-     * @param value 
+     * @param value
      */
     public void validatePrerequisite(FacesContext fc, UIComponent c, Object value) {
-       Course pre = CourseService.getCourseById(selectedPrerequisiteId);
-        if (pre.getId().equals(course.getId())){
+        Course pre = CourseService.getCourseById(selectedPrerequisiteId);
+        if (pre.getId().equals(course.getId())) {
             throw new ValidatorException(
                     new FacesMessage("The same course can't be a prerequsite."));
         }
     }
 
+    /**
+     * Update Course data
+     *
+     * @return
+     */
+    public String addCourse() {
+        return ("/views/admin/addCourse.xhtml?faces-redirect=true");
+    }
+    
     /**
      * Update Course data
      *

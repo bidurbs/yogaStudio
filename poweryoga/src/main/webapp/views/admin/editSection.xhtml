@@ -46,7 +46,7 @@
                         <div class="control-group">
                             <label class="control-label" for="course">Courses <sup>*</sup></label>
                             <div class="controls">
-                                <h:selectOneMenu value="#{sectionController.listOfCourse}">
+                                <h:selectOneMenu value="#{sectionController.selectedCourse}">
                                     <f:selectItem itemLabel="Choose Course" itemValue=""/>
                                     <f:selectItems value="#{sectionController.listOfCourse}" var="item"
                                                    itemLabel="#{item.courseName}" 
@@ -54,6 +54,19 @@
                                 </h:selectOneMenu>
                             </div>
                             <h:message for="course"/>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label" for="semester">Semester <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu value="#{sectionController.selectedSemester}">
+                                    <f:selectItem itemLabel="Choose Semester" itemValue=""/>
+                                    <f:selectItems value="#{sectionController.listOfSemester}" var="item"
+                                                   itemLabel="#{item.semesterName}" 
+                                                   itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <h:message for="semester"/>
                         </div>
 
 

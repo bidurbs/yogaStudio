@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,47 +21,60 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-
 /**
  *
- * @author bidur
+ * @author Guest
  */
 @Entity
-@Table(name = "ENROLLMENT")
+@Table(name="ENROLMENT")
 @NamedQueries({
-    @NamedQuery(name = "Enrollment.findAll", query = "from Enrollment e"),
-    @NamedQuery(name = "Enrollment.findCustomerInSection", query = "from Enrollment e join Users u on u.id=e.user.id join Section s on s.id=e.section.id where e.user.userId:userId and e.section.id:sectionId")
-
+    @NamedQuery(name = "Enrollment.getAllEnrollments", query = "Select e From Enrollment e Where e.section.id=:sectionId AND (e.customerStatus=:status OR e.customerStatus=:status2)"),
+    @NamedQuery(name = "Enrollment.getAllEnrollmentStatus", query = "Select e From Enrollment e Where e.section.id=:sectionId AND e.customerStatus=:status"),
+    @NamedQuery(name = "Enrollment.displayAllSections", query = "Select Distinct s From Section s"),
+    @NamedQuery(name = "Enrollment.getCurrentCount", query = "Select e From Enrollment e Where e.section.id=:myId AND e.customerStatus=:status"),
+    @NamedQuery(name = "Enrollment.getSectionHistory", query = "Select e.section.course From Enrollment e Where e.user.userId=:id AND e.customerStatus=:status"),
+    @NamedQuery(name = "Enrollment.isRegistered", query = "Select e From Enrollment e Where e.user.userId=:cid AND e.section.id=:sid")
 })
 public class Enrollment implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Section section;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Users user;
-    private String status;
-
+    public enum StatusType{
+        active,waitinglist,withdrawal,completed;
+    }
+    @Enumerated(EnumType.STRING)
+    private StatusType customerStatus;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date enrolledDate = new Date();
-
+    private Date enrolledDate=new Date();
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    private Section section;
+    @ManyToOne (cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    private Users user;
+    
     public Enrollment() {
-    }
-
-    public Enrollment(Section section, Users user, String status) {
-        this.section = section;
-        this.user = user;
-        this.status = status;
-    }
-
+    }       
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public StatusType getCustomerStatus() {
+        return customerStatus;
+    }
+
+    public void setCustomerStatus(StatusType customerStatus) {
+        this.customerStatus = customerStatus;
+    }  
+    
+    public Date getEnrolledDate() {
+        return enrolledDate;
+    }
+
+    public void setEnrolledDate(Date enrolledDate) {
+        this.enrolledDate = enrolledDate;
     }
 
     public Section getSection() {
@@ -74,22 +91,10 @@ public class Enrollment implements Serializable {
 
     public void setUser(Users user) {
         this.user = user;
-    }
+    }   
 
-    public Date getEnrolledDate() {
-        return enrolledDate;
+    public void addCustSec(Users customer, Section section){
+        this.user=customer;
+        this.section=section;
     }
-
-    public void setEnrolledDate(Date enrolledDate) {
-        this.enrolledDate = enrolledDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

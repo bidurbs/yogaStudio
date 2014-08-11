@@ -18,7 +18,7 @@ public interface IUserService {
 
     public List<Customer> findAllCustomer();
 
-    public Customer findCustomerById(long customerId);
+    public Customer findCustomerById(Long customerId);
 
     public Customer findCustomerByEmail(String email);
 

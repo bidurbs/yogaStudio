@@ -1,70 +1,106 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Enrollment;
-import com.saviour.poweryoga.model.Section;
-import com.saviour.poweryoga.serviceI.IEnrollmentService;
-import com.saviour.poweryoga.serviceI.ISectionService;
+import com.saviour.poweryoga.model.Withdrawal;
+import com.saviour.poweryoga.serviceI.IWithdrawalService;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
- * @author bidur
- * @version 0.0.1
+ * @author Guest
  */
-@Named("withdrawalController")
+@Named
 @SessionScoped
-public class WithdrawalController implements Serializable {
-
+public class WithdrawalController implements Serializable{
+    private Withdrawal withdrawal;
     @Autowired
-    private ISectionService SectionService;
-    
+    private IWithdrawalService withdrawalService;
+    private String message;
+    private List<Withdrawal> withdrawals=new ArrayList<>();
+    private List<Enrollment> enrollments;
+    private String enrollmentId;
     @Autowired
     private UserController userController;
     
-    @Autowired
-    private IEnrollmentService enrollmentService;
-
-    private Section section;
-    private Customer customer;
-    
     public WithdrawalController() {
-        
+        withdrawal=new Withdrawal();
     }
 
-    public Section getSection() {
-        return section;
+    public String getEnrollmentId() {
+        return enrollmentId;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setEnrollmentId(String enrollmentId) {
+        this.enrollmentId = enrollmentId;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getMessage() {
+        return message;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }        
+
+    public Withdrawal getWithdrawal() {
+        return withdrawal;
+    }
+
+    public void setWithdrawal(Withdrawal withdrawal) {
+        this.withdrawal = withdrawal;
+    }
+
+    public List<Withdrawal> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<Withdrawal> withdrawals) {
+        this.withdrawals = withdrawals;
+    }
+
+    public String displayEnrollment(){
+        Customer customer=(Customer)userController.getCurrentUser();
+        //message="message="+customer.getEmail();
+        enrollments = withdrawalService.getEnrollmentObs(customer);
+        withdrawals=withdrawalService.getAllWithdrawal();
+        return "courseWithdrawal";
     }
     
+    public String withdrawFromSection(){   
+       withdrawal.setWithdrawalStatus(Withdrawal.statusType.request);
+       for(Enrollment en:enrollments){
+           if(en.getId()==Long.parseLong(enrollmentId)){
+               withdrawal.addEnrollment(en);
+           }
+       }       
+       withdrawalService.saveWithdrawal(withdrawal);
+       withdrawals=withdrawalService.getAllWithdrawal();
+       return "courseWithdrawal";
+    }
     
-    /**
-     * Customer request for withdrawal for a section
-     * 
-     * @param section
-     */
-    public void requestWithdrawal(Section section){
-        //check if customer is entolled to this section previously
-        customer = (Customer) userController.getUser();
-        Enrollment enrollment = enrollmentService.isRegistered(customer, section);
-        
-        if(enrollment !=null){
-            enrollment.setStatus("Withdrawal");
-            enrollmentService.updateEnrollment(enrollment);
-        }
+    public String deleteRequest(){
+        withdrawalService.deleteWithdrawal(withdrawal);
+        withdrawals=withdrawalService.getAllWithdrawal();
+        return "courseWithdrawal";
     }
 }

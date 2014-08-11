@@ -185,6 +185,15 @@ public class FacultyController implements Serializable {
         faculty = facultyService.getFacultyById(Id);
         return "editFaculty";
     }
+    
+    /**
+     * add Faculty form
+     * 
+     * @return
+     */
+    public String addFaculty() {
+        return ("/views/admin/addFaculty.xhtml?faces-redirect=true");
+    }
 
     
     /**

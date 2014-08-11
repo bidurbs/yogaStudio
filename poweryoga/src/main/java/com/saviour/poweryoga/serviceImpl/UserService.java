@@ -55,8 +55,13 @@ public class UserService implements IUserService {
 
     @Transactional
     @Override
-    public Customer findCustomerById(long customerId) {
-        return (Customer) crudfacade.read(customerId, Customer.class);
+    public Customer findCustomerById(Long customerId) {
+        try {
+            return (Customer) crudfacade.read(customerId, Customer.class);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     @Override

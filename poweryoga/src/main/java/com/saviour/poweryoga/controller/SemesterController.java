@@ -58,6 +58,14 @@ public class SemesterController implements Serializable {
     }
     
     /**
+     * add Semester form
+     * @return 
+     */
+    public String addSemester() {
+        return ("/views/admin/addSemester.xhtml?faces-redirect=true");
+    }
+    
+    /**
      * Delete Course entry
      *
      * @param Id

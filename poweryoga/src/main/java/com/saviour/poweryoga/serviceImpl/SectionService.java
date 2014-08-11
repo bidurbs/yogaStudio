@@ -53,13 +53,15 @@ public class SectionService implements ISectionService {
 
     @Override
     public void deleteSection(Section section) {
-      
+
         crudfacade.delete(section);
     }
 
     @Override
     public List<Section> listSectionByCourseId(Long Id) {
-        return crudfacade.findWithNamedQuery("Section.findAll");
+        Map<String, Long> paramaters = new HashMap<>(1);
+        paramaters.put("courseId", Id);
+        return crudfacade.findWithNamedQuery("Section.findAllByCourse", paramaters);
     }
 
     /**
@@ -80,6 +82,7 @@ public class SectionService implements ISectionService {
         return (Section) section.get(0);
     }
 
+    @Override
     public Enrollment checkCustomerEnrolled(Section section, Users customer) {
         Enrollment enrollment = (Enrollment) crudfacade.findWithNamedQuery("Enrollment.findCustomerInSection");
         return enrollment;
