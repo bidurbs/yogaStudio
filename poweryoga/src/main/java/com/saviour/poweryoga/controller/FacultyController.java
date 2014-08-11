@@ -15,7 +15,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -49,6 +51,10 @@ public class FacultyController implements Serializable {
 
     private Faculty faculty;
 
+    private Customer selectedCustomer;
+
+    private String EmailToAdvisee;
+
     private List<Faculty> listOfFaculty;
 
     private List<Section> sectionList = new ArrayList<>();
@@ -62,6 +68,7 @@ public class FacultyController implements Serializable {
     public FacultyController() {
         faculty = new Faculty();
         address = new Address();
+        selectedCustomer = new Customer();
     }
 
     public Long getSelectedSectionId() {
@@ -76,6 +83,14 @@ public class FacultyController implements Serializable {
         return sectionList;
     }
 
+    public Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    public void setSelectedCustomer(Customer selectedCustomer) {
+        this.selectedCustomer = selectedCustomer;
+    }
+
     public void setSectionList(List<Section> sectionList) {
         this.sectionList = sectionList;
     }
@@ -84,6 +99,14 @@ public class FacultyController implements Serializable {
         Faculty fac = (Faculty) usercontroller.getUser();
         myadvisee = facultyService.myAdvisee(fac);
         return myadvisee;
+    }
+
+    public String getEmailToAdvisee() {
+        return EmailToAdvisee;
+    }
+
+    public void setEmailToAdvisee(String EmailToAdvisee) {
+        this.EmailToAdvisee = EmailToAdvisee;
     }
 
     public void setMyadvisee(List<Customer> myadvisee) {
@@ -163,6 +186,65 @@ public class FacultyController implements Serializable {
         return "editFaculty";
     }
 
+    
+    /**
+     * 
+     * @param cus
+     * @return 
+     */
+    public String emailToAdvisee(Customer cus) {
+        selectedCustomer = cus; 
+         return ("/views/faculty/sendEmailToAdvisee.xhtml?faces-redirect=true");       
+
+    }
+    
+    
+    /**
+     * Send email to advisee.
+     *
+     * @param cus
+     * @param faculty
+     * @param customer
+     * @return
+     */
+    public String sendEMailToMyAdvisee(){
+        
+        StringBuilder body = new StringBuilder(" Dear " + selectedCustomer.getFirstName() + "\n\n");
+        //body.append("<a href=" + vLink + " target=_blank></a>");
+        body.append(EmailToAdvisee);
+        body.append("\n\n Kind regards,");
+        body.append(usercontroller.getUser().getFirstName());
+        EmailManager.sendEmail(mailSender, "Message from your advisor",
+                body.toString(), selectedCustomer.getEmail());
+
+        return ("/views/faculty/facultyViewAdvisee.xhtml?faces-redirect=true");
+    
+    }
+
+    public void sendRegistrationEmail(Customer mycustomer) {
+        //EMAIL SENDING
+
+//        FacesContext ctx = FacesContext.getCurrentInstance();
+//        String viewId = ctx.getViewRoot().getViewId();
+//        HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+//        String ctr = servletRequest.getRequestURL().toString().replace(servletRequest.getRequestURI().substring(0), "") + servletRequest.getContextPath();
+//
+//        String vLink = ctr + "/views/customer/confirmCustomer.xhtml?id=" + mycustomer.getValidationLink();
+//
+//        String myIp = findMyIP();
+//
+//        vLink = vLink.replace("localhost", myIp);
+//
+//        StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
+//        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n Click to the link below to confirm your registration \n\n");
+//        //body.append("<a href=" + vLink + " target=_blank></a>");
+//        body.append(vLink);
+//        body.append("\n\n");
+//        body.append("Regards\n-PowerYoga Team");
+//        EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());
+//    
+    }
+
     /**
      * Delete Faculty entry. A faculty status will be changed to DEACTIVE but it
      * will not be deleted because it is referenced by customers.
@@ -191,7 +273,6 @@ public class FacultyController implements Serializable {
 
     public List<Faculty> getListOfActiveFaculty() {
         List<Faculty> listOfFaculty = facultyService.getListOfActiveFaculty();
-       
 
         return listOfFaculty;
     }

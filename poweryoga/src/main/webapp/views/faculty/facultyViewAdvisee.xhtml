@@ -33,7 +33,8 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink  value="Send email" />
+                                <h:commandLink action="#{facultyController.emailToAdvisee(adv)}"  
+                                               value="Send email" />
                             </h:form>
                         </h:column>
                     </h:dataTable>
