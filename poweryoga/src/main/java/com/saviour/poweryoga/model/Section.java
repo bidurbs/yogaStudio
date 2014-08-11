@@ -45,7 +45,7 @@ public class Section implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Semester semester;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Course course;
 
     @ManyToMany(mappedBy = "sections")

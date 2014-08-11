@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
@@ -26,102 +27,89 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class EnrollmentService implements IEnrollmentService {
-
     @Autowired
     private CRUDFacadeImpl crudfacade;
-
     @Override
-    public void saveEnrollment(Enrollment enrollment) {
-        crudfacade.create(enrollment);
+    public void saveEnrollment(Enrollment enrollment){
+        //enrollmentDAO.saveEnrollment(enrollment);
+        crudfacade.save(enrollment);
     }
 
     @Override
-    public List<Enrollment> getAllEnrollment() {
-        return crudfacade.findWithNamedQuery("Enrollment.getAllEnrollment");
+    public List<Enrollment> getAllEnrollments(Long id){       
+        //return  enrollmentDAO.getAllEnrollments(id);
+        Map<String, Enrollment.StatusType> paramaters = new HashMap<>(2);
+        Map<String, Long> paramaters2 = new HashMap<>(1);        
+        paramaters.put("status", Enrollment.StatusType.active);
+        paramaters.put("status2", Enrollment.StatusType.waitinglist);
+        paramaters2.put("sectionId", id);
+        return crudfacade.findWithNamedQuery("Enrollment.getAllEnrollments", paramaters,paramaters2);        
     }
-
     @Override
-    public void updateEnrollment(Enrollment enrollment) {
+    public List<Enrollment> getAllEnrollmentStatus(Long id,String status){       
+        //return  enrollmentDAO.getAllEnrollmentStatus(id,status);
+        Map<String, Enrollment.StatusType> paramaters = new HashMap<>(1);
+        Map<String, Long> paramaters2 = new HashMap<>(1);     
+        paramaters.put("status", Enrollment.StatusType.valueOf(status));
+        paramaters2.put("sectionId", id);
+        return crudfacade.findWithNamedQuery("Enrollment.getAllEnrollmentStatus", paramaters,paramaters2);      
+    }
+    @Override
+    public void updateEnrollment(Enrollment enrollment){
+        //enrollmentDAO.updateEnrollment(enrollment);
         crudfacade.update(enrollment);
     }
 
     @Override
-    public Enrollment getEnrollmentById(Long Id) {
-        List<Enrollment> enrollment = crudfacade.findWithNamedQuery("Enrollment.getEnrollmentById");
-        return (Enrollment) enrollment.get(0);
+    public Enrollment getEnrollmentById(Long Id){
+        return (Enrollment)crudfacade.read(Id, Enrollment.class) ;//enrollmentDAO.getEnrollmentById(Id);
     }
 
     @Override
-    public void deleteEnrollment(Enrollment enrollment) {
+    public void deleteEnrollment(Enrollment enrollment){
+        //enrollmentDAO.deleteEnrollment(enrollment);
         crudfacade.delete(enrollment);
     }
-//
-//    @Override
-//    public List<Section> displayAllSections() {
-//        return crudfacade.displayAllSections();
-//    }
-//
-//    @Override
-//    public Users getCustomer() {
-//        return crudfacade.getCustomer();
-//    }
-//
-//    @Override
-//    public Section getSectionOb(Long id) {
-//        return crudfacade.getSectionOb(id);
-//    }
-//
-//    @Override
-//    public int getCurrentCount(Long id) {
-//        return crudfacade.getCurrentCount(id);
-//    }
-//
-//    @Override
-//    public List<Course> getSectionHistory(Users custmomer) {
-//        return crudfacade.getSectionHistory(custmomer);
-//    }
-
     @Override
-    public Enrollment isRegistered(Customer customer, Section section) {
+    public List<Section> displayAllSections(){        
+        //return enrollmentDAO.displayAllSections();
+        return crudfacade.findWithNamedQuery("Section.findAll"); 
+    }
+    @Override
+    public Section getSectionOb(Long id){
+        //return enrollmentDAO.getSectionOb(id);
+        return (Section)crudfacade.read(id, Section.class);
+    }
+    @Override
+    public int getCurrentCount(Long id){
+        //return enrollmentDAO.getCurrentCount(id);
+        Map<String, Enrollment.StatusType> paramaters = new HashMap<>(1);
+        Map<String, Long> paramaters2 = new HashMap<>(1);     
+        paramaters.put("status", Enrollment.StatusType.active);
+        paramaters2.put("myId", id); 
+        List count=crudfacade.findWithNamedQuery("Enrollment.getCurrentCount", paramaters,paramaters2); 
+        return count.size();
+    }
+    @Override
+    public List<Course> getSectionHistory(Users custmomer){
+        //return enrollmentDAO.getSectionHistory(custmomer);
+        Map<String, Enrollment.StatusType> paramaters = new HashMap<>(1);
+        Map<String, Long> paramaters2 = new HashMap<>(1);     
+        paramaters.put("status", Enrollment.StatusType.completed);
+        paramaters2.put("id", custmomer.getUserId());        
+        return crudfacade.findWithNamedQuery("Enrollment.getSectionHistory", paramaters,paramaters2); 
+    }
+    
+    @Override
+    public Enrollment isRegistered(Customer customer,Section section){
+        //return enrollmentDAO.isRegistered(customer, section);
         Map<String, Long> paramaters = new HashMap<>(2);
-        paramaters.put("userId", customer.getUserId());
-        paramaters.put("sectionId", section.getId());
-        List<Enrollment> enrollment = crudfacade.findWithNamedQuery("Enrollment.findCustomerInSection");
-        return (Enrollment) enrollment.get(0);
+        paramaters.put("cid", customer.getUserId()); 
+        paramaters.put("sid", section.getId());        
+        List isRegister=crudfacade.findWithNamedQuery2("Enrollment.isRegistered", paramaters); 
+        if(isRegister.isEmpty())
+            return null;
+        return (Enrollment)isRegister.get(0);
     }
-
-//    @Override
-//    public List<Course> getPrerequisites(Section section) {
-//        return crudfacade.getPrerequisites(section);
-//    }
-
-    @Override
-    public List<Section> displayAllSections() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Users getCustomer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Section getSectionOb(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getCurrentCount(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Course> getSectionHistory(Users custmomer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Course> getPrerequisites(Section section) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

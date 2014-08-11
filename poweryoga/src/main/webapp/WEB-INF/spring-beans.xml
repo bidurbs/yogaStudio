@@ -69,6 +69,8 @@
                 <value>com.saviour.poweryoga.model.Transcript</value>
                  <value>com.saviour.poweryoga.model.Address</value>
                  <value>com.saviour.poweryoga.model.Waiver</value>
+                 <value>com.saviour.poweryoga.model.Enrollment</value>
+                 <value>com.saviour.poweryoga.model.Withdrawal</value>
             </list>
         </property>
 

@@ -60,15 +60,16 @@
                                             <h5>${section.sectionName} </h5>			
                                             <hr class="soft"/>
                                             <p>
-                                                Start Date: #{section.semester.startDate} <br/>
+                                               Start Date: #{section.semester.startDate} <br/>
                                                End Date: #{section.semester.endDate}
                                             </p>
                                             <br class="clr"/>
                                         </div>
                                         <div class="span3 alignR">
                                             <h:form class="form-horizontal qtyFrm">
-                                                <h:commandLink class="btn btn-large" action="#" value="Enroll Now" />
+                                                <h:commandLink class="btn btn-large" action="#{enrollmentController.enrollCustomer(section.id)}" value="Enroll Now" />
                                             </h:form>
+                                            #{enrollmentController.message}
                                         </div>
                                     </div>
                                 </ui:repeat>
