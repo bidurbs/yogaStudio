@@ -55,6 +55,19 @@
                             </div>
                             <h:message for="course"/>
                         </div>
+                        <div class="control-group">
+                            <label class="control-label" for="semester">Semester <sup>*</sup></label>
+                            <div class="controls">
+                                <h:selectOneMenu value="#{sectionController.selectedSemester}">
+                                    <f:selectItem itemLabel="Choose Semester" itemValue=""/>
+                                    <f:selectItems value="#{sectionController.listOfSemester}" var="item"
+                                                   itemLabel="#{item.semesterName}" 
+                                                   itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <h:message for="semester"/>
+                        </div>
+                        
                         
                         <div class="control-group">
                             <div class="controls">

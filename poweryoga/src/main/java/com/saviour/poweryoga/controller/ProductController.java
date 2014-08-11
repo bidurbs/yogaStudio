@@ -62,6 +62,15 @@ public class ProductController implements Serializable {
         product = ProductService.getProductById(Id);
         return "editProduct";
     }
+    
+    /**
+     * display add Product form
+     * 
+     * @return
+     */
+    public String addProduct() {
+        return ("/views/admin/addProduct.xhtml?faces-redirect=true");
+    }
 
     /**
      * Delete Product entry

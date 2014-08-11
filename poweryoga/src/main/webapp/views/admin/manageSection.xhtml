@@ -23,7 +23,10 @@
             <ui:define name="content">
                 <h3>Section List</h3>	
                 <hr class="soft"/>
-                <a href="addSection.xhtml">Add Section</a>
+                <h:form>
+                    <h:commandLink action="#{sectionController.addSection()}" value="Add Section" /> 
+                </h:form>
+                <!--<a href="addSection.xhtml">Add Section</a>-->
                 <div class="well">
                     <h:dataTable value="#{sectionController.listOfSection}" var="item" class="table table-bordered">
                         <h:column>

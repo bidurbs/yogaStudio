@@ -7,8 +7,10 @@ package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Section;
+import com.saviour.poweryoga.model.Semester;
 import com.saviour.poweryoga.serviceI.ICourseService;
 import com.saviour.poweryoga.serviceI.ISectionService;
+import com.saviour.poweryoga.serviceI.ISemesterService;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -30,13 +32,20 @@ public class SectionController implements Serializable {
 
     @Autowired
     private ICourseService courseService;
+    
+    @Autowired
+    private ISemesterService semesterService;
 
     private Course course;
     private Course coursePrerequisite;
+    private Semester semester;
     private Section section;
     private List<Section> listOfSection;
     private List<Course> listOfCourse;
+    private List<Semester> listOfSemester;
     private String selectedCourse;
+
+    private Long selectedSemester;
 
     public SectionController() {
         section = new Section();
@@ -50,6 +59,35 @@ public class SectionController implements Serializable {
         this.selectedCourse = selectedCourse;
     }
 
+    public Long getSelectedSemester() {
+        return selectedSemester;
+    }
+
+    public void setSelectedSemester(Long selectedSemester) {
+        this.selectedSemester = selectedSemester;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    public List<Semester> getListOfSemester() {
+        listOfSemester = semesterService.getAllSemester();
+        return listOfSemester;
+    }
+
+    public void setListOfSemester(List<Semester> listOfSemester) {
+        this.listOfSemester = listOfSemester;
+    }
+    
+    
+
+    
+
     /**
      * Save Section data
      *
@@ -57,8 +95,15 @@ public class SectionController implements Serializable {
      */
     public String saveSection() {
         // find the section based on selected course name and set course of this section 
-        course = courseService.findByName(selectedCourse);
-        section.setCourse(course);
+        if (!selectedCourse.isEmpty()) {
+            course = courseService.findByName(selectedCourse);
+            section.setCourse(course);
+        }   
+        //assign semester
+        if(selectedSemester!=null){
+            semester = semesterService.getSemesterById(selectedSemester);
+            section.setSemester(semester);
+        }
         SectionService.saveSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
@@ -69,8 +114,16 @@ public class SectionController implements Serializable {
      * @return
      */
     public String updateSection() {
-        course = courseService.findByName(selectedCourse);
-        section.setCourse(course);
+        // find the section based on selected course name and set course of this section 
+        if (!selectedCourse.isEmpty()) {
+            course = courseService.findByName(selectedCourse);
+            section.setCourse(course);
+        }   
+        //assign semester
+        if(selectedSemester!=null){
+            semester = semesterService.getSemesterById(selectedSemester);
+            section.setSemester(semester);
+        }
         SectionService.updateSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
@@ -84,6 +137,15 @@ public class SectionController implements Serializable {
     public String editSection(Long Id) {
         section = SectionService.getSectionById(Id);
         return "editSection";
+    }
+    
+    /**
+     * display add Section data form
+     * 
+     * @return
+     */
+    public String addSection() {
+        return ("/views/admin/addSection.xhtml?faces-redirect=true");
     }
 
     /**
