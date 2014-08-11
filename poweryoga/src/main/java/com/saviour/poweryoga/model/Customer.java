@@ -25,22 +25,21 @@ import javax.persistence.Table;
 public class Customer extends Users implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<PurchaseOrder> orders=new ArrayList<>();
+    private List<PurchaseOrder> orders = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "customer")
-    private List<CreditCard> creditCards=new ArrayList<>();
-    
+    private List<CreditCard> creditCards = new ArrayList<>();
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Faculty myAdvisor;
 
+    public List<PurchaseOrder> getOrders() {
+        return orders;
+    }
 
-//    public List<PurchaseOrder> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<PurchaseOrder> orders) {
-//        this.orders = orders;
-//    }
+    public void setOrders(List<PurchaseOrder> orders) {
+        this.orders = orders;
+    }
 
     public List<CreditCard> getCreditCards() {
         return creditCards;
@@ -61,9 +60,5 @@ public class Customer extends Users implements Serializable {
     public void setMyAdvisor(Faculty myAdvisor) {
         this.myAdvisor = myAdvisor;
     }
-
-   
-    
-    
 
 }

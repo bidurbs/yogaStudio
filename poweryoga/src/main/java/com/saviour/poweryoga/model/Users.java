@@ -31,7 +31,8 @@ import javax.persistence.UniqueConstraint;
 @NamedQueries({
     @NamedQuery(name = "Users.findAllCustomer", query = "from Customer c"),
     @NamedQuery(name = "Users.findCustomerByEmail", query = "from Customer c where c.email=:email"),
-    @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass")
+    @NamedQuery(name = "User.authenticateUser", query = "from Users u where u.email = :uemail and u.password= :upass"),
+    @NamedQuery(name = "User.findCustomerByValidationLink", query = "from Customer c where c.validationLink=:validationLink")
 })
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Users implements Serializable {
@@ -55,6 +56,12 @@ public class Users implements Serializable {
     @Column(name = "Phone")
     private String phone;
 
+    @Column(name = "Approved")
+    private boolean approved;
+
+    @Column(name = "ValidationLink")
+    private String validationLink;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Address address;
 
@@ -64,18 +71,39 @@ public class Users implements Serializable {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Section> sections = new ArrayList<>();
 
+
     public Users() {
     }
 
-    public Users(String firstName, String lastName, String email, String password, String phone, Address address, Role role) {
+    public Users(String firstName, String lastName, String email, String password, String phone, boolean approved, String validationLink, Address address, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.phone = phone;
+        this.approved = approved;
+        this.validationLink = validationLink;
         this.address = address;
         this.role = role;
     }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public String getValidationLink() {
+        return validationLink;
+    }
+
+    public void setValidationLink(String validationLink) {
+        this.validationLink = validationLink;
+    }
+
+
 
     public Address getAddress() {
         return address;
@@ -109,7 +137,6 @@ public class Users implements Serializable {
         this.lastName = lastName;
     }
 
-    
     public String getEmail() {
         return email;
     }

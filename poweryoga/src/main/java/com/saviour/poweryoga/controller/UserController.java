@@ -7,6 +7,7 @@ import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author TalakB
  * @version 0.0.1
  */
-@Named("userController")
+@Named
 @SessionScoped
 public class UserController implements Serializable {
 
@@ -27,7 +28,9 @@ public class UserController implements Serializable {
     @Autowired
     private NotificationController notoficationController;
 //    
+    
     private Users user;
+    //= new Users();
     private Role userRole;
 
     //to keep user related data on the session 
@@ -135,6 +138,8 @@ public class UserController implements Serializable {
                     return ("/views/index.xhtml?faces-redirect=true");
                 }
             }
+            else
+                return null;
         } catch (Exception ex) {
             ex.printStackTrace();
             //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");

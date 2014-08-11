@@ -3,9 +3,7 @@ package com.saviour.poweryoga.controller;
 import com.saviour.poweryoga.model.Address;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Faculty;
-import com.saviour.poweryoga.model.PurchaseOrder;
 import com.saviour.poweryoga.model.Role;
-import com.saviour.poweryoga.model.ShoppingCartItem;
 import com.saviour.poweryoga.serviceI.IFacultyService;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.IUserService;
@@ -13,11 +11,15 @@ import com.saviour.poweryoga.util.EmailManager;
 import com.saviour.poweryoga.util.PasswordService;
 import com.saviour.poweryoga.util.YogaValidator;
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -80,6 +82,8 @@ public class CustomerController implements Serializable {
                 //assign advisor 
                 Faculty myAdvisor = facultyService.pickAdvisor();
                 customer.setMyAdvisor(myAdvisor);
+                customer.setApproved(false);
+                customer.setValidationLink(findNextNumber().toString());
                 userService.saveUser(customer);
                 sendRegistrationEmail(customer);
                 //redirect = "/views/index.xhtml?faces-redirect=true";
@@ -93,13 +97,43 @@ public class CustomerController implements Serializable {
         return null;
     }
 
+    public Long findNextNumber() {
+        long number = (long) Math.floor(Math.random() * 9000000000L) + 1000000000L;
+        return number;
+    }
+
     public void sendRegistrationEmail(Customer mycustomer) {
         //EMAIL SENDING
+
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        String viewId = ctx.getViewRoot().getViewId();
+        HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+        String ctr = servletRequest.getRequestURL().toString().replace(servletRequest.getRequestURI().substring(0), "") + servletRequest.getContextPath();
+
+        String vLink = ctr + "/views/customer/confirmCustomer.xhtml?id=" + mycustomer.getValidationLink();
+
+        String myIp = findMyIP();
+
+        vLink = vLink.replace("localhost", myIp);
+
         StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
-        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail());
+        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n Click to the link below to confirm your registration \n\n");
+        //body.append("<a href=" + vLink + " target=_blank></a>");
+        body.append(vLink);
         body.append("\n\n");
         body.append("Regards\n-PowerYoga Team");
         EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());
+    }
+
+    public String findMyIP() {
+        InetAddress ip = null;
+        try {
+            ip = InetAddress.getLocalHost();
+        } catch (java.net.UnknownHostException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Current IP address : " + ip.getHostAddress());
+        return ip.getHostAddress();
     }
 
     public boolean validateEmail(String email) {
@@ -193,5 +227,4 @@ public class CustomerController implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
-
 }

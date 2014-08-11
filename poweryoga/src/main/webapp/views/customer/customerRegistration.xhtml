@@ -3,11 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
     </h:head>
-    <body>
+    <h:body>
         <ui:composition template="/views/template/template.xhtml">
             <ui:define name="successFailure">
                 <h:panelGrid rendered="#{notificationController.successMsg!= null}">
@@ -141,5 +140,5 @@
                 </div>
             </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>
