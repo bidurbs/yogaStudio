@@ -30,7 +30,7 @@ public class UserController implements Serializable {
     private Users user;
     private Role userRole;
 
-    //to keep user relaed data on the session 
+    //to keep user related data on the session 
     private HttpSession activeSession;
 
     

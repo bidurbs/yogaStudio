@@ -91,7 +91,6 @@
 
                                 <h4>Shipping Address</h4>
                                 <input type="checkbox" id="chkAddress" name="chkAddress" onclick="copyBillingAddress()">Same as Billing address</input><br></br>
-
                                 <div class="control-group">
                                     <label class="control-label" for="streetId">Street </label>
                                     <div class="controls">
@@ -139,7 +138,7 @@
 
                                 <div class="control-group">
                                     <div class="controls">
-                                        <h:commandButton class="btn btn-small" value="Next" action="#{purchaseOrderController.saveAddress()}"/>
+                                        <h:commandButton class="btn" value="Next" action="#{purchaseOrderController.saveAddress()}"/>
                                     </div>
                                 </div>
                             </h:form>
