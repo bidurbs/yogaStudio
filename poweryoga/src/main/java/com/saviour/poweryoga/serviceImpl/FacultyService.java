@@ -31,7 +31,7 @@ public class FacultyService implements IFacultyService {
     public void saveFaculty(Faculty faculty) {
         //set faculty role 
 
-        crudfacade.create(faculty);
+        crudfacade.save(faculty);
 
     }
 
