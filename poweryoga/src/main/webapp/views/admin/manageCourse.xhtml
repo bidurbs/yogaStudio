@@ -23,7 +23,10 @@
             <ui:define name="content">
                 <h3>Course List</h3>	
                 <hr class="soft"/>
-                <a href="addCourse.xhtml">Add Course</a>
+                <h:form>
+                    <h:commandLink action="#{courseController.addCourse()}" value="Add Course" /> 
+                </h:form>
+                <!--<a href="addCourse.xhtml">Add Course</a>-->
                 <div class="well">
                     <h:dataTable value="#{courseController.listOfCourses}" var="item" class="table table-bordered">
                         <h:column>
