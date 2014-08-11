@@ -59,7 +59,7 @@ public class ProductService implements IProductService {
 
     @Override
     public void saveProduct(Product product) {
-        crudfacade.create(product);
+        crudfacade.save(product);
     }
 
     @Override
