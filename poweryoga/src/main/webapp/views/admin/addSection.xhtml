@@ -47,6 +47,7 @@
                             <label class="control-label" for="course">Course <sup>*</sup></label>
                             <div class="controls">
                                 <h:selectOneMenu value="#{sectionController.selectedCourse}">
+                                    <f:selectItem itemLabel="Choose Course" itemValue=""/>
                                     <f:selectItems value="#{sectionController.listOfCourse}" var="item"
                                                    itemLabel="#{item.courseName}" 
                                                    itemValue="#{item.courseName}" />
@@ -54,7 +55,7 @@
                             </div>
                             <h:message for="course"/>
                         </div>
-
+                        
                         <div class="control-group">
                             <div class="controls">
                                 <h:commandButton class="btn btn-large" value="Save" action="#{sectionController.saveSection()}"/>
