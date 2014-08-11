@@ -18,7 +18,7 @@
                             <li><a href="${facesContext.externalContext.requestContextPath}${courseController.displayCourses()}">Courses</a> <span class="divider">/</span></li>
                             <li class="active">Section</li>
                         </ul>
-                        <h3> Course : #{sectionController.course.courseName} <small class="pull-right"> #{sectionController.listOfSection.size()} Section are available </small></h3>	
+                        <h3> Course : #{sectionController.course.courseName} <small class="pull-right"> #{sectionController.listOfSectionForCourse.size()} Section are available </small></h3>	
 
                         <hr class="soft"/>
                         <br class="clr"/>
@@ -32,7 +32,7 @@
                         <c:choose>
                             <c:when test="#{sectionController.course.prerequisites.id != null}">
                                 <div class="span5 pull-right">
-                                    <p>This course has following prerequisite, you need to take.</p>
+                                    <p>This course has following prerequisite course.</p>
                                     <h3>#{sectionController.course.prerequisites.courseName}</h3>
                                     <p>
                                         $#{sectionController.course.prerequisites.courseFee}
@@ -46,11 +46,11 @@
 
                         <br class="clr" />
                         <hr class="soft"/>
-                        <h5>This course has offered the following section. You can choose any one of them.</h5>
+                        <h5>This course is offered in the following section. Enroll in any section you like.</h5>
 
                         <div class="tab-content">
                             <div class="tab-pane active" id="listView">
-                                <ui:repeat value="#{sectionController.listOfSection}" var="section">
+                                <ui:repeat value="#{sectionController.listOfSectionForCourse}" var="section">
                                     <hr class="soft"/>
                                     <div class="row">	  
                                         <div id="productView" class="span2">

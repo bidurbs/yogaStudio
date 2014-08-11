@@ -46,7 +46,7 @@ public class CourseService implements ICourseService {
 
     @Override
     public void saveCourse(Course course) {
-        crudfacade.create(course);
+        crudfacade.save(course);
     }
 
     @Override
