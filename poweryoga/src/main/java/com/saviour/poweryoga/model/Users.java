@@ -64,19 +64,7 @@ public class Users implements Serializable {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Section> sections = new ArrayList<>();
 
-    public Users() {
-    }
-
-    public Users(String firstName, String lastName, String email, String password, String phone, Address address, Role role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.address = address;
-        this.role = role;
-    }
-
+    
     public Address getAddress() {
         return address;
     }
