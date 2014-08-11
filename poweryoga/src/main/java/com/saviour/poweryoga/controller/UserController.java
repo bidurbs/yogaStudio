@@ -39,6 +39,16 @@ public class UserController implements Serializable {
     private boolean isFaculty;
     private boolean isCustomer;
     private boolean isLoggedin;
+    
+    private static String redirect = "";
+
+    public static String getRedirect() {
+        return redirect;
+    }
+
+    public static void setRedirect(String redirect) {
+        UserController.redirect = redirect;
+    }
 
     public UserController() {
         user = new Users();
@@ -104,7 +114,7 @@ public class UserController implements Serializable {
         //encrypt password to check it against the DB. 
         String encPass = PasswordService.encrypt(user.getPassword());
         user.setPassword(encPass);
-
+        String retURL = "";
         try {
             user = userService.authenticateUser(user);
             //check if the user is registered and authenticated 
@@ -117,14 +127,14 @@ public class UserController implements Serializable {
                 //admin
                 if (userRoleCode == Role.ROLE_ADMIN_CODE) {
                     isAdmin = true;
-                    return ("/views/admin/adminHome.xhtml?faces-redirect=true");
+                    retURL="/views/admin/adminHome.xhtml?faces-redirect=true";
                 } //faculty user 
                 else if (userRoleCode == Role.ROLE_FACULTY_CODE) {
                     // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
                     isFaculty = true;
-                    return ("/views/faculty/facultyHome.xhtml?faces-redirect=true");
+                    retURL="/views/faculty/facultyHome.xhtml?faces-redirect=true";
 
                 } //vedor user
                 else if (userRoleCode == Role.ROLE_CUSTOMER_CODE) {
@@ -132,8 +142,15 @@ public class UserController implements Serializable {
 //                userLogged = true;
 //                isAdminUser = true;
                     isCustomer = true;
-                    return ("/views/index.xhtml?faces-redirect=true");
+                    retURL="/views/index.xhtml?faces-redirect=true";
                 }
+                
+                if (redirect != null && redirect.length() > 0) {
+                return redirect;
+            } else {
+                return retURL;
+            }
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
