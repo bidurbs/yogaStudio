@@ -32,7 +32,7 @@
                         <c:choose>
                             <c:when test="#{sectionController.course.prerequisites.id != null}">
                                 <div class="span5 pull-right">
-                                    <p>This course has following prerequisite, you need to take.</p>
+                                    <p>This course has following prerequisite course.</p>
                                     <h3>#{sectionController.course.prerequisites.courseName}</h3>
                                     <p>
                                         $#{sectionController.course.prerequisites.courseFee}
@@ -46,7 +46,7 @@
 
                         <br class="clr" />
                         <hr class="soft"/>
-                        <h5>This course has offered the following section. You can choose any one of them.</h5>
+                        <h5>This course is offered in the following section. Enroll in any section you like.</h5>
 
                         <div class="tab-content">
                             <div class="tab-pane active" id="listView">
