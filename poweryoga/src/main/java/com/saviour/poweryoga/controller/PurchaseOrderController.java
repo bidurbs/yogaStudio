@@ -84,41 +84,47 @@ public class PurchaseOrderController implements Serializable {
 
     public String addToCart(Long productId) {
 
-        product = productService.getProductById(productId);
+        try {
+            product = productService.getProductById(productId);
 
-        HttpSession activeSession = (HttpSession) FacesContext
-                .getCurrentInstance().getExternalContext().getSession(true);
+            HttpSession activeSession = (HttpSession) FacesContext
+                    .getCurrentInstance().getExternalContext().getSession(true);
 
-        Long customerId = (Long) activeSession.getAttribute("loggedUserId");
+            Long customerId = (Long) activeSession.getAttribute("loggedUserId");
 
-        customer = customerService.findCustomerById(customerId);
+            customer = customerService.findCustomerById(customerId);
 
-        if (shoppingCart.getId() == null) {
-            shoppingCart.setUser(customer);
-            shoppingCart.setShopDate(Calendar.getInstance());
+            if (shoppingCart.getId() == null) {
+                shoppingCart.setUser(customer);
+                shoppingCart.setShopDate(Calendar.getInstance());
+            }
+
+            List<ShoppingCartItem> cartItems = shoppingCart.getShoppingCartItems();
+            ShoppingCartItem item = new ShoppingCartItem();
+            item.setProduct(product);
+            item.setQuantity(productQty);
+            item.setPrice(productQty * product.getPrice());
+            item.setShoppingCart(shoppingCart);
+            cartItems.add(item);
+
+            productQty = 1;
+
+            shoppingCart = shoppingCartService.addToCart(shoppingCart);
+            if (shoppingCart != null) {
+                System.out.println("Product in Shopping cart added Successfully");
+
+                noOfItemsInTheCart = shoppingCart.getShoppingCartItems().size();
+
+            } else {
+
+            }
+            updateShoppingCartTotalCost();
+            return ("/views/customer/product.xhtml?faces-redirect=true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
 
-        List<ShoppingCartItem> cartItems = shoppingCart.getShoppingCartItems();
-        ShoppingCartItem item = new ShoppingCartItem();
-        item.setProduct(product);
-        item.setQuantity(productQty);
-        item.setPrice(productQty * product.getPrice());
-        item.setShoppingCart(shoppingCart);
-        cartItems.add(item);
-
-        productQty = 1;
-
-        shoppingCart = shoppingCartService.addToCart(shoppingCart);
-        if (shoppingCart != null) {
-            System.out.println("Product in Shopping cart added Successfully");
-
-            noOfItemsInTheCart = shoppingCart.getShoppingCartItems().size();
-
-        } else {
-
-        }
-        updateShoppingCartTotalCost();
-        return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
     private void updateShoppingCartTotalCost() {
@@ -146,16 +152,14 @@ public class PurchaseOrderController implements Serializable {
     }
 
     public String checkout() {
-        purchaseOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
-        if (purchaseOrder != null && sendPurchaseEmail(purchaseOrder)) {
-
-            successMsg = "Thank you for shopping with us. Please check your email for order detail";
-            errorMsg = null;
+        Customer currCustomer = getCurrentCustomer();
+        if (currCustomer == null) {
+            UserController.setRedirect("/views/customer/customerAddress.jsf?faces-redirect=true");
+            return "/views/userLogin.jsf?faces-redirect=true";
+        } else {
+            billingAddress = currCustomer.getAddress();
             return "/views/customer/customerAddress.jsf?faces-redirect=true";
         }
-        successMsg = null;
-        errorMsg = "Ooops !!! something went wrong confirming your order";
-        return null;
     }
 
     public boolean sendPurchaseEmail(PurchaseOrder myorder) {
@@ -291,12 +295,26 @@ public class PurchaseOrderController implements Serializable {
     }
 
     public String saveCreditCard() {
-        customer = getCurrentCustomer();
-        creditCard.setCustomer(customer);
-        customer.addCreditCard(creditCard);
-        customerService.updateUser(customer);
+        try {
+            customer = getCurrentCustomer();
+            creditCard.setCustomer(customer);
+            customer.addCreditCard(creditCard);
+            customerService.updateUser(customer);
 
-        return "/views/customer/orderDetail.jsf?faces-redirect=t                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          rue";
+            //return "/views/customer/orderDetail.jsf?faces-redirect=true";
+            purchaseOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
+            if (purchaseOrder != null && sendPurchaseEmail(purchaseOrder)) {
+
+                successMsg = "Thank you for shopping with us. Please check your email for order detail";
+                errorMsg = null;
+                return "/views/customer/orderDetail.jsf?faces-redirect=true";
+            }
+        } catch (Exception e) {
+            successMsg = null;
+            errorMsg = "Ooops !!! something went wrong confirming your order";
+            //return null;
+        }
+        return null;
     }
 
     public Customer getCurrentCustomer() {
