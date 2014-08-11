@@ -103,6 +103,22 @@ public class Users implements Serializable {
         this.validationLink = validationLink;
     }
 
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public String getValidationLink() {
+        return validationLink;
+    }
+
+    public void setValidationLink(String validationLink) {
+        this.validationLink = validationLink;
+    }
+
 
     public Address getAddress() {
         return address;
