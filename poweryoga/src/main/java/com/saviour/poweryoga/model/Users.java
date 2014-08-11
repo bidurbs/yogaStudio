@@ -71,6 +71,7 @@ public class Users implements Serializable {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Section> sections = new ArrayList<>();
 
+
     public Users() {
     }
 
@@ -101,6 +102,8 @@ public class Users implements Serializable {
     public void setValidationLink(String validationLink) {
         this.validationLink = validationLink;
     }
+
+
 
     public Address getAddress() {
         return address;

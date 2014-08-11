@@ -69,6 +69,8 @@ public class SectionController implements Serializable {
      * @return
      */
     public String updateSection() {
+        course = courseService.findByName(selectedCourse);
+        section.setCourse(course);
         SectionService.updateSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
