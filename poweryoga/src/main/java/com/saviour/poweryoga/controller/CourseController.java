@@ -100,7 +100,6 @@ public class CourseController implements Serializable {
      * @return
      */
     public String addCourse() {
-        //course = CourseService.getCourseById(Id);
         return ("/views/admin/addCourse.xhtml?faces-redirect=true");
     }
     
