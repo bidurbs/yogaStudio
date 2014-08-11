@@ -23,9 +23,6 @@ public class UserService implements IUserService {
 
     @Autowired
     private CRUDFacadeImpl crudfacade;
-    
-    
-
 
     /**
      * Save the user and return Users object if it is saved successfully.
@@ -74,6 +71,19 @@ public class UserService implements IUserService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Customer findCustomerByValidationLink(String link) {
+        Map<String, String> paramaters = new HashMap<>(1);
+        paramaters.put("validationLink", link);
+
+        List<Customer> customer = crudfacade.findWithNamedQuery("User.findCustomerByValidationLink", paramaters);
+        if (!customer.isEmpty()) {
+            return (Customer) customer.get(0);
+        }
+        return null;
+
     }
 
     @Override

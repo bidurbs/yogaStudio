@@ -50,7 +50,7 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             return null;
         }
     }
-    
+
     @Override
     public T save(T entity) throws EntityExistsException,
             IllegalStateException, IllegalArgumentException,
