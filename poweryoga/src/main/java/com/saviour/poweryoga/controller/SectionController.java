@@ -32,7 +32,7 @@ public class SectionController implements Serializable {
 
     @Autowired
     private ICourseService courseService;
-    
+
     @Autowired
     private ISemesterService semesterService;
 
@@ -43,6 +43,7 @@ public class SectionController implements Serializable {
     private List<Section> listOfSection;
     private List<Course> listOfCourse;
     private List<Semester> listOfSemester;
+    private List<Section> listOfSectionForCourse;
     private String selectedCourse;
 
     private Long selectedSemester;
@@ -83,10 +84,14 @@ public class SectionController implements Serializable {
     public void setListOfSemester(List<Semester> listOfSemester) {
         this.listOfSemester = listOfSemester;
     }
-    
-    
 
-    
+    public List<Section> getListOfSectionForCourse() {
+        return listOfSectionForCourse;
+    }
+
+    public void setListOfSectionForCourse(List<Section> listOfSectionForCourse) {
+        this.listOfSectionForCourse = listOfSectionForCourse;
+    }
 
     /**
      * Save Section data
@@ -98,9 +103,9 @@ public class SectionController implements Serializable {
         if (!selectedCourse.isEmpty()) {
             course = courseService.findByName(selectedCourse);
             section.setCourse(course);
-        }   
+        }
         //assign semester
-        if(selectedSemester!=null){
+        if (selectedSemester != null) {
             semester = semesterService.getSemesterById(selectedSemester);
             section.setSemester(semester);
         }
@@ -118,9 +123,9 @@ public class SectionController implements Serializable {
         if (!selectedCourse.isEmpty()) {
             course = courseService.findByName(selectedCourse);
             section.setCourse(course);
-        }   
+        }
         //assign semester
-        if(selectedSemester!=null){
+        if (selectedSemester != null) {
             semester = semesterService.getSemesterById(selectedSemester);
             section.setSemester(semester);
         }
@@ -138,10 +143,10 @@ public class SectionController implements Serializable {
         section = SectionService.getSectionById(Id);
         return "editSection";
     }
-    
+
     /**
      * display add Section data form
-     * 
+     *
      * @return
      */
     public String addSection() {
@@ -180,7 +185,8 @@ public class SectionController implements Serializable {
     }
 
     public List<Section> getListOfSection() {
-        return listOfSection = SectionService.getAllSections();
+        listOfSection = SectionService.getAllSections();
+        return listOfSection;
     }
 
     public void setListOfSection(List<Section> listOfSection) {
@@ -221,7 +227,7 @@ public class SectionController implements Serializable {
     public String displaySection(long courseId) {
         try {
             course = courseService.getCourseById(courseId);
-            listOfSection = SectionService.listSectionByCourseId(courseId);
+            listOfSectionForCourse = SectionService.listSectionByCourseId(courseId);
             return ("/views/customer/section.xhtml?faces-redirect=true");
         } catch (Exception ex) {
             return null;
