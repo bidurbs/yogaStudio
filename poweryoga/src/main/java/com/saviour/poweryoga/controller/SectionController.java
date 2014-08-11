@@ -124,7 +124,7 @@ public class SectionController implements Serializable {
     }
 
     public List<Course> getListOfCourse() {
-        listOfCourse = SectionService.getAllCourses();
+        listOfCourse = courseService.getActiveCourses();
         return listOfCourse;
     }
 

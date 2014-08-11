@@ -91,14 +91,20 @@ public class FacultyService implements IFacultyService {
      */
     @Override
     public Faculty pickAdvisor() {
-        String pickAdv = "select FACULTY.userId from (select FACULTY.userId, count(myAdvisor_userId) as totalAdvisee from FACULTY LEFT JOIN CUSTOMER on CUSTOMER.myAdvisor_userId = FACULTY.userId group by myAdvisor_userId order by totalAdvisee asc limit 1) as FACULTY";
-        // Object obj = crudfacade.findWithNativeQuery(pickAdv);
-        String qResult = crudfacade.findWithNativeQuery(pickAdv).toString();
+        try {
 
-        Faculty selectedAdvisor = (Faculty) crudfacade.read(Long.valueOf(qResult), Faculty.class);
+            String pickAdv = "select FACULTY.userId from (select FACULTY.userId, count(myAdvisor_userId) as totalAdvisee from FACULTY LEFT JOIN CUSTOMER on CUSTOMER.myAdvisor_userId = FACULTY.userId group by myAdvisor_userId order by totalAdvisee asc limit 1) as FACULTY";
+            // Object obj = crudfacade.findWithNativeQuery(pickAdv);
+            String qResult = crudfacade.findWithNativeQuery(pickAdv).toString();
+
+            Faculty selectedAdvisor = (Faculty) crudfacade.read(Long.valueOf(qResult), Faculty.class);
         //List<Faculty> facultyNew = crudfacade.findWithNativeQuery(pickAdv);
-        // return facultyNew.get(0);
-        return selectedAdvisor;
+            // return facultyNew.get(0);
+            return selectedAdvisor;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -145,7 +151,7 @@ public class FacultyService implements IFacultyService {
 
             List<Object[]> facObj = crudfacade.findWithNamedQuery("Faculty.findActiveDeactive",
                     paramaters);
-            
+
             List<Faculty> faculty = new ArrayList<>();
             for (Object[] f : facObj) {
                 faculty.add((Faculty) f[0]);

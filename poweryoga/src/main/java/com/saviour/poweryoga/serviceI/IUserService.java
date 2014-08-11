@@ -11,7 +11,7 @@ import java.util.List;
 public interface IUserService {
 
     public Users saveUser(Users user);
-    
+
     public void updateUser(Users user);
 
     public Users authenticateUser(Users user);
@@ -21,7 +21,9 @@ public interface IUserService {
     public Customer findCustomerById(long customerId);
 
     public Customer findCustomerByEmail(String email);
-    
+
     public Users findUserById(Long userId);
+
+    public Customer findCustomerByValidationLink(String link);
 
 }
