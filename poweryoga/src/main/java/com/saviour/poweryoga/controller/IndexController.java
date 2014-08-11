@@ -34,7 +34,7 @@ public class IndexController implements Serializable {
     }
 
     public List<Course> getListOfCourses() {
-        ListOfCourses = CourseService.getAllCourses();
+        ListOfCourses = CourseService.getActiveCourses();
         return ListOfCourses;
     }
 
