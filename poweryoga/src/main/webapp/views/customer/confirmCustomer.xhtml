@@ -5,10 +5,16 @@
     <h:head>
     </h:head>
     <h:body>
-        <h:form>
-            
-            <h:outputText value="#{customerValidationController.myStatus}"></h:outputText>
-            
-        </h:form>
+
+        <h:panelGrid rendered="#{customerValidationController.myStatus == 'validation_success'}">
+            Verification complete. You can login from <a href="/poweryoga/views/userLogin.xhtml?faces-redirect=true">here</a>
+        </h:panelGrid>
+        <h:panelGrid rendered="#{customerValidationController.myStatus == 'validation_done'}">
+            Sorry, this link already used for verification
+        </h:panelGrid>
+        <h:panelGrid rendered="#{customerValidationController.myStatus == 'invalid_link'}">
+            Link is invalid
+        </h:panelGrid>
+
     </h:body>
 </html>

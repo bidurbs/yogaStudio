@@ -7,6 +7,8 @@ package com.saviour.poweryoga.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +25,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PRODUCT")
 @NamedQueries({
-        @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname"),
-        @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by rand()"),
-        @NamedQuery(name = "Product.findAllProducts", query = "FROM Product p")        
-        
+    @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname"),
+    @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by rand()"),
+    @NamedQuery(name = "Product.findAllProducts", query = "FROM Product p WHERE p.status=:status"),
+    @NamedQuery(name = "Product.findAllActiveProducts", query = "FROM Product p WHERE p.status=:status")
+
 })
 public class Product implements Serializable {
 
@@ -45,6 +48,14 @@ public class Product implements Serializable {
     private String description;
 
     private int quantity;
+
+    public enum statusType {
+
+        ACTIVE, INACTIVE;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private statusType status;
 
     public Product() {
 
@@ -103,5 +114,15 @@ public class Product implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public statusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(statusType status) {
+        this.status = status;
+    }
+    
+    
 
 }
