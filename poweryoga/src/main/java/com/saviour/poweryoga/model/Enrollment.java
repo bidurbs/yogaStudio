@@ -28,12 +28,12 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name="ENROLMENT")
 @NamedQueries({
-    @NamedQuery(name = "Enrollment.getAllEnrollments", query = "Select e From Enrollment e Where e.section.id=:sectionId AND (e.customerStatus=:status OR e.customerStatus=:status2)"),
+    @NamedQuery(name = "Enrollment.getAllEnrollments", query = "Select e From Enrollment e Where e.user.userId=:customerId AND e.customerStatus=:status"),
     @NamedQuery(name = "Enrollment.getAllEnrollmentStatus", query = "Select e From Enrollment e Where e.section.id=:sectionId AND e.customerStatus=:status"),
     @NamedQuery(name = "Enrollment.displayAllSections", query = "Select Distinct s From Section s"),
     @NamedQuery(name = "Enrollment.getCurrentCount", query = "Select e From Enrollment e Where e.section.id=:myId AND e.customerStatus=:status"),
     @NamedQuery(name = "Enrollment.getSectionHistory", query = "Select e.section.course From Enrollment e Where e.user.userId=:id AND e.customerStatus=:status"),
-    @NamedQuery(name = "Enrollment.isRegistered", query = "Select e From Enrollment e Where e.user.userId=:cid AND e.section.id=:sid")
+    @NamedQuery(name = "Enrollment.isRegistered", query = "Select e From Enrollment e Where e.user.userId=:cid AND e.section.course.id=:sid")
 })
 public class Enrollment implements Serializable {
     @Id

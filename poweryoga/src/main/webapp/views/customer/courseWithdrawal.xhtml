@@ -37,7 +37,7 @@
                             <h:message for="requestDate"/>
                             Course:
                             <h:selectOneMenu id="enrollments" value="#{withdrawalController.enrollmentId}" >                          
-                                <f:selectItems value="#{withdrawalController.enrollments}" var="enrol" itemValue="#{enrol.id}" itemLabel="#{enrol.section.sectionName}"/>                          
+                                <f:selectItems value="#{withdrawalController.enrollments}" var="enrol" itemValue="#{enrol.id}" itemLabel="#{enrol.section.course.courseName}"/>                          
                             </h:selectOneMenu>
                             <h:message for="enrollments"/>
                             Reason:
@@ -50,7 +50,7 @@
                         </h:panelGrid>
 
                         <!--  Data display -->
-                        <h:dataTable value="#{withdrawalController.withdrawals}" var="withdraw" border="2">
+                        <h:dataTable value="#{withdrawalController.withdrawals}" var="withdraw" class="table table-bordered">
                             <h:column>
                                 <f:facet name="header">Date </f:facet>
                                     #{withdraw.withdrawalDate}

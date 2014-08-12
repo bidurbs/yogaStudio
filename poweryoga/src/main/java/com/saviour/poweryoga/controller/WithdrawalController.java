@@ -87,6 +87,8 @@ public class WithdrawalController implements Serializable{
     }
     
     public String withdrawFromSection(){   
+       Customer customer=(Customer)userController.getCurrentUser();
+       enrollments = withdrawalService.getEnrollmentObs(customer);
        withdrawal.setWithdrawalStatus(Withdrawal.statusType.request);
        for(Enrollment en:enrollments){
            if(en.getId()==Long.parseLong(enrollmentId)){

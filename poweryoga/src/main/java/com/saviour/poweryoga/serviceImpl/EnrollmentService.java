@@ -37,11 +37,10 @@ public class EnrollmentService implements IEnrollmentService {
     @Override
     public List<Enrollment> getAllEnrollments(Long id){       
         //return  enrollmentDAO.getAllEnrollments(id);
-        Map<String, Enrollment.StatusType> paramaters = new HashMap<>(2);
+        Map<String, Enrollment.StatusType> paramaters = new HashMap<>(1);
         Map<String, Long> paramaters2 = new HashMap<>(1);        
-        paramaters.put("status", Enrollment.StatusType.active);
-        paramaters.put("status2", Enrollment.StatusType.waitinglist);
-        paramaters2.put("sectionId", id);
+        paramaters.put("status", Enrollment.StatusType.completed);
+        paramaters2.put("customerId", id);
         return crudfacade.findWithNamedQuery("Enrollment.getAllEnrollments", paramaters,paramaters2);        
     }
     @Override
@@ -104,7 +103,7 @@ public class EnrollmentService implements IEnrollmentService {
         //return enrollmentDAO.isRegistered(customer, section);
         Map<String, Long> paramaters = new HashMap<>(2);
         paramaters.put("cid", customer.getUserId()); 
-        paramaters.put("sid", section.getId());        
+        paramaters.put("sid", section.getCourse().getId());        
         List isRegister=crudfacade.findWithNamedQuery2("Enrollment.isRegistered", paramaters); 
         if(isRegister.isEmpty())
             return null;

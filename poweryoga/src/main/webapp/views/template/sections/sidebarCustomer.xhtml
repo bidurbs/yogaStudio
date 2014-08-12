@@ -5,11 +5,9 @@
             <div id="sidebar" class="span3">
                 <br class="clr"/>
                 <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
-                    <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/viewCourseHistory.xhtml?faces-redirect=true">View Course History</a></li>
+                    <li><h:commandLink value="View Transcript/Course History" action="#{enrollmentController.displayAllSectionHistory()}"/></li>
                     <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerApplyWaiver.xhtml?faces-redirect=true">Apply for Waiver Request</a></li>
                     <li><a href="${facesContext.externalContext.requestContextPath}/views/faculty/facultyViewSection.xhtml?faces-redirect=true">Shop an item</a></li>
-                    <!--<li><a href="${facesContext.externalContext.requestContextPath}/views/faculty/facultyViewSection.xhtml?faces-redirect=true">View Transcript</a></li>--> 
-                    <li><h:commandLink value="View Transcript" action="#{transcriptController.viewTranscript()}"/></li>
                     <li><h:commandLink value="Withdrawal Form" action="#{withdrawalController.displayEnrollment()}"/></li>
                     <li><h:commandLink value="Update Profile" action="#{customerController.findCustomerById()}"/></li>
                     <li><h:commandLink value="View Orders" action="#{purchaseOrderViewController.viewMyOrders()}"/></li>
@@ -19,3 +17,4 @@
         </h:form>
     </h:body>
 </html>
+
