@@ -15,6 +15,10 @@
                 <h3>Email to Advisee</h3>	
                 <hr class="soft"/>
                 <div class="well">
+                     <h:form id="emailSent">
+                        <h:outputText id="esentList"/>
+                        <h:message for="esentList" id="emSent"  style="color:red"/>
+                    </h:form>
                     <h:form class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label" for="firstName">First Name <sup>*</sup></label>
@@ -38,7 +42,7 @@
                         
 
                          <div class="control-group">
-                            <label class="control-label" for="reason">Reason: <sup>*</sup></label>
+                            <label class="control-label" for="reason">Message: <sup>*</sup></label>
                             <div class="controls">
                                 <h:inputTextarea cols="30" value="#{facultyController.emailToAdvisee}"/>
                             </div>

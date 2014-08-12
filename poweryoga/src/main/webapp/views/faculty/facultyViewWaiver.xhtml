@@ -15,6 +15,10 @@
                 <h3>Pending Waiver Requests</h3>	
                 <hr class="soft"/>
                 <div class="well">
+                     <h:form id="waiverList">
+                        <h:outputText id="wList"/>
+                        <h:message for="wList" id="WviList"  style="color:red"/>
+                    </h:form>
                     <h:dataTable value="#{waiverController.pendingRequests}" var="waiver" 
                                  class="table table-bordered">
 
