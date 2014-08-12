@@ -10,14 +10,15 @@ import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IRoleService;
 import com.saviour.poweryoga.serviceI.ISectionService;
 import com.saviour.poweryoga.util.EmailManager;
+import com.saviour.poweryoga.util.NotificationUtil;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 
@@ -46,9 +47,8 @@ public class FacultyController implements Serializable {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    private NotificationController notificationController;
-
+//    @Autowired
+//    private NotificationController notificationController;
     private Faculty faculty;
 
     private Customer selectedCustomer;
@@ -95,10 +95,25 @@ public class FacultyController implements Serializable {
         this.sectionList = sectionList;
     }
 
+    /**
+     * Get my advisee.
+     *
+     * @return
+     */
     public List<Customer> getMyadvisee() {
+        //Get logged in Faculty. 
         Faculty fac = (Faculty) usercontroller.getUser();
+        //Pass the faulty and get the lists of advisee
+
         myadvisee = facultyService.myAdvisee(fac);
-        return myadvisee;
+        if (!myadvisee.isEmpty()) {
+            return myadvisee;
+        } else {
+            FacesContext.getCurrentInstance()
+                    .addMessage("advList:NoAdviList",
+                            new FacesMessage("No advisee assigned. ", "No advisee assigned."));
+            return null;
+        }
     }
 
     public String getEmailToAdvisee() {
@@ -144,15 +159,26 @@ public class FacultyController implements Serializable {
             //set role 
             faculty.setRole(facRRole);
 
+            //set approved
+            faculty.setApproved(true);
+
             //set stauts 
             faculty.setStatus(Faculty.statusType.ACTIVE);
             facultyService.saveFaculty(faculty);
             return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
         } catch (Exception ex) {
             ex.printStackTrace();
-            notificationController.setErrorMsg("Customer saving failed");
+
+            String sucessErrmsg = "Customer saving failed";
+            NotificationUtil.flashScope().put(sucessErrmsg, this);
+            // setErrorMsg("Customer saving failed");
         }
         return null;
+    }
+
+    public String nextpage(String msg) {
+        NotificationUtil.flashScope().put("msg", msg);
+        return "page2?faces-redirect=true";
     }
 
     /**
@@ -172,7 +198,17 @@ public class FacultyController implements Serializable {
      */
     public List<Section> getMySections() {
         Faculty fac = (Faculty) usercontroller.getUser();
-        return fac.getSections();
+        List<Section> mySections = fac.getSections();
+        if (!mySections.isEmpty()) {
+            return mySections;
+        } else {
+            FacesContext.getCurrentInstance()
+                    .addMessage("advList:NoAdviList",
+                            new FacesMessage("You are not assigned.",
+                                    "You are not assigned"));
+            return null;
+        }
+        //return fac.getSections();
     }
 
     /**
@@ -311,13 +347,23 @@ public class FacultyController implements Serializable {
      * @param waiver
      */
     public void notifyWaiverRequestDecision(Waiver waiver) {
-        StringBuilder body = new StringBuilder(" Dear " + waiver.getUser().getFirstName() + "\n\n");
-        
-        body.append("Your waiver request for the course "
-                + waiver.getSection().getCourse().getCourseName() + " has beed " + waiver.getStatus().toString().toLowerCase());
-        body.append("\n\n Kind regards,\n\n");
-        body.append("Yoga Studio");
-        EmailManager.sendEmail(mailSender, "Waiver request decision",
-                body.toString(), waiver.getUser().getEmail());
+        try {
+            StringBuilder body = new StringBuilder(" Dear " + waiver.getUser().getFirstName() + "\n\n");
+
+            body.append("Your waiver request for the course "
+                    + waiver.getSection().getCourse().getCourseName() + " has beed " + waiver.getStatus().toString().toLowerCase() + ".");
+            body.append("\n\n Kind regards,\n\n");
+            body.append("Yoga Studio");
+            EmailManager.sendEmail(mailSender, "Waiver request decision",
+                    body.toString(), waiver.getUser().getEmail());
+            
+            //notification message
+            FacesContext.getCurrentInstance()
+                    .addMessage("emailSent:emSent",
+                            new FacesMessage("Email sent.",
+                                    "Email sent"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

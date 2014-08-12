@@ -22,9 +22,6 @@ public class ProductService implements IProductService {
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
-
-
-
     /**
      * This method will return list of product matched with the parameter name
      *
@@ -36,7 +33,7 @@ public class ProductService implements IProductService {
 
         try {
             Map<String, String> paramaters = new HashMap<>(1);
-            paramaters.put("pname", "%"+name+"%");
+            paramaters.put("pname", "%" + name + "%");
             return crudfacade.findWithNamedQuery("Product.searchProduct", paramaters);
         } catch (Exception ex) {
             return null;
@@ -64,7 +61,9 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return crudfacade.findWithNamedQuery("Product.findAllProducts");
+        Map<String, Enum> paramaters = new HashMap<>(1);
+        paramaters.put("status", Product.statusType.ACTIVE);
+        return crudfacade.findWithNamedQuery("Product.findAllActiveProducts", paramaters);
     }
 
     @Override

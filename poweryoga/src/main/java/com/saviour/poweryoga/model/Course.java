@@ -25,39 +25,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "COURSE")
 @NamedQueries({
-        @NamedQuery(name = "Course.findByName", query = "FROM Course c WHERE c.courseName=:cname"),
-        @NamedQuery(name = "Course.findAll", query = "FROM Course c"),
-        @NamedQuery(name = "Course.findActiveCourses", 
-            query = "FROM Course c WHERE c.status=:cstatus"),
-    
-})
+    @NamedQuery(name = "Course.findByName", query = "FROM Course c WHERE c.courseName=:cname"),
+    @NamedQuery(name = "Course.findAll", query = "FROM Course c"),
+    @NamedQuery(name = "Course.findActiveCourses",
+            query = "FROM Course c WHERE c.status=:cstatus"),})
 public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String courseCode; 
-    
+    private String courseCode;
+
     private String courseName;
 
     private double courseFee;
 
     private String description;
-    
-     public enum statusType {
+
+    public enum statusType {
+
         ACTIVE, INACTIVE;
     }
 
     @Enumerated(EnumType.STRING)
     private statusType status;
 
-
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Course prerequisites;
 
-
-    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private List<Section> sections;
 
     public Course(String courseName, double courseFee, String description, Course prerequisites) {
@@ -65,6 +62,7 @@ public class Course implements Serializable {
         this.courseFee = courseFee;
         this.description = description;
         this.prerequisites = prerequisites;
+        this.status = Course.statusType.ACTIVE;
     }
 
     public Course() {
@@ -106,8 +104,6 @@ public class Course implements Serializable {
     public void setStatus(statusType status) {
         this.status = status;
     }
-    
-    
 
     public void setCourseFee(double courseFee) {
         this.courseFee = courseFee;

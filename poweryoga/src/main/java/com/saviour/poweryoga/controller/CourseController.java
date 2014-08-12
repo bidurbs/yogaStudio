@@ -38,7 +38,7 @@ public class CourseController implements Serializable {
     }
 
     public CourseController() {
-        course = new Course();
+        //course = new Course();
     }
 
     /**
@@ -102,6 +102,7 @@ public class CourseController implements Serializable {
      * @return
      */
     public String addCourse() {
+        course = new Course();
         return ("/views/admin/addCourse.xhtml?faces-redirect=true");
     }
     

@@ -3,7 +3,9 @@ package com.saviour.poweryoga.serviceImpl;
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Semester;
 import com.saviour.poweryoga.serviceI.ISemesterService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +25,14 @@ public class SemesterService implements ISemesterService {
 
     @Override
     public void saveSemester(Semester semester) {
-        crudfacade.create(semester);
+        crudfacade.save(semester);
     }
 
     @Override
     public List<Semester> getAllSemester() {
-        return crudfacade.findWithNamedQuery("Semester.findAll");
+        Map<String, Enum> paramaters = new HashMap<>(1);
+        paramaters.put("status", Semester.statusType.ACTIVE);
+        return crudfacade.findWithNamedQuery("Semester.findAllActiveSemesters", paramaters);
     }
 
     @Override

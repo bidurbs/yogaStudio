@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +29,8 @@ import javax.persistence.Table;
 @Table(name = "SECTION")
 @NamedQueries({
     @NamedQuery(name = "Section.findAll", query = "from Section s"),
-    @NamedQuery(name = "Section.findAllByCourse", query = "FROM Section s  WHERE s.course.id=:courseId"),
+    @NamedQuery(name = "Section.findAllActiveSections", query = "FROM Section s WHERE s.status=:status"),
+    @NamedQuery(name = "Section.findAllByCourse", query = "FROM Section s  WHERE s.course.id=:courseId AND s.status=:status"),
     @NamedQuery(name = "Section.findByName", query = "FROM Section s WHERE s.sectionName=:sname"),
     @NamedQuery(name = "Section.findUserInSection", query = "from Section s")
 
@@ -49,6 +52,14 @@ public class Section implements Serializable {
 
     @ManyToMany(mappedBy = "sections")
     private List<Users> users = new ArrayList<>();
+    
+    public enum statusType {
+
+        ACTIVE, INACTIVE;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private statusType status;
 
     public Section() {
     }
@@ -108,5 +119,15 @@ public class Section implements Serializable {
     public void setUsers(List<Users> users) {
         this.users = users;
     }
+
+    public statusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(statusType status) {
+        this.status = status;
+    }
+    
+    
 
 }

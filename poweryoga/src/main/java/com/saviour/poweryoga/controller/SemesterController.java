@@ -24,7 +24,7 @@ public class SemesterController implements Serializable {
     private List<Semester> listOfSemester;
 
     public SemesterController() {
-        semester = new Semester();
+        //semester = new Semester();
     }
     
     /**
@@ -33,6 +33,7 @@ public class SemesterController implements Serializable {
      * @return 
      */
     public String saveSemester() {
+        semester.setStatus(Semester.statusType.ACTIVE);
         SemesterService.saveSemester(semester);
         return ("/views/admin/manageSemester.xhtml?faces-redirect=true");
     }
@@ -62,6 +63,7 @@ public class SemesterController implements Serializable {
      * @return 
      */
     public String addSemester() {
+        semester = new Semester();
         return ("/views/admin/addSemester.xhtml?faces-redirect=true");
     }
     
@@ -72,7 +74,12 @@ public class SemesterController implements Serializable {
      * @return 
      */
     public String deleteSemester(long Id) {
-        SemesterService.deleteSemester(Id);
+        semester = SemesterService.getSemesterById(Id);
+
+        //Set its status inactive
+        semester.setStatus(Semester.statusType.INACTIVE);
+        SemesterService.updateSemester(semester);
+        //SemesterService.deleteSemester(Id);
         return ("/views/admin/manageSemester.xhtml?faces-redirect=true");
     }
 

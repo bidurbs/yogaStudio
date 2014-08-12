@@ -6,8 +6,10 @@ import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.ConfigurableNavigationHandler;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,15 +148,18 @@ public class UserController implements Serializable {
                     retURL = "/views/index.xhtml?faces-redirect=true";
                 }
 
-                if (redirect != null && redirect.length() > 0) {
-                    return redirect;
-                } else {
-                    return retURL;
-                }
-
             } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("logInForm:unamePassErr", new FacesMessage("Please check username and/or password.", "Please check username and/or password."));
+
                 return null;
             }
+            if (redirect != null && redirect.length() > 0) {
+                return redirect;
+            } else {
+                return retURL;
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
             //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
@@ -260,6 +265,30 @@ public class UserController implements Serializable {
 
     public void setNewRePassword(String newRePassword) {
         this.newRePassword = newRePassword;
+    }
+    
+    /**
+     * Check if the user is logged in and what role is he assigned to restrict
+     * pages.
+     * @return 
+     * @param event
+     */
+    public void isAdminUser(ComponentSystemEvent event) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        ConfigurableNavigationHandler handler = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();
+
+        //if the user is not logged in then redirect to log in page 
+        if (!isLoggedin) {
+           // return null;
+           handler.performNavigation("/views/index.xhtml?faces-redirect=true");
+        }//check type of user
+        else {
+            //show access denied page for non admin users. 
+            if (!(user.getRole().getUserCode() == Role.ROLE_ADMIN_CODE)) {
+                handler.performNavigation("/views/accessDenied.xhtml?faces-redirect=true");
+            }
+        }
     }
 
 }

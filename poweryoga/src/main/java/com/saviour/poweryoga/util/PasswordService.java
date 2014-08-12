@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.inject.Singleton;
+import org.springframework.stereotype.Component;
 //import org.myorg.SystemUnavailableException;
 import sun.misc.BASE64Encoder;
 
@@ -13,6 +15,8 @@ import sun.misc.BASE64Encoder;
  * @author TalakB 
  * @version 1.0.0
  */
+@Component
+@Singleton
 public class PasswordService implements Serializable {
 
     private static PasswordService instance;
