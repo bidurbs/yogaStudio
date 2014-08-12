@@ -33,7 +33,7 @@ import javax.persistence.Temporal;
     @NamedQuery(name = "Enrollment.displayAllSections", query = "Select Distinct s From Section s"),
     @NamedQuery(name = "Enrollment.getCurrentCount", query = "Select e From Enrollment e Where e.section.id=:myId AND e.customerStatus=:status"),
     @NamedQuery(name = "Enrollment.getSectionHistory", query = "Select e.section.course From Enrollment e Where e.user.userId=:id AND e.customerStatus=:status"),
-    @NamedQuery(name = "Enrollment.isRegistered", query = "Select e From Enrollment e Where e.user.userId=:cid AND e.section.course.id=:id")
+    @NamedQuery(name = "Enrollment.isRegistered", query = "Select e From Enrollment e Where e.user.userId=:cid AND e.section.course.id=:sid")
 })
 public class Enrollment implements Serializable {
     @Id
