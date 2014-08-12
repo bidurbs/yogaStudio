@@ -262,6 +262,7 @@ public class FacultyController implements Serializable {
 
         return ("/views/faculty/facultyViewAdvisee.xhtml?faces-redirect=true");
 
+      // return null;
     }
 
     /**

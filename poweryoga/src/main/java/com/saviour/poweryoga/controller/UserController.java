@@ -290,5 +290,43 @@ public class UserController implements Serializable {
             }
         }
     }
+    
+    
+    public void isFacultyUser(ComponentSystemEvent event) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        ConfigurableNavigationHandler handler = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();
+
+        //if the user is not logged in then redirect to log in page 
+        if (!isLoggedin) {
+           // return null;
+           handler.performNavigation("/views/index.xhtml?faces-redirect=true");
+        }//check type of user
+        else {
+            //show access denied page for non admin users. 
+            if (!(user.getRole().getUserCode() == Role.ROLE_FACULTY_CODE)) {
+                handler.performNavigation("/views/accessDenied.xhtml?faces-redirect=true");
+            }
+        }
+        
+    }
+    
+    public void isCustomerUser(ComponentSystemEvent event) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        ConfigurableNavigationHandler handler = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();
+
+        //if the user is not logged in then redirect to log in page 
+        if (!isLoggedin) {
+           // return null;
+           handler.performNavigation("/views/index.xhtml?faces-redirect=true");
+        }//check type of user
+        else {
+            //show access denied page for non admin users. 
+            if (!(user.getRole().getUserCode() == Role.ROLE_CUSTOMER_CODE)) {
+                handler.performNavigation("/views/accessDenied.xhtml?faces-redirect=true");
+            }
+        }
+    }
 
 }
