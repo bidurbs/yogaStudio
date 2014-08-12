@@ -25,7 +25,7 @@ public class SemesterService implements ISemesterService {
 
     @Override
     public void saveSemester(Semester semester) {
-        crudfacade.create(semester);
+        crudfacade.save(semester);
     }
 
     @Override

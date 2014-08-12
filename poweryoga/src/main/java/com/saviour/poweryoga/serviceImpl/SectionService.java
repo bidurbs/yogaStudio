@@ -33,7 +33,7 @@ public class SectionService implements ISectionService {
      */
     @Override
     public void saveSection(Section section) {
-        crudfacade.create(section);
+        crudfacade.save(section);
     }
 
     @Override
