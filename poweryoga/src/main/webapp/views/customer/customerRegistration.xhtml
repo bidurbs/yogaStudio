@@ -9,16 +9,16 @@
     <h:body>
         <ui:composition template="/views/template/template.xhtml">
             <ui:define name="successFailure">
-                <h:panelGrid rendered="#{notificationController.successMsg!= null}">
+                <h:panelGrid rendered="#{customerController.successMsg!= null}">
                     <div class="alert fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{notificationController.successMsg}</strong>
+                        <strong>#{customerController.successMsg}</strong>
                     </div>
                 </h:panelGrid>
-                <h:panelGrid rendered="#{notificationController.errorMsg != null}">
+                <h:panelGrid rendered="#{customerController.errorMsg != null}">
                     <div class="alert alert-block alert-error fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{notificationController.errorMsg}</strong>
+                        <strong>#{customerController.errorMsg}</strong>
                     </div>
                 </h:panelGrid>
             </ui:define>
@@ -28,7 +28,7 @@
                         <h3>Registration</h3>	
                         <hr class="soft"/>
                         <div class="well">
-                            <h:form class="form-horizontal">
+                            <h:form class="form-horizontal" id="frmCustomerRegistration">
                                 <div class="control-group">
                                     <label class="control-label" for="firstName">First Name <sup>*</sup></label>
                                     <div class="controls">
