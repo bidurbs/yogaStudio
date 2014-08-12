@@ -185,29 +185,27 @@ public class FacultyController implements Serializable {
         faculty = facultyService.getFacultyById(Id);
         return "editFaculty";
     }
-    
+
     /**
      * add Faculty form
-     * 
+     *
      * @return
      */
     public String addFaculty() {
         return ("/views/admin/addFaculty.xhtml?faces-redirect=true");
     }
 
-    
     /**
-     * 
+     *
      * @param cus
-     * @return 
+     * @return
      */
     public String emailToAdvisee(Customer cus) {
-        selectedCustomer = cus; 
-         return ("/views/faculty/sendEmailToAdvisee.xhtml?faces-redirect=true");       
+        selectedCustomer = cus;
+        return ("/views/faculty/sendEmailToAdvisee.xhtml?faces-redirect=true");
 
     }
-    
-    
+
     /**
      * Send email to advisee.
      *
@@ -216,42 +214,18 @@ public class FacultyController implements Serializable {
      * @param customer
      * @return
      */
-    public String sendEMailToMyAdvisee(){
-        
+    public String sendEMailToMyAdvisee() {
+
         StringBuilder body = new StringBuilder(" Dear " + selectedCustomer.getFirstName() + "\n\n");
         //body.append("<a href=" + vLink + " target=_blank></a>");
         body.append(EmailToAdvisee);
-        body.append("\n\n Kind regards,");
+        body.append("\n\n Kind regards,\n\n");
         body.append(usercontroller.getUser().getFirstName());
         EmailManager.sendEmail(mailSender, "Message from your advisor",
                 body.toString(), selectedCustomer.getEmail());
 
         return ("/views/faculty/facultyViewAdvisee.xhtml?faces-redirect=true");
-    
-    }
 
-    public void sendRegistrationEmail(Customer mycustomer) {
-        //EMAIL SENDING
-
-//        FacesContext ctx = FacesContext.getCurrentInstance();
-//        String viewId = ctx.getViewRoot().getViewId();
-//        HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
-//        String ctr = servletRequest.getRequestURL().toString().replace(servletRequest.getRequestURI().substring(0), "") + servletRequest.getContextPath();
-//
-//        String vLink = ctr + "/views/customer/confirmCustomer.xhtml?id=" + mycustomer.getValidationLink();
-//
-//        String myIp = findMyIP();
-//
-//        vLink = vLink.replace("localhost", myIp);
-//
-//        StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
-//        body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n Click to the link below to confirm your registration \n\n");
-//        //body.append("<a href=" + vLink + " target=_blank></a>");
-//        body.append(vLink);
-//        body.append("\n\n");
-//        body.append("Regards\n-PowerYoga Team");
-//        EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());
-//    
     }
 
     /**
@@ -337,8 +311,13 @@ public class FacultyController implements Serializable {
      * @param waiver
      */
     public void notifyWaiverRequestDecision(Waiver waiver) {
-        EmailManager.sendEmail(mailSender, "Waiver request +" + waiver.getStatus().toString().toLowerCase(),
-                "Your waiver request for the section" + waiver.getSection().getSectionName() + " is " + waiver.getStatus().toString().toLowerCase(),
-                waiver.getUser().getEmail());
+        StringBuilder body = new StringBuilder(" Dear " + waiver.getUser().getFirstName() + "\n\n");
+        
+        body.append("Your waiver request for the course "
+                + waiver.getSection().getCourse().getCourseName() + " has beed " + waiver.getStatus().toString().toLowerCase());
+        body.append("\n\n Kind regards,\n\n");
+        body.append("Yoga Studio");
+        EmailManager.sendEmail(mailSender, "Waiver request decision",
+                body.toString(), waiver.getUser().getEmail());
     }
 }
