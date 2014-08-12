@@ -92,7 +92,7 @@ public class WaiverController implements Serializable {
      */
     public String waiveSection() {
         try {
-          Section sec = sectionService.getSectionByName(selectedSectionName);
+            Section sec = sectionService.getSectionByName(selectedSectionName);
             Users user = usercontroller.getUser();
             waiver.setUser(user);
             waiver.setSection(sec);
@@ -100,7 +100,7 @@ public class WaiverController implements Serializable {
 
             waiverService.saveWaiver(waiver);
             successMsg = "Waiver submitted.";
-            return ("/views/customer/customerHome.xhtml?faces-redirect=true");
+            return ("/views/customer/customerApplyWaiver.xhtml?faces-redirect=true");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -109,10 +109,7 @@ public class WaiverController implements Serializable {
 
         }
     }
-    
-    
-
-    
+      
 
     public List<Waiver> getPendingRequests() {
         pendingRequests = waiverService.showPendingWaivers();
