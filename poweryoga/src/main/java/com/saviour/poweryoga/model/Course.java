@@ -62,6 +62,7 @@ public class Course implements Serializable {
         this.courseFee = courseFee;
         this.description = description;
         this.prerequisites = prerequisites;
+        this.status = Course.statusType.ACTIVE;
     }
 
     public Course() {
