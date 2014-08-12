@@ -38,7 +38,9 @@ public class SectionService implements ISectionService {
 
     @Override
     public List<Section> getAllSections() {
-        return crudfacade.findWithNamedQuery("Section.findAll");
+        Map<String, Enum> paramaters = new HashMap<>(1);
+        paramaters.put("status", Section.statusType.ACTIVE);
+        return crudfacade.findWithNamedQuery("Section.findAllActiveSections", paramaters);
     }
 
     @Override
@@ -61,7 +63,10 @@ public class SectionService implements ISectionService {
     public List<Section> listSectionByCourseId(Long Id) {
         Map<String, Long> paramaters = new HashMap<>(1);
         paramaters.put("courseId", Id);
-        return crudfacade.findWithNamedQuery("Section.findAllByCourse", paramaters);
+        
+        Map<String, Enum> paramaters2 = new HashMap<>(2); 
+        paramaters2.put("status", Section.statusType.ACTIVE);
+        return crudfacade.findWithNamedQuery("Section.findAllByCourse", paramaters,paramaters2);
     }
 
     /**
@@ -71,7 +76,9 @@ public class SectionService implements ISectionService {
      */
     @Override
     public List<Course> getAllCourses() {
-        return crudfacade.findWithNamedQuery("Course.findAll");
+        Map<String, Enum> paramaters = new HashMap<>(1);
+        paramaters.put("status", Course.statusType.ACTIVE);
+        return crudfacade.findWithNamedQuery("Course.findAllActiveCourses", paramaters);
     }
 
     @Override
@@ -93,6 +100,5 @@ public class SectionService implements ISectionService {
     public void deleteSection(Long Id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 
 }
