@@ -23,14 +23,17 @@
                                 <h:form class="navbar-search pull-left" style="width: 400px !important; margin-left: 120px">                            
                                     <h:inputText value="#{productSearchController.productName}" style="font-style: italic" class="search-query span5">
                                         <f:passThroughAttribute name="placeholder"
-                                                                value="Search..."/>
+                                                                value="Search Products..."/>
                                     </h:inputText>
                                     <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
                                 </h:form>
                             </c:when>
                             <c:when test="#{userController.isCustomer}">
                                 <h:form class="navbar-search pull-left" style="width: 400px !important; margin-left: 120px">                            
-                                    <h:inputText value="#{productSearchController.productName}" class="search-query span5"/>
+                                    <h:inputText value="#{productSearchController.productName}" style="font-style: italic" class="search-query span5">
+                                        <f:passThroughAttribute name="placeholder"
+                                                                value="Search Products..."/>
+                                    </h:inputText>
                                     <h:commandButton class="btn btn-small" value="Search" action="#{productSearchController.searchProduct()}" style="visibility: hidden; width: 0" />
                                 </h:form>
                             </c:when>
@@ -39,7 +42,9 @@
                             <ul class="nav pull-right">
                                 <c:choose>
                                     <c:when test="#{userController.isLoggedin}">
-                                        <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">Welcome #{userController.activeSession.getAttribute("loggedUserFname")}</a></li>
+                                        <c:if test="#{userController.isCustomer}">
+                                            <li class=""><a href="${facesContext.externalContext.requestContextPath}/views/customer/myProfile.xhtml">Welcome #{userController.activeSession.getAttribute("loggedUserFname")}</a></li>
+                                        </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerRegistration.xhtml">Signup</a></li>
