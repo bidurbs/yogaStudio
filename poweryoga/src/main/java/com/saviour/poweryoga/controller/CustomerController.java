@@ -93,7 +93,7 @@ public class CustomerController implements Serializable {
 
                 //redirect = "/views/index.xhtml?faces-redirect=true";
                 //return (redirect);
-             //   notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to activate your registration.");
+
               //  notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to complete registration process.");
 
                 successMsg = "Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to complete registration process.";
