@@ -74,6 +74,8 @@ public class CourseController implements Serializable {
             if (!pre.getId().equals(course.getId())) {
                 course.setPrerequisites(pre);
             }
+        } else {
+            course.setPrerequisites(null);
         }
         CourseService.updateCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
