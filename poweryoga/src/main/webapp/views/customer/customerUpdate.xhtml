@@ -35,20 +35,24 @@
                                     <h:inputHidden value="#{customerController.customer.userId}"/>
                                     <label class="control-label" for="firstName">First Name <sup>*</sup></label>
                                     <div class="controls">
-                                        <h:inputText id="firstName" value="#{customerController.customer.firstName}" maxlength="50"/>
+                                        <h:inputText id="firstName" value="#{customerController.customer.firstName}" maxlength="50" requiredMessage="First name is required">
+                                            <f:validateRequired/>
+                                        </h:inputText>
                                     </div>
-                                    <h:message for="firstName"/>
+                                    <h:message for="firstName" class="error"/>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="lastName">Last Name <sup>*</sup></label>
                                     <div class="controls">
-                                        <h:inputText id="lastName" value="#{customerController.customer.lastName}" maxlength="50"/>
+                                        <h:inputText id="lastName" value="#{customerController.customer.lastName}" maxlength="50" requiredMessage="First name is required">
+                                            <f:validateRequired/>
+                                        </h:inputText>
                                     </div>
-                                    <h:message for="lastName"/>
+                                    <h:message for="lastName" class="error"/>
                                 </div>
 
                                 <div class="control-group">
-                                    <label class="control-label" for="email">Email <sup>*</sup></label>
+                                    <label class="control-label" for="email">Email </label>
                                     <div class="controls">
                                         <h:inputText id="email" value="#{customerController.customer.email}" maxlength="50" readonly="true"/>
                                     </div>
@@ -85,6 +89,14 @@
                                         <h:inputText id="state" value="#{customerController.customer.address.state}" maxlength="50"/>
                                     </div>
                                     <h:message for="state"/>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="state">Zip </label>
+                                    <div class="controls">
+                                        <h:inputText id="zip" value="#{customerController.customer.address.zip}" maxlength="5"/>
+                                    </div>
+                                    <h:message for="zip" class="error"/>
                                 </div>
 
                                 <div class="control-group">

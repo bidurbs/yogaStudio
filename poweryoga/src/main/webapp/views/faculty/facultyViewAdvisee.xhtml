@@ -15,6 +15,10 @@
                 <h3>My Advisee</h3>	
                 <hr class="soft"/>
                 <div class="well">
+                    <h:form id="advList">
+                        <h:outputText id="adviList"/>
+                        <h:message for="adviList" id="NoAdviList"  style="color:red"/>
+                    </h:form>
                     <h:dataTable value="#{facultyController.myadvisee}" var="adv" 
                                  class="table table-bordered">
 
@@ -33,7 +37,8 @@
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
-                                <h:commandLink  value="Send email" />
+                                <h:commandLink action="#{facultyController.emailToAdvisee(adv)}"  
+                                               value="Send email" />
                             </h:form>
                         </h:column>
                     </h:dataTable>

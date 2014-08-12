@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -109,11 +111,24 @@ public class WaiverController implements Serializable {
 
         }
     }
-      
-
+    /**
+     * Get all pending requests. The faculty can see all the requests submitted
+     * by customers.
+     *
+     * @return
+     */
     public List<Waiver> getPendingRequests() {
         pendingRequests = waiverService.showPendingWaivers();
-        return pendingRequests;
+
+        if (!pendingRequests.isEmpty()) {
+            return pendingRequests;
+        } else {
+            FacesContext.getCurrentInstance()
+                    .addMessage("waiverList:wList",
+                            new FacesMessage("No Pending request. ", "No Pending request."));
+            return null;
+        }
+      
     }
 
     public void setPendingRequests(List<Waiver> pendingRequests) {

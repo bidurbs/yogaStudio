@@ -107,6 +107,11 @@ public class FacultyService implements IFacultyService {
         }
     }
 
+    /**
+     * Return lists of customers advised by this faculty. 
+     * @param faculty
+     * @return 
+     */
     @Override
     public List<Customer> myAdvisee(Faculty faculty) {
         try {

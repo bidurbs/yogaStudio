@@ -10,24 +10,29 @@
     <body>
         <ui:composition template="template/template.xhtml">
             <ui:define name="successFailure">
-                <h:panelGrid rendered="#{notificationController.successMsg != null}">
-                    <div class="alert fade in">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{notificationController.successMsg}</strong>
-                    </div>
-                </h:panelGrid>
-                <h:panelGrid rendered="#{notificationController.errorMsg != null}">
-                    <div class="alert alert-block alert-error fade in">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{notificationController.errorMsg}</strong>
-                    </div>
-                </h:panelGrid>
+                <h:form id="sucErrForm">
+                    <h:panelGrid rendered="#{notificationController.successMsg != null}">
+                        <div class="alert fade in">
+                            <button type="button" 
+                                    class="close" 
+                                    data-dismiss="alert">×
+                            </button>
+                            <strong>#{notificationController.successMsg}</strong>
+                        </div>
+                    </h:panelGrid>
+                    <h:panelGrid rendered="#{notificationController.errorMsg != null}">
+                        <div class="alert alert-block alert-error fade in">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>#{notificationController.errorMsg}</strong>
+                        </div>
+                    </h:panelGrid>
+                </h:form>
             </ui:define>
             <ui:define name="content">
                 <h3>Login</h3>	
                 <hr class="soft"/>
                 <div class="well">
-                    <h:form class="form-horizontal">
+                    <h:form class="form-horizontal" id="logInForm">
 
                         <div class="control-group">
                             <label class="control-label" for="email">Email <sup>*</sup></label>
@@ -55,6 +60,8 @@
                                 <h:commandButton class="btn btn-large" value="Login" action="#{userController.loginUser()}"/>
                                 <!--<input class="btn btn-large" type="submit" value="Register" />-->
                             </div>
+                            <h:message for="password" id="unamePassErr"  style="color:red"/>
+
                         </div>
                         <div class="control-group">
                             <div class="controls">

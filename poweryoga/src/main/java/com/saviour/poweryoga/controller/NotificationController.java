@@ -1,7 +1,7 @@
 package com.saviour.poweryoga.controller;
 
 import java.io.Serializable;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -9,9 +9,9 @@ import javax.inject.Named;
  * @author TalakB
  * @version 0.0.1 
  */
-@Named("notificationController")
-@RequestScoped
-public class NotificationController implements Serializable{
+@Named
+@SessionScoped
+public  class NotificationController implements Serializable {
 
     private String errorMsg = null;
 

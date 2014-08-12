@@ -57,9 +57,6 @@
                                     <f:selectItems value="#{courseController.listOfCourses}" var="item"
                                                    itemLabel="#{item.courseName}" 
                                                    itemValue="#{item.id}"/>
-                                    <f:ajax event="change" 
-                                            listener="#{courseController.validatePrerequisite}" 
-                                            render="preError"/>
                                 </h:selectOneMenu>
                             </div>
                             <h:message for="preCourse" id="preError"  style="color:red"/>

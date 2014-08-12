@@ -104,6 +104,7 @@ public class UserService implements IUserService {
      */
     @Override
     public Users authenticateUser(Users user) {
+        
         try {
             Map<String, String> paramaters = new HashMap<>(2);
             paramaters.put("uemail", user.getEmail());
@@ -111,11 +112,24 @@ public class UserService implements IUserService {
 
             List authUser = crudfacade.findWithNamedQuery("User.authenticateUser", paramaters);
 
-            return (Users) authUser.get(0);
+            if (!authUser.isEmpty()) {
+                Users authenticatedUser = (Users) authUser.get(0);
+                if (authenticatedUser instanceof Customer) {
+                    if (authenticatedUser.isApproved()) {
+                        return (Users) authUser.get(0);
+                    } else {
+                        return null;
+                    }
+                }
+                return authenticatedUser;
+            }
+
         } catch (Exception ex) {
             return null;
 
         }
+        return null;
+        
     }
 
     @Override

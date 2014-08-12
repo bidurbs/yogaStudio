@@ -29,7 +29,7 @@ public class ProductController implements Serializable {
     private List<Product> listOfProducts;
 
     public ProductController() {
-        product = new Product();
+        //product = new Product();
     }
 
     /**
@@ -38,6 +38,7 @@ public class ProductController implements Serializable {
      * @return
      */
     public String saveProduct() {
+        product.setStatus(Product.statusType.ACTIVE);
         ProductService.saveProduct(product);
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
@@ -69,6 +70,7 @@ public class ProductController implements Serializable {
      * @return
      */
     public String addProduct() {
+        product = new Product();
         return ("/views/admin/addProduct.xhtml?faces-redirect=true");
     }
 
@@ -80,7 +82,12 @@ public class ProductController implements Serializable {
      */
     public String deleteProduct(long id) {
         product = ProductService.getProductById(id);
-        ProductService.deleteProduct(product);
+
+        //Set its status inactive
+        product.setStatus(Product.statusType.INACTIVE);
+        ProductService.updateProduct(product);
+        //product = ProductService.getProductById(id);
+        //ProductService.deleteProduct(product);
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 

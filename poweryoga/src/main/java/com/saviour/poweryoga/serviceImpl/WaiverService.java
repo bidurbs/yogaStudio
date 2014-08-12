@@ -41,6 +41,10 @@ public class WaiverService implements IWaiverService {
         return crudfacade.findWithNamedQuery("Waiver.findAllWaivers");
     }
 
+    /**
+     * Return lists of waivers with PENDING request status. 
+     * @return
+     */
     @Override
     public List<Waiver> showPendingWaivers() {
         try {
