@@ -22,40 +22,44 @@
                         <div class="control-group">
                             <label class="control-label" for="coursecode">Course Code <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName1" value="#{courseController.course.courseCode}" >
+                                <h:inputText id="coursecode" value="#{courseController.course.courseCode}" validatorMessage="Required">
                                     <f:validateRequired/>
                                 </h:inputText>
+                                <h:message for="coursecode" class="error"/>
                             </div>
-                            <h:message for="courseCourse" class="error"/>
+                            
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName" value="#{courseController.course.courseName}" >
+                                <h:inputText id="courseName" value="#{courseController.course.courseName}" validatorMessage="Required">
                                     <f:validateRequired/>
                                 </h:inputText>
+                                <h:message for="courseName" class="error"/>
                             </div>
-                            <h:message for="courseName" class="error"/>
+                            
                         </div>
 
                         <div class="control-group">
                             <label class="control-label" for="description">Description <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputTextarea id="description" value="#{courseController.course.description}">
+                                <h:inputTextarea id="description" value="#{courseController.course.description}" validatorMessage="Required">
                                     <f:validateRequired/>
                                 </h:inputTextarea>
+                                <h:message for="description" class="error"/>
                             </div>
-                            <h:message for="description" class="error"/>
+                            
                         </div>
 
                         <div class="control-group">
                             <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseFee" value="#{courseController.course.courseFee}" >
+                                <h:inputText id="courseFee" value="#{courseController.course.courseFee}" validatorMessage="Required" >
                                     <f:validateRequired/>
                                 </h:inputText>
+                                <h:message for="courseFee" class="error"/>
                             </div>
-                            <h:message for="courseFee" class="error"/>
+                            
                         </div>
 
                         <div class="control-group">
@@ -67,8 +71,9 @@
                                                    itemLabel="#{item.courseName}" 
                                                    itemValue="#{item.id}"/>
                                 </h:selectOneMenu>
+                                <h:message for="course" class="error"/>
                             </div>
-                            <h:message for="course" class="error"/>
+                            
                         </div>   
 
                         <div class="control-group">
