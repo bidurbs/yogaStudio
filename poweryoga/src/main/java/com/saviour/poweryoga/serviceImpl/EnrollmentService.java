@@ -103,7 +103,7 @@ public class EnrollmentService implements IEnrollmentService {
         //return enrollmentDAO.isRegistered(customer, section);
         Map<String, Long> paramaters = new HashMap<>(2);
         paramaters.put("cid", customer.getUserId()); 
-        paramaters.put("sid", section.getId());        
+        paramaters.put("sid", section.getCourse().getId());        
         List isRegister=crudfacade.findWithNamedQuery2("Enrollment.isRegistered", paramaters); 
         if(isRegister.isEmpty())
             return null;

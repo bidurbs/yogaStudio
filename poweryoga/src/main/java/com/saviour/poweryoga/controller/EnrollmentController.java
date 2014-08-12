@@ -110,39 +110,13 @@ public class EnrollmentController implements Serializable {
 //        sectionId = (String) ((UIOutput) event.getSource()).getValue();
 //        enrollments = enrollmentService.getAllEnrollments(Long.parseLong(sectionId));
 //    }
-//
-//    public void ajaxListner2(AjaxBehaviorEvent event) {
-//        status = (String) ((UIOutput) event.getSource()).getValue();
-//        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
-//        //message="sectionId="+sectionId;
-//    }
-//    public String deleteCustomer() {
-//        enrollmentService.deleteEnrollment(enrollment);
-//        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
-//        return "manageEnrolledCustomers";
-//    }
-//    public String updateCustomer() {
-//        enrollmentService.updateEnrollment(enrollment);
-//        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
-//        return "manageEnrolledCustomers";
-//    }
-//    public String displaySections() {
-//        sections = enrollmentService.displayAllSections();
-//        sectionId = sections.get(0).getId().toString();
-//        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
-//        return "registerForClass";
-//    }
+    
     public String displayAllSectionHistory() {
        // sections = enrollmentService.displayAllSections();
         Users user = userController.getCurrentUser();
         enrollments = enrollmentService.getAllEnrollments(user.getUserId());
         return "viewCourseHistory";
     }
-//     public String deleteWaitingList(){
-//        enrollmentService.deleteEnrollment(enrollment);
-//        message="Data deletion success!!";
-//        return "section";
-//    }
     public String enrollCustomer(Long sectionId) {
         Users user = userController.getCurrentUser();
         if (user == null) {
