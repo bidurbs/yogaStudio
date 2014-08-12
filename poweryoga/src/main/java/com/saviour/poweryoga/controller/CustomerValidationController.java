@@ -50,7 +50,7 @@ public class CustomerValidationController implements Serializable {
 
         System.out.println("Key" + id);
         try {
-            myStatus = "Invalid link for verification";
+            myStatus = "invalid_link";
             if (id != null) {
                 Customer mycustomer = userService.findCustomerByValidationLink(id);
 
@@ -59,9 +59,10 @@ public class CustomerValidationController implements Serializable {
                     userService.updateUser(mycustomer);
                     //String myApp = "<a href=\"http://" + findMyIP() + ":8080/poweryoga/views/userLogin.xhtml\">Verify</a>";
                     //System.out.println("Link " + myApp);
-                    myStatus = "Verification Complete. You can login now ";// + myApp; 
+                    //myStatus = "Verification Complete. You can login now " + myApp;
+                    myStatus="validation_success";
                 } else {
-                    myStatus = "Opps something went wrong or verification already done";
+                    myStatus = "validation_done";
                 }
             }
         } catch (Exception e) {
