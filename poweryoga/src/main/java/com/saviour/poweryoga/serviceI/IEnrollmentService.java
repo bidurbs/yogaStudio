@@ -19,7 +19,9 @@ import java.util.List;
 public interface IEnrollmentService {
     public void saveEnrollment(Enrollment enrollment);
 
-    public List<Enrollment> getAllEnrollment();
+    public List<Enrollment> getAllEnrollments(Long id);
+    
+    public List<Enrollment> getAllEnrollmentStatus(Long id,String status);
 
     public void updateEnrollment(Enrollment enrollment);
 
@@ -29,8 +31,6 @@ public interface IEnrollmentService {
     
     public List<Section> displayAllSections();
     
-    public Users getCustomer();
-    
     public Section getSectionOb(Long id);
     
     public int getCurrentCount(Long id); 
@@ -39,5 +39,4 @@ public interface IEnrollmentService {
     
     public Enrollment isRegistered(Customer customer,Section section);
     
-    public List<Course> getPrerequisites(Section section);
 }

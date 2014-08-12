@@ -197,6 +197,7 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
      * @param parameters
      * @return
      */
+    
     @Override
     public List findWithNamedQuery(String namedQueryName, Map<String, String> parameters) {
         try {
@@ -267,6 +268,29 @@ public class CRUDFacadeImpl<T> extends CRUDEntityFacade<T> {
             return null;
         }
 
+    }
+     @Override
+    public List findWithNamedQuery2(String namedQueryName,Map<String, Long> parameters){
+        Query query = sessionFactory.getCurrentSession().getNamedQuery(namedQueryName);
+
+        for (Map.Entry<String, Long> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.list();
+    }
+    @Override
+    public List findWithNamedQuery(String namedQueryName, Map<String, String> parameters,Map<String, Long> parameters2) {
+        //  Set parameters = parameters.entrySet();
+        Query query = sessionFactory.openSession().getNamedQuery(namedQueryName);
+
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        for (Map.Entry<String, Long> entry : parameters2.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }        
+        return query.list();
     }
 
 }

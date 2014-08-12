@@ -129,4 +129,12 @@ public class Course implements Serializable {
         this.prerequisites = prerequisites;
     }
 
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
 }
