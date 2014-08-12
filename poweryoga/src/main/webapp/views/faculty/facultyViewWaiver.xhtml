@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    <f:event listener="#{userController.isFacultyUser}" type="preRenderView" />
     <h:head>
 
     </h:head>
@@ -15,7 +15,7 @@
                 <h3>Pending Waiver Requests</h3>	
                 <hr class="soft"/>
                 <div class="well">
-                     <h:form id="waiverList">
+                    <h:form id="waiverList">
                         <h:outputText id="wList"/>
                         <h:message for="wList" id="WviList"  style="color:red"/>
                     </h:form>
@@ -26,27 +26,27 @@
                             <f:facet name="header"> First Name</f:facet>
                                 #{waiver.user.firstName}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header"> Last Name</f:facet>
                                 #{waiver.user.lastName}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header"> Email </f:facet>
                                 #{waiver.user.email}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header">Section Name</f:facet>
                                 #{waiver.section.sectionName}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header">Course Name</f:facet>
                                 #{waiver.section.course.courseName}
                         </h:column>
-                         <h:column>
+                        <h:column>
                             <f:facet name="header">Reason</f:facet>
                                 #{waiver.reason}
                         </h:column>
-                        
+
                         <h:column>
                             <f:facet name="header">Action</f:facet>
                             <h:form>
