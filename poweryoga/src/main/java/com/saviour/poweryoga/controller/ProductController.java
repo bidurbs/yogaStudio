@@ -80,7 +80,12 @@ public class ProductController implements Serializable {
      */
     public String deleteProduct(long id) {
         product = ProductService.getProductById(id);
-        ProductService.deleteProduct(product);
+
+        //Set its status inactive
+        product.setStatus(Product.statusType.INACTIVE);
+        ProductService.updateProduct(product);
+        //product = ProductService.getProductById(id);
+        //ProductService.deleteProduct(product);
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 
