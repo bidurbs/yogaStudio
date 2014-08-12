@@ -49,7 +49,7 @@ public class SectionController implements Serializable {
     private Long selectedSemester;
 
     public SectionController() {
-        section = new Section();
+        //section = new Section();
     }
 
     public String getSelectedCourse() {
@@ -109,6 +109,7 @@ public class SectionController implements Serializable {
             semester = semesterService.getSemesterById(selectedSemester);
             section.setSemester(semester);
         }
+        section.setStatus(Section.statusType.ACTIVE);
         SectionService.saveSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
@@ -150,6 +151,7 @@ public class SectionController implements Serializable {
      * @return
      */
     public String addSection() {
+        section = new Section();
         return ("/views/admin/addSection.xhtml?faces-redirect=true");
     }
 
@@ -161,7 +163,9 @@ public class SectionController implements Serializable {
      */
     public String deleteSection(Long Id) {
         section = SectionService.getSectionById(Id);
-        SectionService.deleteSection(section);
+        //SectionService.deleteSection(section);
+        section.setStatus(Section.statusType.INACTIVE);
+        SectionService.updateSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
 

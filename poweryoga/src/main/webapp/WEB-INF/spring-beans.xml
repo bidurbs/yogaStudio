@@ -46,7 +46,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${jdbc.dialect}</prop>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
@@ -67,10 +67,10 @@
                 <value>com.saviour.poweryoga.model.ShoppingCart</value>
                 <value>com.saviour.poweryoga.model.ShoppingCartItem</value>
                 <value>com.saviour.poweryoga.model.Transcript</value>
-                 <value>com.saviour.poweryoga.model.Address</value>
-                 <value>com.saviour.poweryoga.model.Waiver</value>
-                 <value>com.saviour.poweryoga.model.Enrollment</value>
-                 <value>com.saviour.poweryoga.model.Withdrawal</value>
+                <value>com.saviour.poweryoga.model.Address</value>
+                <value>com.saviour.poweryoga.model.Waiver</value>
+                <value>com.saviour.poweryoga.model.Enrollment</value>
+                <value>com.saviour.poweryoga.model.Withdrawal</value>
             </list>
         </property>
 
@@ -81,7 +81,7 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
       
-      <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com"/>
         <property name="port" value="587"/>
         <property name="username" value="saviouryoga"/>

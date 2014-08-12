@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -43,8 +44,9 @@ public class CustomerController implements Serializable {
     @Autowired
     private IFacultyService facultyService;
 
-    @Autowired
-    private NotificationController notificationController;
+    private String errorMsg = null;
+
+    private String successMsg = null;
 
     private List<Customer> customers;
 
@@ -65,8 +67,10 @@ public class CustomerController implements Serializable {
     }
 
     /**
+     * Save customer information for registration
      *
-     * Customer registration.
+     * @return String Based on success or failiure return to same page with
+     * message
      */
     public String saveCustomer() {
         try {
@@ -86,41 +90,48 @@ public class CustomerController implements Serializable {
                 customer.setValidationLink(findNextNumber().toString());
                 userService.saveUser(customer);
                 sendRegistrationEmail(customer);
+
                 //redirect = "/views/index.xhtml?faces-redirect=true";
                 //return (redirect);
-                notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to activate your registration.");
+             //   notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to activate your registration.");
+              //  notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to complete registration process.");
+
+                successMsg = "Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please cheack your email to complete registration process.";
+                errorMsg = null;
+
                 customer = new Customer();
                 address = new Address();
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            notificationController.setErrorMsg("Customer saving failed");
+            errorMsg = "Customer saving failed";
+            successMsg = null;
         }
         return null;
     }
 
+    /**
+     * Find next number for validation
+     *
+     * @return Long a random number
+     */
     public Long findNextNumber() {
         long number = (long) Math.floor(Math.random() * 9000000000L) + 1000000000L;
         return number;
     }
 
     public void sendRegistrationEmail(Customer mycustomer) {
-        //EMAIL SENDING
 
+        //EMAIL SENDING
         FacesContext ctx = FacesContext.getCurrentInstance();
-        String viewId = ctx.getViewRoot().getViewId();
         HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
         String ctr = servletRequest.getRequestURL().toString().replace(servletRequest.getRequestURI().substring(0), "") + servletRequest.getContextPath();
 
         String vLink = ctr + "/views/customer/confirmCustomer.xhtml?id=" + mycustomer.getValidationLink();
-
         String myIp = findMyIP();
-
         vLink = vLink.replace("localhost", myIp);
 
         StringBuilder body = new StringBuilder(" Welcome !!! to PowerYoga family.\n\n Your registration information\n\n");
         body.append("   First Name:   ").append(customer.getFirstName()).append("\n   Last Name:   ").append(customer.getLastName()).append("\n   Email:   ").append(customer.getEmail()).append("\n Click to the link below to confirm your registration \n\n");
-        //body.append("<a href=" + vLink + " target=_blank></a>");
         body.append(vLink);
         body.append("\n\n");
         body.append("Regards\n-PowerYoga Team");
@@ -134,15 +145,16 @@ public class CustomerController implements Serializable {
         } catch (java.net.UnknownHostException ex) {
             Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Current IP address : " + ip.getHostAddress());
-        return ip.getHostAddress();
+        if (ip != null) {
+            return ip.getHostAddress();
+        }
+        return null;
     }
 
     public boolean validateEmail(String email) {
         if (YogaValidator.emailValidator(customer.getEmail()) == false) {
-            // successMsg = null;
-            notificationController.setErrorMsg("Invalid email format");
-            // errorMsg = "Invalid email format";
+            FacesContext.getCurrentInstance().addMessage("frmCustomerRegistration:email",
+                    new FacesMessage("Invalid email format", "Invalid email format"));
             return false;
         }
         return true;
@@ -158,9 +170,8 @@ public class CustomerController implements Serializable {
         if (cust == null) {
             return false;
         }
-        //  successMsg = null;
-        notificationController.setErrorMsg("Email ID already exists.");
-
+        FacesContext.getCurrentInstance().addMessage("frmCustomerRegistration:email",
+                new FacesMessage("Email ID already exists", "Email ID already exists"));
         return true;
     }
 
@@ -168,24 +179,28 @@ public class CustomerController implements Serializable {
         if (password.equals(rePassword)) {
             return true;
         }
-        //  notificationController.setSuccessMsg = null;
-        notificationController.setErrorMsg("Password and confirm password  mismatch");
+        FacesContext.getCurrentInstance().addMessage("frmCustomerRegistration:password",
+                new FacesMessage("Password and confirm password mismatch", "Password and confirm password mismatch"));
         return false;
     }
 
     public void updateCustomer() {
         try {
             userService.updateUser(customer);
-            notificationController.setSuccessMsg("Customer " + customer.getFirstName() + " updated successfully");
-            //    errorMsg = null;
+            errorMsg = null;
+            successMsg = "Customer " + customer.getFirstName() + " updated successfully";
         } catch (Exception ex) {
-            ex.printStackTrace();
-            notificationController.setErrorMsg("Customer update failed");
-            //successMsg = null;
+            errorMsg = "Customer update failed";
+            successMsg = null;
+
         }
     }
 
     public String findCustomerById() {
+
+        errorMsg = null;
+        successMsg = null;
+
         HttpSession activeSession = (HttpSession) FacesContext
                 .getCurrentInstance().getExternalContext().getSession(true);
 
@@ -193,7 +208,7 @@ public class CustomerController implements Serializable {
 
         customer = userService.findCustomerById(customerId);
         if (customer != null) {
-            return "/views/customer/customerUpdate";
+            return "/views/customer/customerUpdate?faces-redirect=true";
         }
         return null;
     }
@@ -229,4 +244,21 @@ public class CustomerController implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
 }

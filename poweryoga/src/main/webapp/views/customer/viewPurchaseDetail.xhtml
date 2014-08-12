@@ -16,9 +16,25 @@
                         <hr class="soft"/>
                         <div class="well">
                             <h:form class="form-horizontal">
+
+                                <h:panelGrid columns="6" width="70%">
+
+                                    Order Number: 
+                                    <h:outputText value="#{purchaseOrderViewController.purchaseOrder.id}"/>
+
+                                    Customer Name: 
+                                    <h:outputText value="#{purchaseOrderViewController.purchaseOrder.customer.firstName} #{purchaseOrderViewController.purchaseOrder.customer.lastName}"/>
+
+                                    Order Date: 
+                                    <h:outputText value="#{purchaseOrderViewController.purchaseOrder.buyDateStr}"/>
+
+                                </h:panelGrid>
+
+                                <br/><br/>
+
                                 <h:dataTable headerClass="cart_menu" styleClass="table table-condensed" value="#{purchaseOrderViewController.purchaseOrder.shoppingCart.shoppingCartItems}" var="item">
 
-                                   <h:column>
+                                    <h:column>
                                         <f:facet name="header">Item</f:facet>
                                         <h:graphicImage style="width: 140px; height: 120px;" value="#{item.product.imageURL}" alt="Product_Image"/>
 
@@ -39,6 +55,12 @@
                                             #{item.price}
                                     </h:column>
 
+                                    <f:facet name="footer">
+                                        <h:panelGroup style="display:block; text-align:right; padding-right: 120px;">
+                                            <h:outputText value="Total" style="padding-right: 200px"/>
+                                            <h:outputText value="#{purchaseOrderViewController.purchaseOrder.shoppingCart.totalPrice}" />
+                                        </h:panelGroup>
+                                    </f:facet>
 
                                 </h:dataTable>
 

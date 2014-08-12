@@ -24,7 +24,7 @@ public class SemesterController implements Serializable {
     private List<Semester> listOfSemester;
 
     public SemesterController() {
-        semester = new Semester();
+        //semester = new Semester();
     }
     
     /**
@@ -63,6 +63,7 @@ public class SemesterController implements Serializable {
      * @return 
      */
     public String addSemester() {
+        semester = new Semester();
         return ("/views/admin/addSemester.xhtml?faces-redirect=true");
     }
     

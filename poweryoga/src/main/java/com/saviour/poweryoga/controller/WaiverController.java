@@ -102,7 +102,7 @@ public class WaiverController implements Serializable {
 
             waiverService.saveWaiver(waiver);
             successMsg = "Waiver submitted.";
-            return ("/views/customer/customerHome.xhtml?faces-redirect=true");
+            return ("/views/customer/customerApplyWaiver.xhtml?faces-redirect=true");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -111,7 +111,6 @@ public class WaiverController implements Serializable {
 
         }
     }
-
     /**
      * Get all pending requests. The faculty can see all the requests submitted
      * by customers.

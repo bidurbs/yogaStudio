@@ -6,10 +6,9 @@
 package com.saviour.poweryoga.controller;
 
 import com.saviour.poweryoga.model.Course;
-import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
-import com.saviour.poweryoga.model.Waiver;
+import com.saviour.poweryoga.model.Users;
 import com.saviour.poweryoga.serviceI.IEnrollmentService;
 import com.saviour.poweryoga.serviceI.IWaiverService;
 import java.io.Serializable;
@@ -17,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.component.UIOutput;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -119,78 +116,77 @@ public class EnrollmentController implements Serializable {
 //        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
 //        //message="sectionId="+sectionId;
 //    }
-
-    public String deleteCustomer() {
-        enrollmentService.deleteEnrollment(enrollment);
-        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
-        return "manageEnrolledCustomers";
-    }
-
-    public String updateCustomer() {
-        enrollmentService.updateEnrollment(enrollment);
-        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
-        return "manageEnrolledCustomers";
-    }
-
-    public String displaySections() {
-        sections = enrollmentService.displayAllSections();
-        sectionId = sections.get(0).getId().toString();
-        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
-        return "registerForClass";
-    }
-
-    public String displaySectionsStatus() {
-        sections = enrollmentService.displayAllSections();
-        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
-        return "manageEnrolledCustomers";
-    }
-     public String deleteWaitingList(){
-        enrollmentService.deleteEnrollment(enrollment);
-        message="Data deletion success!!";
-        return "section";
-    }
+//    public String deleteCustomer() {
+//        enrollmentService.deleteEnrollment(enrollment);
+//        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
+//        return "manageEnrolledCustomers";
+//    }
+//    public String updateCustomer() {
+//        enrollmentService.updateEnrollment(enrollment);
+//        enrollments = enrollmentService.getAllEnrollmentStatus(Long.parseLong(sectionId), status);
+//        return "manageEnrolledCustomers";
+//    }
+//    public String displaySections() {
+//        sections = enrollmentService.displayAllSections();
+//        sectionId = sections.get(0).getId().toString();
+//        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
+//        return "registerForClass";
+//    }
+//    public String displaySectionsStatus() {
+//        sections = enrollmentService.displayAllSections();
+//        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
+//        return "manageEnrolledCustomers";
+//    }
+//     public String deleteWaitingList(){
+//        enrollmentService.deleteEnrollment(enrollment);
+//        message="Data deletion success!!";
+//        return "section";
+//    }
     public String enrollCustomer(Long sectionId) {
-        Customer customer = (Customer) userController.getCurrentUser();
+        Users user = userController.getCurrentUser();
+        if (user == null) {
+            message = "You are not a logged in user.";
+            return "section";
+        }
         Section section = enrollmentService.getSectionOb(sectionId);
-        Enrollment en = enrollmentService.isRegistered(customer, section);
-        if (en != null) {
-            message = "You are already registered!!!";
+        Enrollment enrolmentOb = enrollmentService.isRegistered(user, section);
+        if (enrolmentOb != null) {
+            message = "You are already enrolled in this course!!!";
             return "section";
         }
         maxCapacity = section.getMaxNoStudent();
         count = enrollmentService.getCurrentCount(sectionId);
         if (count == maxCapacity) {
-
-            return addToWaitingList(customer, section);
+            return addToWaitingList(user, section);
         }
-        if (checkPrerequisite(customer, section) == 0) {
+        if (checkPrerequisite(user, section) == 0) {
             return "section";
         }
-        return  addToEnrolled(customer, section);
+        return addToEnrolled(user, section);
     }
 
-    private String addToWaitingList(Customer customer, Section section) {
+    private String addToWaitingList(Users customer, Section section) {
         enrollment.setCustomerStatus(Enrollment.StatusType.waitinglist);
         enrollment.addCustSec(customer, section);
         enrollmentService.saveEnrollment(enrollment);
-        message = "Maximum limit reached, do you want to be added to waiting list?!!";
-       // enrollments = enrollmentService.getAllEnrollments(Long.parseLong(sectionId));
+        message = "Maximum limit reached, You are added to a waiting list!";
+        // enrollments = enrollmentService.getAllEnrollments(Long.parseLong(sectionId));
         return "section";
     }
 
-    private String addToEnrolled(Customer customer, Section section) {
+    private String addToEnrolled(Users customer, Section section) {
 
         enrollment.setCustomerStatus(Enrollment.StatusType.active);
         enrollment.addCustSec(customer, section);
         enrollmentService.saveEnrollment(enrollment);
-        message = "Data saved successfully!!";//customer="+customer.getFirstName()+"section="+section.getSectionName();
+        message = "Successfully enrolled in the course.";//customer="+customer.getFirstName()+"section="+section.getSectionName();
         flag = 0;
         //enrollments = enrollmentService.getAllEnrollments(Long.parseLong(sectionId));
 
         return "section";
     }
 
-    private int checkPrerequisite(Customer customer, Section section) {
+    private int checkPrerequisite(Users customer, Section section) {
         Course prerequisite = section.getCourse().getPrerequisites();
         List<Course> sectionHistory = enrollmentService.getSectionHistory(customer);
 //        List<Waiver> waivers = waiverService.getAllWaiver();//enrollmentService.checkWaiverStatus(customer.getUserId(),section.getId());

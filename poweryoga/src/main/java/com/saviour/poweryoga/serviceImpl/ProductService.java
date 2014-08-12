@@ -2,7 +2,6 @@ package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Product;
-import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IProductService;
 import java.util.HashMap;
 import java.util.List;

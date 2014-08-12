@@ -188,8 +188,8 @@ public class UserController implements Serializable {
      * @return to home page
      */
     public String logoutUser() {
-        activeSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        activeSession.invalidate();
+        HttpSession mySession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        mySession.invalidate();
         isLoggedin = false;
         return ("/views/index.xhtml?faces-redirect=true");
     }

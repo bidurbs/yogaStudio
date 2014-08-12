@@ -13,6 +13,7 @@ import com.saviour.poweryoga.serviceI.IShoppingCartService;
 import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.EmailManager;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
@@ -121,7 +122,6 @@ public class PurchaseOrderController implements Serializable {
             updateShoppingCartTotalCost();
             return ("/views/customer/product.xhtml?faces-redirect=true");
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
 
@@ -165,14 +165,15 @@ public class PurchaseOrderController implements Serializable {
     public boolean sendPurchaseEmail(PurchaseOrder myorder) {
         //EMAIL SENDING
         try {
-            StringBuilder body = new StringBuilder("Thank you for shopping with PowerYoga.com.\n\n Your shopping detail\n\n");
+            StringBuilder body = new StringBuilder("Hello Dear  \n\nThank you for shopping with PowerYoga.com.\n\n Your shopping detail\n\n");
             int count = 0;
             for (ShoppingCartItem item : myorder.getShoppingCart().getShoppingCartItems()) {
                 count++;
-                body.append(count + "   " + item.getProduct().getName() + "   " + item.getQuantity() + "   " + item.getPrice());
+                body.append(count).append("   ").append(item.getProduct().getName()).append("   ").append(item.getQuantity()).append("   ").append(item.getPrice());
                 body.append("\n");
             }
-            body.append("\n");
+            body.append("\n     Total ").append(myorder.getShoppingCart().getShoppingCartItems().size()).append("  item(s) and $").append(myorder.getShoppingCart().getTotalPrice()).append(" dollar");
+            body.append("\n\n");
             body.append("Regards\n-PowerYoga Team");
             EmailManager.sendEmail(mailSender, "Shopping Information", body.toString(), myorder.getCustomer().getEmail());
             return true;
@@ -288,10 +289,19 @@ public class PurchaseOrderController implements Serializable {
     public String saveAddress() {
 
         customer = getCurrentCustomer();
-        customer.setAddress(billingAddress);
+        customer.setAddress(updateCustomerAddress(customer.getAddress()));
         customerService.updateUser(customer);
 
         return "/views/customer/cardInformation.jsf?faces-redirect=true";
+    }
+
+    public Address updateCustomerAddress(Address customerAddr) {
+        customerAddr.setStreet(billingAddress.getStreet());
+        customerAddr.setCity(billingAddress.getCity());
+        customerAddr.setState(billingAddress.getState());
+        customerAddr.setZip(billingAddress.getZip());
+        customerAddr.setCountry(billingAddress.getCountry());
+        return customerAddr;
     }
 
     public String saveCreditCard() {
@@ -301,18 +311,26 @@ public class PurchaseOrderController implements Serializable {
             customer.addCreditCard(creditCard);
             customerService.updateUser(customer);
 
-            //return "/views/customer/orderDetail.jsf?faces-redirect=true";
             purchaseOrder = purchaseOrderService.savePurchaseOrder(shoppingCart, customer, Calendar.getInstance());
             if (purchaseOrder != null && sendPurchaseEmail(purchaseOrder)) {
 
                 successMsg = "Thank you for shopping with us. Please check your email for order detail";
                 errorMsg = null;
+                purchaseOrder.setBuyDateStr(refineDate(purchaseOrder.getBuyingDate()));
                 return "/views/customer/orderDetail.jsf?faces-redirect=true";
             }
         } catch (Exception e) {
             successMsg = null;
             errorMsg = "Ooops !!! something went wrong confirming your order";
-            //return null;
+        }
+        return null;
+    }
+
+    public String refineDate(Calendar buyDate) {
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        if (buyDate != null) {
+            String nDate = df.format(buyDate.getTime());
+            return nDate;
         }
         return null;
     }

@@ -8,7 +8,6 @@ package com.saviour.poweryoga.serviceImpl;
 
 import com.saviour.poweryoga.crudfacade.CRUDFacadeImpl;
 import com.saviour.poweryoga.model.Course;
-import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Users;
@@ -101,7 +100,7 @@ public class EnrollmentService implements IEnrollmentService {
     }
     
     @Override
-    public Enrollment isRegistered(Customer customer,Section section){
+    public Enrollment isRegistered(Users customer,Section section){
         //return enrollmentDAO.isRegistered(customer, section);
         Map<String, Long> paramaters = new HashMap<>(2);
         paramaters.put("cid", customer.getUserId()); 

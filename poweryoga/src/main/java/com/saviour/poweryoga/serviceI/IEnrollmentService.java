@@ -37,6 +37,6 @@ public interface IEnrollmentService {
     
     public List<Course> getSectionHistory(Users custmomer);    
     
-    public Enrollment isRegistered(Customer customer,Section section);
+    public Enrollment isRegistered(Users customer,Section section);
     
 }
