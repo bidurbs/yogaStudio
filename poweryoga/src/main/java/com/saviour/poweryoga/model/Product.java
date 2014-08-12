@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PRODUCT")
 @NamedQueries({
-    @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.name LIKE :pname"),
+    @NamedQuery(name = "Product.searchProduct", query = "FROM Product p WHERE p.status='ACTIVE' and p.name LIKE :pname"),
     @NamedQuery(name = "Product.getAllFeatured", query = "FROM Product p order by rand()"),
     @NamedQuery(name = "Product.findAllProducts", query = "FROM Product p WHERE p.status=:status"),
     @NamedQuery(name = "Product.findAllActiveProducts", query = "FROM Product p WHERE p.status=:status")
@@ -122,7 +122,5 @@ public class Product implements Serializable {
     public void setStatus(statusType status) {
         this.status = status;
     }
-    
-    
 
 }
