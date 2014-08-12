@@ -28,7 +28,7 @@ public class UserController implements Serializable {
     @Autowired
     private NotificationController notoficationController;
 //    
-    
+
     private Users user;
     //= new Users();
     private Role userRole;
@@ -36,13 +36,11 @@ public class UserController implements Serializable {
     //to keep user related data on the session 
     private HttpSession activeSession;
 
-    
-
     private boolean isAdmin;
     private boolean isFaculty;
     private boolean isCustomer;
     private boolean isLoggedin;
-    
+
     private static String redirect = "";
 
     public static String getRedirect() {
@@ -130,14 +128,14 @@ public class UserController implements Serializable {
                 //admin
                 if (userRoleCode == Role.ROLE_ADMIN_CODE) {
                     isAdmin = true;
-                    retURL="/views/admin/adminHome.xhtml?faces-redirect=true";
+                    retURL = "/views/admin/adminHome.xhtml?faces-redirect=true";
                 } //faculty user 
                 else if (userRoleCode == Role.ROLE_FACULTY_CODE) {
                     // activeSession.setAttribute("loggedUser", user);
 //                userLogged = true;
 //                isAdminUser = true;
                     isFaculty = true;
-                    retURL="/views/faculty/facultyHome.xhtml?faces-redirect=true";
+                    retURL = "/views/faculty/facultyHome.xhtml?faces-redirect=true";
 
                 } //vedor user
                 else if (userRoleCode == Role.ROLE_CUSTOMER_CODE) {
@@ -145,18 +143,18 @@ public class UserController implements Serializable {
 //                userLogged = true;
 //                isAdminUser = true;
                     isCustomer = true;
-                    retURL="/views/index.xhtml?faces-redirect=true";
+                    retURL = "/views/index.xhtml?faces-redirect=true";
                 }
-                
-                if (redirect != null && redirect.length() > 0) {
-                return redirect;
-            } else {
-                return retURL;
-            }
 
-            }
-            else
+                if (redirect != null && redirect.length() > 0) {
+                    return redirect;
+                } else {
+                    return retURL;
+                }
+
+            } else {
                 return null;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");
@@ -211,9 +209,13 @@ public class UserController implements Serializable {
                     userService.updateUser(usr);
                     notoficationController.setSuccessMsg("Password updated successfully");
                     return;
+                } else {
+                    notoficationController.setErrorMsg("New password doesn't match with re-password.");
                 }
+            } else {
+                notoficationController.setErrorMsg("Current password you have entered is not correct.");
             }
-            notoficationController.setErrorMsg("Password doesn't match");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

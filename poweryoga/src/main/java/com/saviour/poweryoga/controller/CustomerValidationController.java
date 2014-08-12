@@ -8,6 +8,9 @@ package com.saviour.poweryoga.controller;
 import com.saviour.poweryoga.model.Customer;
 import com.saviour.poweryoga.serviceI.IUserService;
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
@@ -39,7 +42,7 @@ public class CustomerValidationController implements Serializable {
     }
 
     @PostConstruct
-    public void initoi() {
+    public void init() {
         checkValidation();
     }
 
@@ -47,20 +50,34 @@ public class CustomerValidationController implements Serializable {
 
         System.out.println("Key" + id);
         try {
-            myStatus="Invalid verification";
+            myStatus = "Invalid link for verification";
             if (id != null) {
                 Customer mycustomer = userService.findCustomerByValidationLink(id);
 
                 if (mycustomer != null && !mycustomer.isApproved()) {
                     mycustomer.setApproved(true);
                     userService.updateUser(mycustomer);
-                    myStatus="Verification Complete. You can login now.";
+                    //String myApp = "<a href=\"http://" + findMyIP() + ":8080/poweryoga/views/userLogin.xhtml\">Verify</a>";
+                    //System.out.println("Link " + myApp);
+                    myStatus = "Verification Complete. You can login now ";// + myApp; 
+                } else {
+                    myStatus = "Opps something went wrong or verification already done";
                 }
             }
         } catch (Exception e) {
 
         }
 
+    }
+
+    public String findMyIP() {
+        InetAddress ip = null;
+        try {
+            ip = InetAddress.getLocalHost();
+        } catch (java.net.UnknownHostException ex) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ip.getHostAddress();
     }
 
     public String getMyStatus() {

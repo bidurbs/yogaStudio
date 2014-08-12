@@ -38,6 +38,7 @@ public class ProductSearchController implements Serializable {
     public String searchProduct() {
         products = productService.searchProduct(productName);
         noOfAvailableProducts = products.size();
+        productName=null;
         return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
