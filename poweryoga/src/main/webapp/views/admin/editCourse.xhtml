@@ -21,37 +21,49 @@
                     <h:form class="form-horizontal">
 
                         <div class="control-group">
-                            <label class="control-label" for="name">Course Code <sup>*</sup></label>
+                            <label class="control-label" for="courseCode">Course Code <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName1" value="#{courseController.course.courseCode}" />
+                                <h:inputText id="courseCode" value="#{courseController.course.courseCode}" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="courseCode" class="error"/>
                             </div>
-                            <h:message for="courseCourse"/>
+                            
                         </div>
 
                         <div class="control-group">
                             <label class="control-label" for="courseName">Course Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="courseName" value="#{courseController.course.courseName}" />
+                                <h:inputText id="courseName" value="#{courseController.course.courseName}" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="courseName" class="error"/>
                             </div>
-                            <h:message for="courseName"/>
+                            
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="description">Description <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputTextarea id="imageURL" value="#{courseController.course.description}" />
+                                <h:inputTextarea id="imageURL" value="#{courseController.course.description}" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </h:inputTextarea>
+                                <h:message for="description" class="error"/>
                             </div>
-                            <h:message for="description"/>
+                            
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="courseFee">Course Fee <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="price" value="#{courseController.course.courseFee}" />
+                                <h:inputText id="price" value="#{courseController.course.courseFee}" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="courseFee" class="error"/>
                             </div>
-                            <h:message for="courseFee"/>
+                            
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="course">Prerequisite Course <sup>*</sup></label>
+                            <label class="control-label" for="course">Prerequisite Course</label>
                             <div class="controls">
                                 <h:selectOneMenu id="preCourse" value="#{courseController.selectedPrerequisiteId}">
                                     <f:selectItem itemValue="#{item.id}" itemLabel="None" />
@@ -59,8 +71,9 @@
                                                    itemLabel="#{item.courseName}" 
                                                    itemValue="#{item.id}"/>
                                 </h:selectOneMenu>
+                                <h:message for="preCourse" id="preError" class="error"/>
                             </div>
-                            <h:message for="preCourse" id="preError"  style="color:red"/>
+                           
                         </div>  
 
                         <div class="control-group">

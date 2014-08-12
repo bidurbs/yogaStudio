@@ -21,23 +21,32 @@
                         <div class="control-group">
                             <label class="control-label" for="semesterName">Semester Name <sup>*</sup></label>
                             <div class="controls">
-                                <h:inputText id="semesterName" value="#{semesterController.semester.semesterName}" />
+                                <h:inputText id="semesterName" value="#{semesterController.semester.semesterName}" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </h:inputText>
+                                <h:message for="semesterName" class="error"/>
                             </div>
-                            <h:message for="semesterName"/>
+                            
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="startDate">Start Date <sup>*</sup></label>
+                            <label class="control-label" for="popupCals">Start Date <sup>*</sup></label>
                             <div class="controls">
-                                <p:calendar value="#{semesterController.semester.startDate}" id="popupCals"/>
+                                <p:calendar value="#{semesterController.semester.startDate}" id="popupCals" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </p:calendar>
+                                <h:message for="popupCals" class="error"/>
                             </div>
-                            <h:message for="startDate"/>
+                            
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="endDate">End Date <sup>*</sup></label>
+                            <label class="control-label" for="popupCale">End Date <sup>*</sup></label>
                             <div class="controls">
-                                <p:calendar value="#{semesterController.semester.endDate}" id="popupCale"/>
+                                <p:calendar value="#{semesterController.semester.endDate}" id="popupCale" validatorMessage="Required">
+                                    <f:validateRequired/>
+                                </p:calendar>
+                                <h:message for="popupCale" class="error"/>
                             </div>
-                            <h:message for="endDate"/>
+                            
                         </div>
 
                         <div class="control-group">
