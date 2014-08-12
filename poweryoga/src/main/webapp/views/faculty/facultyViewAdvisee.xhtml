@@ -15,6 +15,10 @@
                 <h3>My Advisee</h3>	
                 <hr class="soft"/>
                 <div class="well">
+                    <h:form id="advList">
+                        <h:outputText id="adviList"/>
+                        <h:message for="adviList" id="NoAdviList"  style="color:red"/>
+                    </h:form>
                     <h:dataTable value="#{facultyController.myadvisee}" var="adv" 
                                  class="table table-bordered">
 

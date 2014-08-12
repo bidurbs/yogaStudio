@@ -6,8 +6,8 @@ import com.saviour.poweryoga.serviceI.IUserService;
 import com.saviour.poweryoga.util.PasswordService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,8 +155,11 @@ public class UserController implements Serializable {
             }
 
             }
-            else
+            else{
+                FacesContext.getCurrentInstance()
+                        .addMessage("logInForm:unamePassErr", new FacesMessage("Please check username and/or password.", "Please check username and/or password."));
                 return null;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             //    notoficationController.setErrorMsg("Login failed. Please cehck username/password.");

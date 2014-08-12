@@ -15,6 +15,10 @@
                 <h3>My Sections</h3>	
                 <hr class="soft"/>
                 <div class="well">
+                    <h:form id="advList">
+                        <h:outputText id="adviList"/>
+                        <h:message for="adviList" id="NoAdviList"  style="color:red"/>
+                    </h:form>
                     <h:dataTable value="#{facultyController.mySections}" var="sec" class="table table-bordered">
 
                         <h:column>
