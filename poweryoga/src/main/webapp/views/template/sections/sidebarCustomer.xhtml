@@ -5,7 +5,7 @@
             <div id="sidebar" class="span3">
                 <br class="clr"/>
                 <ul class="nav nav-list bs-docs-sidenav" style="display: block;">
-                    <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/viewCourseHistory.xhtml?faces-redirect=true">View Course History</a></li>
+                    <li><h:commandLink value="View Transcript/Course History" action="#{enrollmentController.displayAllSectionHistory()}"/></li>
                     <li><a href="${facesContext.externalContext.requestContextPath}/views/customer/customerApplyWaiver.xhtml?faces-redirect=true">Apply for Waiver Request</a></li>
                     <li><a href="${facesContext.externalContext.requestContextPath}/views/faculty/facultyViewSection.xhtml?faces-redirect=true">Shop an item</a></li>
                     <!--<li><a href="${facesContext.externalContext.requestContextPath}/views/faculty/facultyViewSection.xhtml?faces-redirect=true">View Transcript</a></li>--> 
@@ -19,3 +19,4 @@
         </h:form>
     </h:body>
 </html>
+

@@ -132,11 +132,12 @@ public class EnrollmentController implements Serializable {
 //        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
 //        return "registerForClass";
 //    }
-//    public String displaySectionsStatus() {
-//        sections = enrollmentService.displayAllSections();
-//        enrollments = enrollmentService.getAllEnrollments(sections.get(0).getId());
-//        return "manageEnrolledCustomers";
-//    }
+    public String displayAllSectionHistory() {
+       // sections = enrollmentService.displayAllSections();
+        Users user = userController.getCurrentUser();
+        enrollments = enrollmentService.getAllEnrollments(user.getUserId());
+        return "viewCourseHistory";
+    }
 //     public String deleteWaitingList(){
 //        enrollmentService.deleteEnrollment(enrollment);
 //        message="Data deletion success!!";

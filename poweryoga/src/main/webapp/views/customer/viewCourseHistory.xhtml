@@ -4,70 +4,42 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <f:event listener="#{userController.isCustomerUser}" type="preRenderView" />
+
     <h:head>
 
     </h:head>
     <body>
-        <ui:composition template="template/template.xhtml">
-
+        <ui:composition template="../template/templateCustomer.xhtml">         
             <ui:define name="content">
+         
+                     <div class="well">
+                         <h:dataTable value="#{enrollmentController.enrollments}" var="enrol" class="table table-bordered">
+                        <h:column>
+                            <f:facet name="header">Course Name</f:facet>
+                                #{enrol.section.course.courseName}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Course Code</f:facet>
+                                #{enrol.section.course.courseCode}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Status</f:facet>
+                                #{enrol.customerStatus}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Course Fee</f:facet>
+                                #{enrol.section.course.courseFee}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Enrolled Date</f:facet>
+                                #{enrol.enrolledDate}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Grade</f:facet>
+                               
+                        </h:column>
+                    </h:dataTable>
 
-                <div class="well"> 
-                    <center>
-                        <h4>Yoga Studio Course Withdrawal</h4>
-                        <h:form>
-                            <h:panelGrid columns="3">
-                                Date:
-                                <h:inputText id="requestDate" value="#{withdrawalController.withdrawal.withdrawalDate}">
-                                    <f:convertDateTime type="date"/>
-                                </h:inputText>
-                                <h:message for="requestDate"/>
-                                Course:
-                                <h:selectOneMenu id="enrollments" value="#{withdrawalController.enrollmentId}" >                          
-                                    <f:selectItems value="#{withdrawalController.enrollments}" var="enrol" itemValue="#{enrol.id}" itemLabel="#{enrol.section.sectionName}"/>                          
-                                </h:selectOneMenu>
-                                <h:message for="enrollments"/>
-                                Reason:
-                                <h:inputTextarea id="reason" cols="30" value="#{withdrawalController.withdrawal.reason}"/>
-                                <h:message for="reason"/>              
-
-                                &nbsp;
-                                <h:commandButton value="Withdraw course" action="#{withdrawalController.withdrawFromSection()}"/>
-                                <h:outputText value="#{withdrawalController.message}"/>
-                            </h:panelGrid>
-
-                            <!--  Data display -->
-                            <h:dataTable value="#{withdrawalController.withdrawals}" var="withdraw" border="2">
-                                <h:column>
-                                    <f:facet name="header">Date </f:facet>
-                                        #{withdraw.withdrawalDate}
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">Section Name </f:facet>
-                                        #{withdraw.enrollment.section.sectionName}                         
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">Reason </f:facet>
-                                        #{withdraw.reason}        
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">Withdrawal Status </f:facet>
-                                        #{withdraw.withdrawalStatus}  
-
-                                </h:column>
-
-                                <h:column>
-                                    <f:facet name="header">delete</f:facet>
-                                    <h:commandButton value="Delete" action="#{withdrawalController.deleteRequest()}">
-                                        <f:setPropertyActionListener target="#{withdrawalController.withdrawal}" value="#{withdraw}" />
-                                    </h:commandButton>        
-                                </h:column>
-
-                            </h:dataTable>
-
-                        </h:form>  
-                    </center>
                 </div>
             </ui:define>
         </ui:composition>
