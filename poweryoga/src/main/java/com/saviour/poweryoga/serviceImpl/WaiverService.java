@@ -32,7 +32,7 @@ public class WaiverService implements IWaiverService {
 
     @Override
     public void saveWaiver(Waiver waiver) {
-        crudfacade.create(waiver);
+        crudfacade.save(waiver);
 
     }
 
@@ -66,7 +66,16 @@ public class WaiverService implements IWaiverService {
     public void updateWaiver(Waiver waiver) {
 
     }
-
+    @Override
+    public List<Waiver> checkWaiver(Users customer,Section section){
+        Map<String, Waiver.statusType> paramaters = new HashMap<>(1);
+        Map<String, Long> paramaters2 = new HashMap<>(2);
+        paramaters.put("status", Waiver.statusType.APPROVED); 
+        paramaters2.put("cid", customer.getUserId()); 
+        paramaters2.put("sid", section.getCourse().getId());        
+        List isRegister=crudfacade.findWithNamedQuery("Waiver.checkWaiver", paramaters,paramaters2); 
+        return isRegister;
+    }
     @Override
     public Waiver getWaiverById(Long Id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

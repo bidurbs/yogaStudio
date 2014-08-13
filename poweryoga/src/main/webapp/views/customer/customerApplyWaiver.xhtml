@@ -27,6 +27,8 @@
                 </h:panelGrid>
             </ui:define>
             <ui:define name="content">
+                <div class="well"> 
+                  <h4>Yoga Studio apply for waiver</h4>
                 <h:form>
                     <h:panelGrid columns="2">
                         <div class="control-group">
@@ -42,7 +44,7 @@
                                 <h:selectOneMenu value="#{waiverController.selectedSectionName}" >
                                     <f:selectItems value="#{waiverController.section}" var="waive" 
                                                    itemValue="#{waive.sectionName}" 
-                                                   itemLabel="#{waive.sectionName}"/>
+                                                   itemLabel="#{waive.course.courseName}"/>
                                 </h:selectOneMenu>
                             </div>
 
@@ -55,7 +57,8 @@
                         </div>
                         <h:commandButton value="Waive" action="#{waiverController.waiveSection()}"/>
                     </h:panelGrid>
-                </h:form>
+                  </h:form>
+                 </ui:define>
             </ui:define>
         </ui:composition>
     </body>

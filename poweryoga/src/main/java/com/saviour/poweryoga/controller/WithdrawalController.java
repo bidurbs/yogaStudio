@@ -80,17 +80,14 @@ public class WithdrawalController implements Serializable{
 
     public String displayEnrollment(){
         Customer customer=(Customer)userController.getCurrentUser();
-        //message="message="+customer.getEmail();
         enrollments = withdrawalService.getEnrollmentObs(customer);
         withdrawals=withdrawalService.getAllWithdrawal();
         return "courseWithdrawal";
     }
     
     public String withdrawFromSection(){   
-       Customer customer=(Customer)userController.getCurrentUser();
-       enrollments = withdrawalService.getEnrollmentObs(customer);
        withdrawal.setWithdrawalStatus(Withdrawal.statusType.request);
-       for(Enrollment en:enrollments){
+       for(Enrollment en:enrollments){          
            if(en.getId()==Long.parseLong(enrollmentId)){
                withdrawal.addEnrollment(en);
            }
@@ -100,7 +97,7 @@ public class WithdrawalController implements Serializable{
        return "courseWithdrawal";
     }
     
-    public String deleteRequest(){
+    public String deleteRequest(){       
         withdrawalService.deleteWithdrawal(withdrawal);
         withdrawals=withdrawalService.getAllWithdrawal();
         return "courseWithdrawal";

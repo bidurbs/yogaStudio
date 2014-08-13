@@ -31,7 +31,7 @@ public class WithdrawalService implements IWithdrawalService{
     @Override
     public void saveWithdrawal(Withdrawal withdrawal){
         //withdrawalDAO.saveWithdrawal(withdrawal);
-        crudfacade.create(withdrawal);
+        crudfacade.save(withdrawal);
     }
 
     @Override

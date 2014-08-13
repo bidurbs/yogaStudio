@@ -9,6 +9,7 @@ import com.saviour.poweryoga.model.Course;
 import com.saviour.poweryoga.model.Enrollment;
 import com.saviour.poweryoga.model.Section;
 import com.saviour.poweryoga.model.Users;
+import com.saviour.poweryoga.model.Waiver;
 import com.saviour.poweryoga.serviceI.IEnrollmentService;
 import com.saviour.poweryoga.serviceI.IWaiverService;
 import java.io.Serializable;
@@ -163,16 +164,9 @@ public class EnrollmentController implements Serializable {
 
     private int checkPrerequisite(Users customer, Section section) {
         Course prerequisite = section.getCourse().getPrerequisites();
-        List<Course> sectionHistory = enrollmentService.getSectionHistory(customer);
-//        List<Waiver> waivers = waiverService.getAllWaiver();//enrollmentService.checkWaiverStatus(customer.getUserId(),section.getId());
-//        if (!waivers.isEmpty()) {
-//            for (Waiver w : waivers) {
-//                if ((Objects.equals(w.getSection().getId(), section.getId())) && (w.getUser().getUserId() == customer.getUserId()) && w.getStatus().equals(Waiver.statusType.APPROVED)) {
-//                    flag = 1;
-//                }
-//            }
-//        }
-        if (prerequisite == null) { // check this if it works
+        List<Course> sectionHistory = enrollmentService.getSectionHistory(customer); 
+        List<Waiver> waiver=waiverService.checkWaiver(customer, section);
+        if (prerequisite == null || !waiver.isEmpty() ) { // check this if course doesn't have prerequisite
             flag = 1;
         } else {
             if (!sectionHistory.isEmpty()) {

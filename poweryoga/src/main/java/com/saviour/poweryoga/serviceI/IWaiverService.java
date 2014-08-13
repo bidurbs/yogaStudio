@@ -20,6 +20,8 @@ public interface IWaiverService {
     public void saveWaiver(Waiver waiver);
 
     public List<Waiver> getAllWaiver();
+    
+    public List<Waiver> checkWaiver(Users customer,Section section);
 
     public void updateWaiver(Waiver waiver);
 
