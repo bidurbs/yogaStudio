@@ -151,7 +151,7 @@ public class UserController implements Serializable {
             } else {
                 FacesContext.getCurrentInstance()
                         .addMessage("logInForm:unamePassErr", new FacesMessage("Please check username and/or password.", "Please check username and/or password."));
-
+                user=new Users();
                 return null;
             }
             if (redirect != null && redirect.length() > 0) {
