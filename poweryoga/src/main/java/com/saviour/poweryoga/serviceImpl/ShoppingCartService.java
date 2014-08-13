@@ -21,11 +21,24 @@ public class ShoppingCartService implements IShoppingCartService {
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
+    /**
+     * This method will add item in the shopping cart
+     *
+     * @param cart
+     * @return Saved shopping cart
+     */
     @Override
     public ShoppingCart addToCart(ShoppingCart cart) {
         return (ShoppingCart) crudfacade.merge(cart);
     }
 
+    /**
+     * This method will remove item from shopping cart
+     *
+     * @param cart
+     * @param item
+     * @return Shopping cart after removal
+     */
     @Override
     public ShoppingCart removeFromCart(ShoppingCart cart, ShoppingCartItem item) {
         cart.getShoppingCartItems().remove(item);

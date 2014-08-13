@@ -35,13 +35,23 @@ public class ProductSearchController implements Serializable {
 
     }
 
+    /**
+     * Search Product based on the name entered by customer
+     *
+     * @return Product page
+     */
     public String searchProduct() {
         products = productService.searchProduct(productName);
         noOfAvailableProducts = products.size();
-        productName=null;
+        productName = null;
         return ("/views/customer/product.xhtml?faces-redirect=true");
     }
 
+    /**
+     * Display all product in the system
+     *
+     * @return Product page
+     */
     public String displayProducts() {
         products = productService.getAllProducts();
         noOfAvailableProducts = products.size();
@@ -80,9 +90,14 @@ public class ProductSearchController implements Serializable {
         this.noOfAvailableProducts = noOfAvailableProducts;
     }
 
+    /**
+     * View detail information of a product from Product Page
+     *
+     * @param product Selected Product
+     * @return Product Detail Page
+     */
     public String viewProductDetail(Product product) {
         this.product = product;
-        //return "/views/customer/productDetail";
         return ("/views/customer/productDetail.xhtml?faces-redirect=true");
     }
 

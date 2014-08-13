@@ -14,6 +14,12 @@ import java.util.regex.Pattern;
  */
 public class YogaValidator {
 
+    /**
+     * This method will validate email
+     *
+     * @param email
+     * @return true/false based on the given email is valid or not
+     */
     public static Boolean emailValidator(String email) {
         try {
             String pattern = "\\A^(?=.{0,64}$)([a-z0-9_\\.-]+)@([\\da-z\\.-]+)([\\da-z]+)\\.([a-z]+)\\z";
@@ -22,25 +28,4 @@ public class YogaValidator {
             return false;
         }
     }
-
-    public static Boolean dateValidator(String dateValue) {
-        try {
-            String pattern1 = "\\A^(?=.{0,10}$)((19|20)\\d\\d|\\d{2})[/-](0?[1-9]|1[012])[/-](0?[1-9]|[12][0-9]|3[01])\\z";
-            String pattern2 = "\\A^(?=.{0,8}$)((19|20)\\d\\d|\\d{2})(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])\\z";
-            return Pattern.compile(pattern1).matcher(dateValue).matches()
-                    || Pattern.compile(pattern2).matcher(dateValue).matches();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static Boolean numValidator(String number) {
-        try {
-            String pattern = "\\A-?[0-9]*[\\.]?[0-9]*\\z";
-            return Pattern.compile(pattern).matcher(number).matches();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
 }

@@ -83,6 +83,12 @@ public class PurchaseOrderController implements Serializable {
         checkShipping = false;
     }
 
+    /**
+     * Add product to shopping cart
+     *
+     * @param productId Product id to add
+     * @return product page to add more products
+     */
     public String addToCart(Long productId) {
 
         try {
@@ -135,6 +141,11 @@ public class PurchaseOrderController implements Serializable {
         shoppingCart.setTotalPrice(total);
     }
 
+    /**
+     * This method will remove item from shopping cart
+     *
+     * @param item Shopping cart item to be removed
+     */
     public void removeProduct(ShoppingCartItem item) {
         shoppingCart = shoppingCartService.removeFromCart(shoppingCart, item);
         updateShoppingCartTotalCost();
@@ -151,6 +162,12 @@ public class PurchaseOrderController implements Serializable {
         updateShoppingCartTotalCost();
     }
 
+    /**
+     * Checkout from Shopping Cart to purchase product
+     *
+     * @return login page or address page based on the customer already logged
+     * in or not
+     */
     public String checkout() {
         Customer currCustomer = getCurrentCustomer();
         if (currCustomer == null) {
@@ -162,6 +179,12 @@ public class PurchaseOrderController implements Serializable {
         }
     }
 
+    /**
+     * Send email to customer after purchase complete
+     *
+     * @param myorder Purchase order for which we will send the email
+     * @return true/false based on email sent or not
+     */
     public boolean sendPurchaseEmail(PurchaseOrder myorder) {
         //EMAIL SENDING
         try {
@@ -286,6 +309,11 @@ public class PurchaseOrderController implements Serializable {
         this.checkShipping = checkShipping;
     }
 
+    /**
+     * Save/update address of the customer
+     *
+     * @return Card information page after address saved successfully
+     */
     public String saveAddress() {
 
         customer = getCurrentCustomer();
@@ -295,7 +323,7 @@ public class PurchaseOrderController implements Serializable {
         return "/views/customer/cardInformation.jsf?faces-redirect=true";
     }
 
-    public Address updateCustomerAddress(Address customerAddr) {
+    private Address updateCustomerAddress(Address customerAddr) {
         customerAddr.setStreet(billingAddress.getStreet());
         customerAddr.setCity(billingAddress.getCity());
         customerAddr.setState(billingAddress.getState());
@@ -304,6 +332,12 @@ public class PurchaseOrderController implements Serializable {
         return customerAddr;
     }
 
+    /**
+     * Save credit card information and confirm order and save the purchase
+     * order
+     *
+     * @return order detail page
+     */
     public String saveCreditCard() {
         try {
             customer = getCurrentCustomer();
@@ -344,13 +378,4 @@ public class PurchaseOrderController implements Serializable {
         return customerService.findCustomerById(customerId);
     }
 
-    public void changeShippingCheckBox() {
-        if (checkShipping) {
-            shippingAddress.setStreet(billingAddress.getStreet());
-            shippingAddress.setCity(billingAddress.getCity());
-            shippingAddress.setState(billingAddress.getState());
-            shippingAddress.setZip(billingAddress.getZip());
-            shippingAddress.setCountry(billingAddress.getCountry());
-        }
-    }
 }

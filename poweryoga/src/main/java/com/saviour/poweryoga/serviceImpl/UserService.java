@@ -53,6 +53,12 @@ public class UserService implements IUserService {
         return crudfacade.findWithNamedQuery("Users.findAllCustomer");
     }
 
+    /**
+     * This method will find a customer by his/her id
+     *
+     * @param customerId
+     * @return
+     */
     @Transactional
     @Override
     public Customer findCustomerById(Long customerId) {
@@ -64,6 +70,12 @@ public class UserService implements IUserService {
 
     }
 
+    /**
+     * This method will find customer by his/her email
+     *
+     * @param email Customer email
+     * @return Customer based on email or null
+     */
     @Override
     public Customer findCustomerByEmail(String email) {
 
@@ -78,6 +90,12 @@ public class UserService implements IUserService {
         }
     }
 
+    /**
+     * This method will find customer by validation link sent to his/her email
+     *
+     * @param link
+     * @return Customer based on link or null
+     */
     @Override
     public Customer findCustomerByValidationLink(String link) {
         Map<String, String> paramaters = new HashMap<>(1);
@@ -91,6 +109,11 @@ public class UserService implements IUserService {
 
     }
 
+    /**
+     * This method will update user information
+     *
+     * @param user
+     */
     @Override
     public void updateUser(Users user) {
         crudfacade.merge(user);
@@ -104,7 +127,7 @@ public class UserService implements IUserService {
      */
     @Override
     public Users authenticateUser(Users user) {
-        
+
         try {
             Map<String, String> paramaters = new HashMap<>(2);
             paramaters.put("uemail", user.getEmail());
@@ -129,7 +152,7 @@ public class UserService implements IUserService {
 
         }
         return null;
-        
+
     }
 
     @Override

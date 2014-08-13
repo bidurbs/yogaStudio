@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.faces.context.FacesContext;
-import javax.mail.internet.MailDateFormat;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,6 +44,11 @@ public class PurchaseOrderViewController implements Serializable {
         purchaseOrders = new ArrayList<>();
     }
 
+    /**
+     * This method generate order list for a customer
+     *
+     * @return Purchase order list page
+     */
     public String viewMyOrders() {
         Customer customer = getCurrentCustomer();
 
@@ -53,7 +57,7 @@ public class PurchaseOrderViewController implements Serializable {
             purchaseOrders.get(i).setBuyDateStr(refineDate(purchaseOrders.get(i).getBuyingDate()));
         }
 
-        return "/views/customer/viewPurchase";
+        return "/views/customer/viewPurchase?faces-redirect=true";
 
     }
 
@@ -83,9 +87,15 @@ public class PurchaseOrderViewController implements Serializable {
         this.purchaseOrders = purchaseOrders;
     }
 
+    /**
+     * View detail of an specific order
+     *
+     * @param order Purchase order
+     * @return Order detail page
+     */
     public String viewMyOrderDetail(PurchaseOrder order) {
         purchaseOrder = order;
-        return "/views/customer/viewPurchaseDetail";
+        return "/views/customer/viewPurchaseDetail?faces-redirect=true";
     }
 
     public PurchaseOrder getPurchaseOrder() {

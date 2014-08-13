@@ -25,6 +25,14 @@ public class PurchaseOrderService implements IPurchaseOrderService {
     @Autowired
     private CRUDFacadeImpl crudfacade;
 
+    /**
+     * This method will save Purchase Order
+     *
+     * @param shoppingCart
+     * @param customer
+     * @param buyDate
+     * @return Saved Purchase Order
+     */
     @Override
     public PurchaseOrder savePurchaseOrder(ShoppingCart shoppingCart, Customer customer, Calendar buyDate) {
         PurchaseOrder purchaseOrder = new PurchaseOrder(buyDate, shoppingCart, customer);
@@ -32,6 +40,12 @@ public class PurchaseOrderService implements IPurchaseOrderService {
 
     }
 
+    /**
+     * This method will find list of order for a customer
+     *
+     * @param customerId
+     * @return Purchase Order list
+     */
     @Override
     public List<PurchaseOrder> findOrderByCustomerId(Long customerId) {
         Map<String, Long> paramaters = new HashMap<>(1);

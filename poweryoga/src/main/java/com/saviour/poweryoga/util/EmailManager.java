@@ -19,6 +19,14 @@ import org.springframework.stereotype.Component;
 @Singleton
 public class EmailManager {
 
+    /**
+     * This method will send email to customer/faculty/admin etc
+     *
+     * @param mailSender Java email sender
+     * @param subject Email subject
+     * @param body Email body
+     * @param mailTo Mail to information
+     */
     public static void sendEmail(JavaMailSender mailSender, String subject, String body, String mailTo) {
 
         SimpleMailMessage email = new SimpleMailMessage();

@@ -90,12 +90,6 @@ public class CustomerController implements Serializable {
                 customer.setValidationLink(findNextNumber().toString());
                 userService.saveUser(customer);
                 sendRegistrationEmail(customer);
-
-                //redirect = "/views/index.xhtml?faces-redirect=true";
-                //return (redirect);
-
-              //  notificationController.setSuccessMsg("Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please check your email to complete registration process.");
-
                 successMsg = "Welcome !! " + customer.getFirstName() + " " + customer.getLastName() + ". Please check your email to complete registration process.";
                 errorMsg = null;
 
@@ -119,6 +113,11 @@ public class CustomerController implements Serializable {
         return number;
     }
 
+    /**
+     * Send email after customer put information and hit Register
+     *
+     * @param mycustomer Customer for which we will send email
+     */
     public void sendRegistrationEmail(Customer mycustomer) {
 
         //EMAIL SENDING
@@ -138,7 +137,7 @@ public class CustomerController implements Serializable {
         EmailManager.sendEmail(mailSender, "Welcome to PowerYoga studio", body.toString(), mycustomer.getEmail());
     }
 
-    public String findMyIP() {
+    private String findMyIP() {
         InetAddress ip = null;
         try {
             ip = InetAddress.getLocalHost();
@@ -151,6 +150,12 @@ public class CustomerController implements Serializable {
         return null;
     }
 
+    /**
+     * Validate customer email format
+     *
+     * @param email Customer email
+     * @return true/false based on email given
+     */
     public boolean validateEmail(String email) {
         if (YogaValidator.emailValidator(customer.getEmail()) == false) {
             FacesContext.getCurrentInstance().addMessage("frmCustomerRegistration:email",
@@ -161,9 +166,10 @@ public class CustomerController implements Serializable {
     }
 
     /**
+     * Find a customer from database by email
      *
-     * @param email
-     * @return
+     * @param email Customer email
+     * @return true/false based on email
      */
     public boolean findCustomerByEmail(String email) {
         Customer cust = userService.findCustomerByEmail(email.trim());
@@ -184,6 +190,9 @@ public class CustomerController implements Serializable {
         return false;
     }
 
+    /**
+     * Update customer to database
+     */
     public void updateCustomer() {
         try {
             userService.updateUser(customer);
@@ -196,6 +205,11 @@ public class CustomerController implements Serializable {
         }
     }
 
+    /**
+     * Find customer to update/view his/her profile
+     *
+     * @return Customer update page
+     */
     public String findCustomerById() {
 
         errorMsg = null;

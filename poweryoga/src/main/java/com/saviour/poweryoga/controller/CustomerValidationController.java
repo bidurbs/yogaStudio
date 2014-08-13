@@ -25,7 +25,6 @@ import org.springframework.stereotype.Controller;
  * @author Md Mojahidul Islam
  * @version 0.0.1
  */
-//@Controller
 @ManagedBean(name = "customerValidationController")
 @RequestScoped
 public class CustomerValidationController implements Serializable {
@@ -46,9 +45,10 @@ public class CustomerValidationController implements Serializable {
         checkValidation();
     }
 
+    /**
+     * Check link sent to the customer and verify customer based on that link
+     */
     public void checkValidation() {
-
-        System.out.println("Key" + id);
         try {
             myStatus = "invalid_link";
             if (id != null) {
@@ -57,10 +57,7 @@ public class CustomerValidationController implements Serializable {
                 if (mycustomer != null && !mycustomer.isApproved()) {
                     mycustomer.setApproved(true);
                     userService.updateUser(mycustomer);
-                    //String myApp = "<a href=\"http://" + findMyIP() + ":8080/poweryoga/views/userLogin.xhtml\">Verify</a>";
-                    //System.out.println("Link " + myApp);
-                    //myStatus = "Verification Complete. You can login now " + myApp;
-                    myStatus="validation_success";
+                    myStatus = "validation_success";
                 } else {
                     myStatus = "validation_done";
                 }
@@ -69,16 +66,6 @@ public class CustomerValidationController implements Serializable {
 
         }
 
-    }
-
-    public String findMyIP() {
-        InetAddress ip = null;
-        try {
-            ip = InetAddress.getLocalHost();
-        } catch (java.net.UnknownHostException ex) {
-            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return ip.getHostAddress();
     }
 
     public String getMyStatus() {
