@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:event listener="#{userController.isAdminUser}" type="preRenderView" />
     <h:head>
 
@@ -11,14 +12,18 @@
     <body>
         <ui:composition template="../template/templateAdmin.xhtml">
             <ui:define name="successFailure">
-                <div class="alert fade in">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Success</strong>
-                </div>
-                <div class="alert alert-block alert-error fade in">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Failure</strong>
-                </div>
+                <c:if test="#{semesterController.successMsg !=null}">
+                    <div class="alert fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{semesterController.successMsg}</strong>
+                    </div>
+                </c:if>
+                <c:if test="#{semesterController.errorMsg !=null}">
+                    <div class="alert alert-block alert-error fade in">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>#{semesterController.errorMsg}</strong>
+                    </div>
+                </c:if>
             </ui:define>
             <ui:define name="content">
                 <h3>Semester List</h3>	

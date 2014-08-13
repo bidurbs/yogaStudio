@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:event listener="#{userController.isAdminUser}" type="preRenderView" />
 
     <h:head>
@@ -12,18 +13,18 @@
     <body>
         <ui:composition template ="../template/templateAdmin.xhtml">
             <ui:define name ="successFailure">
-                <h:panelGrid rendered="#{notificationController.successMsg != null}">
+                <c:if test="#{facultyController.successMsg !=null}">
                     <div class="alert fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{notificationController.successMsg}</strong>
+                        <strong>#{facultyController.successMsg}</strong>
                     </div>
-                </h:panelGrid>
-                <h:panelGrid rendered="#{notificationController.errorMsg != null}">
+                </c:if>
+                <c:if test="#{facultyController.errorMsg !=null}">
                     <div class="alert alert-block alert-error fade in">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>#{notificationController.errorMsg}</strong>
+                        <strong>#{facultyController.errorMsg}</strong>
                     </div>
-                </h:panelGrid>
+                </c:if>
             </ui:define>
 
             <ui:define name="content">

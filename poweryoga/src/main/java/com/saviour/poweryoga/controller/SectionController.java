@@ -48,6 +48,10 @@ public class SectionController implements Serializable {
 
     private Long selectedSemester;
 
+    private String errorMsg = null;
+
+    private String successMsg = null;
+
     public SectionController() {
         //section = new Section();
     }
@@ -99,18 +103,23 @@ public class SectionController implements Serializable {
      * @return
      */
     public String saveSection() {
-        // find the section based on selected course name and set course of this section 
-        if (!selectedCourse.isEmpty()) {
-            course = courseService.findByName(selectedCourse);
-            section.setCourse(course);
+        try {
+            // find the section based on selected course name and set course of this section 
+            if (!selectedCourse.isEmpty()) {
+                course = courseService.findByName(selectedCourse);
+                section.setCourse(course);
+            }
+            //assign semester
+            if (selectedSemester != null) {
+                semester = semesterService.getSemesterById(selectedSemester);
+                section.setSemester(semester);
+            }
+            section.setStatus(Section.statusType.ACTIVE);
+            SectionService.saveSection(section);
+            successMsg = "Section is created successfully";
+        } catch (Exception ex) {
+            errorMsg = "Section Create Failed";
         }
-        //assign semester
-        if (selectedSemester != null) {
-            semester = semesterService.getSemesterById(selectedSemester);
-            section.setSemester(semester);
-        }
-        section.setStatus(Section.statusType.ACTIVE);
-        SectionService.saveSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
 
@@ -120,17 +129,22 @@ public class SectionController implements Serializable {
      * @return
      */
     public String updateSection() {
-        // find the section based on selected course name and set course of this section 
-        if (!selectedCourse.isEmpty()) {
-            course = courseService.findByName(selectedCourse);
-            section.setCourse(course);
+        try {
+            // find the section based on selected course name and set course of this section 
+            if (!selectedCourse.isEmpty()) {
+                course = courseService.findByName(selectedCourse);
+                section.setCourse(course);
+            }
+            //assign semester
+            if (selectedSemester != null) {
+                semester = semesterService.getSemesterById(selectedSemester);
+                section.setSemester(semester);
+            }
+            SectionService.updateSection(section);
+            successMsg = "Section is updated successfully";
+        } catch (Exception ex) {
+            errorMsg = "Section Update Failed";
         }
-        //assign semester
-        if (selectedSemester != null) {
-            semester = semesterService.getSemesterById(selectedSemester);
-            section.setSemester(semester);
-        }
-        SectionService.updateSection(section);
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
 
@@ -162,10 +176,15 @@ public class SectionController implements Serializable {
      * @return
      */
     public String deleteSection(Long Id) {
-        section = SectionService.getSectionById(Id);
-        //SectionService.deleteSection(section);
-        section.setStatus(Section.statusType.INACTIVE);
-        SectionService.updateSection(section);
+        try {
+            section = SectionService.getSectionById(Id);
+            //SectionService.deleteSection(section);
+            section.setStatus(Section.statusType.INACTIVE);
+            SectionService.updateSection(section);
+            successMsg = "Section is deleted successfully";
+        } catch (Exception ex) {
+            errorMsg = "Delete Section Failed";
+        }
         return ("/views/admin/manageSection.xhtml?faces-redirect=true");
     }
 
@@ -237,4 +256,21 @@ public class SectionController implements Serializable {
             return null;
         }
     }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
 }

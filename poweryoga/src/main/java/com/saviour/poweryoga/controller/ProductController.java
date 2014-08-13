@@ -24,9 +24,13 @@ public class ProductController implements Serializable {
 
     @Autowired
     private IProductService ProductService;
-    
+
     private Product product;
     private List<Product> listOfProducts;
+
+    private String errorMsg = null;
+
+    private String successMsg = null;
 
     public ProductController() {
         //product = new Product();
@@ -40,6 +44,7 @@ public class ProductController implements Serializable {
     public String saveProduct() {
         product.setStatus(Product.statusType.ACTIVE);
         ProductService.saveProduct(product);
+        successMsg = "Product is created successfully";
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 
@@ -50,6 +55,7 @@ public class ProductController implements Serializable {
      */
     public String updateProduct() {
         ProductService.updateProduct(product);
+        successMsg = "Product is updated successfully";
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 
@@ -63,10 +69,10 @@ public class ProductController implements Serializable {
         product = ProductService.getProductById(Id);
         return "editProduct";
     }
-    
+
     /**
      * display add Product form
-     * 
+     *
      * @return
      */
     public String addProduct() {
@@ -81,13 +87,16 @@ public class ProductController implements Serializable {
      * @return
      */
     public String deleteProduct(long id) {
-        product = ProductService.getProductById(id);
+        try {
+            product = ProductService.getProductById(id);
 
-        //Set its status inactive
-        product.setStatus(Product.statusType.INACTIVE);
-        ProductService.updateProduct(product);
-        //product = ProductService.getProductById(id);
-        //ProductService.deleteProduct(product);
+            //Set its status inactive
+            product.setStatus(Product.statusType.INACTIVE);
+            ProductService.updateProduct(product);
+            successMsg = "Product is deleted successfully";
+        } catch (Exception ex) {
+            errorMsg = "Delete Product Failed";
+        }
         return ("/views/admin/manageProduct.xhtml?faces-redirect=true");
     }
 
@@ -107,4 +116,21 @@ public class ProductController implements Serializable {
     public void setListOfProducts(List<Product> listOfProducts) {
         this.listOfProducts = listOfProducts;
     }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
 }

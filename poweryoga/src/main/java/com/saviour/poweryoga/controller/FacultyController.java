@@ -64,6 +64,10 @@ public class FacultyController implements Serializable {
     private Address address;
 
     private Long selectedSectionId;
+    
+    private String errorMsg = null;
+
+    private String successMsg = null;
 
     public FacultyController() {
         faculty = new Faculty();
@@ -165,13 +169,14 @@ public class FacultyController implements Serializable {
             //set stauts 
             faculty.setStatus(Faculty.statusType.ACTIVE);
             facultyService.saveFaculty(faculty);
+            successMsg = "Faculty is created successfully";
             return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
         } catch (Exception ex) {
             ex.printStackTrace();
 
             String sucessErrmsg = "Customer saving failed";
             NotificationUtil.flashScope().put(sucessErrmsg, this);
-            // setErrorMsg("Customer saving failed");
+            setErrorMsg("Faculty saving failed");
         }
         return null;
     }
@@ -188,6 +193,7 @@ public class FacultyController implements Serializable {
      */
     public String updateFaculty() {
         facultyService.updateFaculty(faculty);
+        successMsg = "Faculty is created successfully";
         return ("/views/admin/manageFaculty.xhtml?faces-redirect=true");
     }
 
@@ -367,4 +373,22 @@ public class FacultyController implements Serializable {
             ex.printStackTrace();
         }
     }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+    
+    
 }
