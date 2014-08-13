@@ -31,7 +31,7 @@
         <![endif]-->
 
         <!-- Le fav and touch icons -->
-        <link rel="shortcut icon" href="resources/ico/favicon.ico" />
+        <link rel="shortcut icon" href="${facesContext.externalContext.requestContextPath}/resources/ico/favicon.ico" />
     </h:head>
     <h:body>
         <!-- Navbar
@@ -48,18 +48,7 @@
                 </ui:insert>
 
                 <div class="span9">
-                    <c:if test="#{notificationController.successMsg !=null}">
-                        <div class="alert fade in">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <strong>#{notificationController.successMsg}</strong>
-                        </div>
-                    </c:if>
-                    <c:if test="#{notificationController.errorMsg!=null}">
-                        <div class="alert alert-block alert-error fade in">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <strong>#{notificationController.errorMsg}</strong>
-                        </div>
-                    </c:if>
+                    <ui:insert name="successFailure"/>
                     <ui:insert name="content"/>
 
                 </div>
@@ -69,8 +58,8 @@
             </ui:insert>
         </div>
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-        <!--        <h:outputScript library="js" name="jquery.js"/>
-                <h:outputScript library="js" name="google-code-prettify/prettify.js" />-->
+        <h:outputScript library="js" name="jquery.js"/>
+        <h:outputScript library="js" name="google-code-prettify/prettify.js" />
         <h:outputScript library="js" name="application.js"/>
         <h:outputScript library="js" name="bootstrap-transition.js" />
         <h:outputScript library="js" name="bootstrap-modal.js"/>

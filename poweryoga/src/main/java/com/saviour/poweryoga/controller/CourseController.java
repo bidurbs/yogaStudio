@@ -29,13 +29,9 @@ public class CourseController implements Serializable {
     private int noOfCourses;
     private Long selectedPrerequisiteId;
 
-    public int getNoOfCourses() {
-        return noOfCourses;
-    }
+    private String errorMsg = null;
 
-    public void setNoOfCourses(int noOfCourses) {
-        this.noOfCourses = noOfCourses;
-    }
+    private String successMsg = null;
 
     public CourseController() {
         //course = new Course();
@@ -55,12 +51,12 @@ public class CourseController implements Serializable {
             //set course status 
             course.setStatus(Course.statusType.ACTIVE);
             CourseService.saveCourse(course);
-            return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
+            successMsg = "Course is created successfully";
         } catch (Exception ex) {
             ex.printStackTrace();
-            //errorMsg = "Course saving failed";
+            errorMsg = "Course saving failed";
         }
-        return null;
+        return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
 
     /**
@@ -69,15 +65,20 @@ public class CourseController implements Serializable {
      * @return
      */
     public String updateCourse() {
-        if (selectedPrerequisiteId !=null) {
-            Course pre = CourseService.getCourseById(selectedPrerequisiteId);
-            if (!pre.getId().equals(course.getId())) {
-                course.setPrerequisites(pre);
+        try {
+            if (selectedPrerequisiteId != null) {
+                Course pre = CourseService.getCourseById(selectedPrerequisiteId);
+                if (!pre.getId().equals(course.getId())) {
+                    course.setPrerequisites(pre);
+                }
+            } else {
+                course.setPrerequisites(null);
             }
-        } else {
-            course.setPrerequisites(null);
+            CourseService.updateCourse(course);
+            successMsg = "Course is updated successfully";
+        } catch (Exception ex) {
+            errorMsg = "Update Course Failed";
         }
-        CourseService.updateCourse(course);
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
 
@@ -105,7 +106,7 @@ public class CourseController implements Serializable {
         course = new Course();
         return ("/views/admin/addCourse.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Update Course data
      *
@@ -124,11 +125,17 @@ public class CourseController implements Serializable {
      * @return
      */
     public String deleteCourse(Long Id) {
-        course = CourseService.getCourseById(Id);
+        try {
+            course = CourseService.getCourseById(Id);
 
-        //Set its status inactive
-        course.setStatus(Course.statusType.INACTIVE);
-        CourseService.updateCourse(course);
+            //Set its status inactive
+            course.setStatus(Course.statusType.INACTIVE);
+            CourseService.updateCourse(course);
+            successMsg = "Course is deleted successfully";
+        } catch (Exception ex) {
+            errorMsg = "Delete Course Failed";
+        }
+
         return ("/views/admin/manageCourse.xhtml?faces-redirect=true");
     }
 
@@ -165,6 +172,30 @@ public class CourseController implements Serializable {
 
     public void setSelectedPrerequisiteId(Long selectedPrerequisiteId) {
         this.selectedPrerequisiteId = selectedPrerequisiteId;
+    }
+
+    public int getNoOfCourses() {
+        return noOfCourses;
+    }
+
+    public void setNoOfCourses(int noOfCourses) {
+        this.noOfCourses = noOfCourses;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
     }
 
 }

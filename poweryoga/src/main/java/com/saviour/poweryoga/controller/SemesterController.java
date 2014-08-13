@@ -23,63 +23,75 @@ public class SemesterController implements Serializable {
     private Semester semester;
     private List<Semester> listOfSemester;
 
+    private String errorMsg = null;
+
+    private String successMsg = null;
+
     public SemesterController() {
         //semester = new Semester();
     }
-    
+
     /**
      * Save Semester data
      *
-     * @return 
+     * @return
      */
     public String saveSemester() {
         semester.setStatus(Semester.statusType.ACTIVE);
         SemesterService.saveSemester(semester);
+        successMsg = "Semester is created successfully";
         return ("/views/admin/manageSemester.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Display update Semester data page
      *
-     * @return 
+     * @return
      */
     public String updateSemester() {
         SemesterService.updateSemester(semester);
+        successMsg = "Semester is updated successfully";
         return ("/views/admin/manageSemester.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Update Semester data
+     *
      * @param Id
-     * @return 
+     * @return
      */
     public String editSemester(long Id) {
         semester = SemesterService.getSemesterById(Id);
         return "editSemester";
     }
-    
+
     /**
      * add Semester form
-     * @return 
+     *
+     * @return
      */
     public String addSemester() {
         semester = new Semester();
         return ("/views/admin/addSemester.xhtml?faces-redirect=true");
     }
-    
+
     /**
      * Delete Course entry
      *
      * @param Id
-     * @return 
+     * @return
      */
     public String deleteSemester(long Id) {
-        semester = SemesterService.getSemesterById(Id);
+        try {
+            semester = SemesterService.getSemesterById(Id);
 
-        //Set its status inactive
-        semester.setStatus(Semester.statusType.INACTIVE);
-        SemesterService.updateSemester(semester);
-        //SemesterService.deleteSemester(Id);
+            //Set its status inactive
+            semester.setStatus(Semester.statusType.INACTIVE);
+            SemesterService.updateSemester(semester);
+            successMsg = "Semester is deleted successfully";
+        } catch (Exception ex) {
+            errorMsg = "Delete Semester Failed";
+        }
         return ("/views/admin/manageSemester.xhtml?faces-redirect=true");
     }
 
@@ -99,4 +111,21 @@ public class SemesterController implements Serializable {
     public void setListOfSemester(List<Semester> listOfSemester) {
         this.listOfSemester = listOfSemester;
     }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getSuccessMsg() {
+        return successMsg;
+    }
+
+    public void setSuccessMsg(String successMsg) {
+        this.successMsg = successMsg;
+    }
+
 }
